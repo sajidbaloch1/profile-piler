@@ -6,7 +6,14 @@
     "type": "project",
     "require": {
         "php": "^7.2",
-        "laravel/lumen-framework": "^6.0"
+        "aws/aws-sdk-php": "^3.133",
+        "elasticsearch/elasticsearch": "^7.5",
+        "flipbox/lumen-generator": "^6.0",
+        "fruitcake/laravel-cors": "^1.0",
+        "jsq/amazon-es-php": "^0.3.0",
+        "laravel/lumen-framework": "^6.0",
+        "php-curl-class/php-curl-class": "^8.6",
+        "wizacha/aws-signature-middleware": "^0.1.2"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",

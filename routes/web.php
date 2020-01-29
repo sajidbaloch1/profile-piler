@@ -1,5 +1,7 @@
 <?php
 
+use \Curl\Curl;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,5 +14,7 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return ['appVersion' => $router->app->version()];
 });
+
+$router->get('/profiles', 'ProfileController@index');
