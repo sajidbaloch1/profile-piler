@@ -25,7 +25,8 @@ class ProfileController extends Controller
                     "followers" => 'desc'
                 ]
             ],
-            'size' => 50
+            'size' => 50,
+            // 'from' => 50
         ];
 
         try {

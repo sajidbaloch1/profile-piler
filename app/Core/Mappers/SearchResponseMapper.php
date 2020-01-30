@@ -15,7 +15,10 @@ class SearchResponseMapper
     public function buildPayload()
     {
         return [
-            'profiles' => $this->buildProfiles()
+            'profiles' => $this->buildProfiles(),
+            'pagging' => [
+                'total' => $this->response['hits']['total']['value']
+            ]
         ];
     }
 
