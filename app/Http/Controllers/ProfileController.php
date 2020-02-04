@@ -10,6 +10,7 @@ class ProfileController extends Controller
     //
     public function index(Request $request)
     {
+        $pageSize = env('PAGE_SIZE', 100);
         $query = [
             'query' => [
                 'bool' => [
@@ -25,9 +26,13 @@ class ProfileController extends Controller
                     "followers" => 'desc'
                 ]
             ],
-            'size' => 50,
-            // 'from' => 50
+            'size' => $pageSize,
+            // 'scroll' => '100m'
         ];
+        if ($request->get('page_no')) {
+            $pageNo = $request->get('page_no') > 4 ? 4 : $request->get('page_no');
+            $query['from'] = $pageNo * $pageSize;
+        }
 
         try {
             $response = (new ElasticClient)->search($query);
