@@ -32,7 +32,7 @@ class ElasticClient
     public function search($query, $index = 'influencers')
     {
         $params = [
-            'scroll' => '100m',
+            // 'scroll' => '100m',
             'index' => $index,
             'body'  => $query,
         ];
