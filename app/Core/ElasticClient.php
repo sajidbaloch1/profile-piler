@@ -32,13 +32,27 @@ class ElasticClient
     public function search($query, $index = 'influencers')
     {
         $params = [
-            // 'scroll' => '100m',
+            'scroll' => '100m',
             'index' => $index,
             'body'  => $query,
         ];
 
         try {
             return $this->client->search($params);
+        } catch (\Exception $ex) {
+            throw $this->buildClientException();
+        }
+    }
+
+    public function count($query = null, $index = 'influencers')
+    {
+        $params = ['index' => $index, 'body'  => $query];
+        if (!is_null($query)) {
+            $params['body'] = $query;
+        }
+
+        try {
+            return $this->client->count($params);
         } catch (\Exception $ex) {
             throw $this->buildClientException();
         }

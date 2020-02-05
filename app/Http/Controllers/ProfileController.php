@@ -26,9 +26,9 @@ class ProfileController extends Controller
                     "followers" => 'desc'
                 ]
             ],
-            'size' => $pageSize,
-            // 'scroll' => '100m'
+            'size' => $pageSize
         ];
+
         if ($request->get('page_no')) {
             $pageNo = $request->get('page_no') > 4 ? 4 : $request->get('page_no');
             $query['from'] = $pageNo * $pageSize;
@@ -40,5 +40,31 @@ class ProfileController extends Controller
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
         }
+    }
+
+    public function count(Request $request)
+    {
+        $query = null;
+        if ($request->get('q')) {
+            $query = [
+                'query' => [
+                    'bool' => [
+                        'filter' => [
+                            'multi_match' => [
+                                'type' => 'phrase',
+                                'query' => '"' . $request->get('q') . '"',
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        }
+
+        $response = (new ElasticClient)->count($query);
+        if ($response['count']) {
+            return ['success' => true, 'count' => $response['count']];
+        }
+
+        return ['success' => false];
     }
 }
