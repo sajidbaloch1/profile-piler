@@ -107,6 +107,16 @@ class ProfileController extends Controller
             ];
         }
 
+        if (!empty($request->get('category'))) {
+            $filters[] = [
+                "match_phrase" => [
+                    "category" => [
+                        "query" => $request->get('category')
+                    ]
+                ]
+            ];
+        }
+
         if (count($filters) > 0) {
             $query['query']['bool']['must'] = $filters;
         }
