@@ -60,7 +60,7 @@ class ProfileController extends Controller
                         'filter' => [
                             'multi_match' => [
                                 'type' => 'phrase',
-                                'query' => '"' . $request->get('q') . '"',
+                                'query' => $request->get('q'),
                             ]
                         ]
                     ]
@@ -75,6 +75,42 @@ class ProfileController extends Controller
                 ];
             $query['size'] = $pageSize;
         }
+
+        $filters = [];
+        if (!empty($request->get('location'))) {
+            $filters[] = [
+                "match_phrase" => [
+                    "location" => [
+                        "query" => $request->get('location')
+                    ]
+                ]
+            ];
+        }
+
+        if (!empty($request->get('isVerified'))) {
+            $filters[] = [
+                "match_phrase" => [
+                    "isverified" => [
+                        "query" => $request->get('isVerified') == 'true'
+                    ]
+                ]
+            ];
+        }
+
+        if (!empty($request->get('isFamilySafe'))) {
+            $filters[] = [
+                "match_phrase" => [
+                    "isfamilysafe" => [
+                        "query" => $request->get('isFamilySafe') == 'true'
+                    ]
+                ]
+            ];
+        }
+
+        if (count($filters) > 0) {
+            $query['query']['bool']['must'] = $filters;
+        }
+
 
         if ($request->get('platforms')) {
             $platforms = explode('-', $request->get('platforms'));
@@ -93,9 +129,11 @@ class ProfileController extends Controller
             }
 
             if (count($shoulds) > 0) {
-                $query['query']['bool']['must']['bool'] = [
-                    'should' => $shoulds,
-                    'minimum_should_match' => 1
+                $query['query']['bool']['must'][] = [
+                    'bool' => [
+                        'should' => $shoulds,
+                        'minimum_should_match' => 1
+                    ]
                 ];
             }
         }
