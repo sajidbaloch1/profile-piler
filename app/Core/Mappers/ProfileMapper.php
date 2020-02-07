@@ -40,5 +40,7 @@ class ProfileMapper
         $this->EventsCount = isset($orginalDoc['eventscount']) ? $orginalDoc['eventscount'] : null;
         $this->Profession = isset($orginalDoc['role']) ? $orginalDoc['role'] : null;
         $this->Company = isset($orginalDoc['company']) ? $orginalDoc['company'] : null;
+        $this->PostCount = isset($orginalDoc['postcount']) ? $orginalDoc['postcount'] : null;
+        $this->Category = isset($orginalDoc['category']) ? $orginalDoc['category'] : null;
     }
 }

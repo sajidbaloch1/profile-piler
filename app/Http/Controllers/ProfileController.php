@@ -50,6 +50,12 @@ class ProfileController extends Controller
 
     private function buildQuery(Request $request, $pagination = true)
     {
+
+        $sortFieldName = 'followers';
+        if (!empty($request->get('sort'))) {
+            $sortFieldName = $request->get('sort');
+        }
+
         $pageSize = env('PAGE_SIZE', 100);
 
         $query = [];
@@ -71,7 +77,7 @@ class ProfileController extends Controller
         if ($pagination) {
             $query['sort'] =
                 [
-                    "followers" => 'desc'
+                    $sortFieldName => 'desc'
                 ];
             $query['size'] = $pageSize;
         }
