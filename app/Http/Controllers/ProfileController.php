@@ -117,6 +117,28 @@ class ProfileController extends Controller
             ];
         }
 
+
+        if (!empty($request->get('profession'))) {
+            $filters[] = [
+                "match_phrase" => [
+                    "role" => [
+                        "query" => $request->get('profession')
+                    ]
+                ]
+            ];
+        }
+
+
+        if (!empty($request->get('company'))) {
+            $filters[] = [
+                "match_phrase" => [
+                    "company" => [
+                        "query" => $request->get('company')
+                    ]
+                ]
+            ];
+        }
+
         if (count($filters) > 0) {
             $query['query']['bool']['must'] = $filters;
         }
