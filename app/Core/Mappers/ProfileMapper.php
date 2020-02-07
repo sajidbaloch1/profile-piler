@@ -16,6 +16,9 @@ class ProfileMapper
     public $Name;
     public $TweetCount;
     public $ViewsCount;
+    public $Profession;
+    public $EventsCount;
+    public $Company;
     function __construct($profile)
     {
         $orginalDoc = $profile['_source'];
@@ -33,5 +36,9 @@ class ProfileMapper
         $this->TweetCount = isset($orginalDoc['statusescount']) ? $orginalDoc['statusescount'] : null;
         $this->ViewsCount = isset($orginalDoc['totalsview']) ? $orginalDoc['totalsview'] : null;
         $this->VideoCount = isset($orginalDoc['videocount']) ? $orginalDoc['videocount'] : null;
+        $this->LikesCount = isset($orginalDoc['likescount']) ? $orginalDoc['likescount'] : null;
+        $this->EventsCount = isset($orginalDoc['eventscount']) ? $orginalDoc['eventscount'] : null;
+        $this->Profession = isset($orginalDoc['role']) ? $orginalDoc['role'] : null;
+        $this->Company = isset($orginalDoc['company']) ? $orginalDoc['company'] : null;
     }
 }
