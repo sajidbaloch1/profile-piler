@@ -64,9 +64,25 @@ class ProfileController extends Controller
                 'query' => [
                     'bool' => [
                         'filter' => [
-                            'multi_match' => [
-                                'type' => 'phrase',
-                                'query' => $request->get('q'),
+                            "bool" => [
+                                "should" => [
+                                    [
+                                        'match_phrase' => [
+                                            'description' => $request->get('q')
+                                        ]
+                                    ],
+                                    [
+                                        'match_phrase' => [
+                                            'name' => $request->get('q')
+                                        ]
+                                    ],
+                                    [
+                                        'match_phrase' => [
+                                            'location' => $request->get('q')
+                                        ]
+                                    ]
+                                ],
+                                'minimum_should_match' => 1
                             ]
                         ]
                     ]
