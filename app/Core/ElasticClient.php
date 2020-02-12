@@ -4,7 +4,7 @@ namespace App\Core;
 
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
-use Aws\ElasticsearchService\ElasticsearchPhpHandler;
+use App\Core\ElasticsearchPhpHandler;
 use Elasticsearch\ClientBuilder;
 
 class ElasticClient
