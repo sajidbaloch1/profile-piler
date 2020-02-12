@@ -29,10 +29,23 @@ class ElasticClient
         $this->client = $builder->build();
     }
 
+    public function get($id, $index = 'influencers')
+    {
+        $params = [
+            'index' => $index,
+            'id'    => $id
+        ];
+
+        try {
+            return $this->client->get($params);
+        } catch (\Exception $ex) {
+            throw $this->buildClientException();
+        }
+    }
+
     public function search($query, $index = 'influencers')
     {
         $params = [
-            // 'scroll' => '100m',
             'index' => $index,
             'body'  => $query,
         ];

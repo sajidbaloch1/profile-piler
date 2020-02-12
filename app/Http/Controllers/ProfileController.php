@@ -22,6 +22,16 @@ class ProfileController extends Controller
         }
     }
 
+    public function get($id)
+    {
+        try {
+            $response = $response = (new ElasticClient)->get($id);;
+            return ['success' => true, 'payload'=>(new \App\Core\Mappers\ProfileMapper($response))];
+        } catch (\Exception $ex) {
+            return ['success' => false, "errors" => [$ex->getMessage()]];
+        }
+    }
+
     public function count(Request $request)
     {
         $query = $this->buildQuery($request, false);
