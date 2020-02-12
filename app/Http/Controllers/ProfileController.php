@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-
-
     //
     public function index(Request $request)
     {
@@ -26,7 +24,7 @@ class ProfileController extends Controller
     {
         try {
             $response = $response = (new ElasticClient)->get($id);;
-            return ['success' => true, 'payload'=>(new \App\Core\Mappers\ProfileMapper($response))];
+            return ['success' => true, 'payload' => (new \App\Core\Mappers\ProfileMapper($response))];
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
         }
