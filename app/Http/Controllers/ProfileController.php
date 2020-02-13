@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\ElasticClient;
 use Illuminate\Http\Request;
+use \Curl\Curl;
 
 class ProfileController extends Controller
 {
@@ -237,4 +238,27 @@ class ProfileController extends Controller
         }
         return $query;
     }
+
+    public function feed($platform, $relativeURL)
+    {
+        // return [$platform, $relativeURL];
+        $curl = new Curl();
+        $curl->get('https://www.youtube.com/channel/' . $relativeURL);
+
+        if ($curl->error) {
+            echo 'Error: ' . $curl->errorCode . ': ' . $curl->errorMessage . "\n";
+        } else {
+            $result = [];
+            preg_match_all('#/watch\?v=\w{11}#si', $curl->response, $result);
+            // return $result[0];
+            $urls = array_map(function ($rURL) {
+                return ['url' => 'https://www.youtube.com' . $rURL];
+            }, $result[0]);
+            return array_slice($urls, 0, 20);
+        }
+    }
 }
+
+//tTreOTL2aMY
+//Pr1NGvfvlB8
+//Rmr_tFYYqVc

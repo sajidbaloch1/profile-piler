@@ -20,3 +20,5 @@ $router->get('/', function () use ($router) {
 $router->get('/profile/{platform}/{relativeURL}', 'ProfileController@get');
 $router->get('/profiles', 'ProfileController@index');
 $router->get('/profiles/count', 'ProfileController@count');
+
+$router->get('/profile/feed/{platform}/{relativeURL}', 'ProfileController@feed');
