@@ -19,6 +19,8 @@ class ProfileMapper
     public $Profession;
     public $EventsCount;
     public $Company;
+    public $PlatformID;
+
     function __construct($profile)
     {
         $orginalDoc = $profile['_source'];
@@ -30,6 +32,7 @@ class ProfileMapper
         $this->Followers = $orginalDoc['followers'];
         $this->Id = $profile['_id'];
         $this->Name = $orginalDoc['name'];
+        $this->PlatformID = isset($orginalDoc['userid']) ? $orginalDoc['userid'] : null;
         $this->IsVerified = isset($orginalDoc['isverified']) ? $orginalDoc['isverified'] : null;
         $this->Location = isset($orginalDoc['location']) ? $orginalDoc['location'] : null;
         $this->IsFamilySafe = isset($orginalDoc['isfamilysafe']) ? $orginalDoc['isfamilysafe'] : null;

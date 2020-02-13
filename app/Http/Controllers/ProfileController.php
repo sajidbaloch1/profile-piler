@@ -29,7 +29,7 @@ class ProfileController extends Controller
                 'bool' => [
                     "must" => [
                         [
-                            "match" => [
+                            "match_phrase" => [
                                 "relativeurl" => $relativeURL
                             ]
                         ], [
@@ -241,6 +241,21 @@ class ProfileController extends Controller
 
     public function feed($platform, $relativeURL)
     {
+
+        // if ($platform == 'TT') {
+        //     $curl = new Curl();
+        //     $params = [
+        //         'id' => $platform,
+        //         'type' => "1",
+        //         'count' => "30",
+        //         'minCursor' => "0",
+        //         'maxCursor' => "1581412209000"
+        //     ];
+        //     $curl->get('https://www.tiktok.com/share/item/list');
+        //     // $curl->set
+
+        // }
+
         // return [$platform, $relativeURL];
         $curl = new Curl();
         $curl->get('https://www.youtube.com/channel/' . $relativeURL);
