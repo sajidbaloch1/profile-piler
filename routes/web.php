@@ -17,6 +17,6 @@ $router->get('/', function () use ($router) {
     return ['appVersion' => $router->app->version()];
 });
 
-$router->get('/profile/{id}', 'ProfileController@get');
+$router->get('/profile/{platform}/{relativeURL}', 'ProfileController@get');
 $router->get('/profiles', 'ProfileController@index');
 $router->get('/profiles/count', 'ProfileController@count');

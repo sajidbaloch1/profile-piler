@@ -20,8 +20,39 @@ class ProfileController extends Controller
         }
     }
 
-    public function get($id)
+    public function get($platform, $relativeURL)
     {
+
+        $query = [
+            'query' => [
+                'bool' => [
+                    "must" => [
+                        [
+                            "match" => [
+                                "relativeurl" => $relativeURL
+                            ]
+                        ], [
+                            "match" => [
+                                "platform" => $platform
+                            ]
+                        ]
+                    ]
+                ]
+
+            ]
+        ];
+
+        try {
+            $response = (new ElasticClient)->search($query);
+            $response = (new \App\Core\Mappers\SearchResponseMapper($response))->buildPayload();
+            if ($response['pagging']['total'] !== 1) {
+                throw "Profile Not Found";
+            }
+            return ['success' => true, 'payload' => $response['profiles'][0]];
+        } catch (\Exception $ex) {
+            return ['success' => false, "errors" => [$ex->getMessage()]];
+        }
+
         try {
             $response = $response = (new ElasticClient)->get($id);;
             return ['success' => true, 'payload' => (new \App\Core\Mappers\ProfileMapper($response))];
