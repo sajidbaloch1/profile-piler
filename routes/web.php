@@ -16,9 +16,8 @@ use \Curl\Curl;
 $router->get('/', function () use ($router) {
     return ['appVersion' => $router->app->version()];
 });
-
+$router->get('/profile/feed/{platform}', 'ProfileController@feed');
 $router->get('/profile/{platform}/{relativeURL}', 'ProfileController@get');
 $router->get('/profiles', 'ProfileController@index');
 $router->get('/profiles/count', 'ProfileController@count');
 
-$router->get('/profile/feed/{platform}/{relativeURL}', 'ProfileController@feed');

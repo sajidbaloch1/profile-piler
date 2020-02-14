@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Core\ElasticClient;
 use Illuminate\Http\Request;
-use \Curl\Curl;
 
 class ProfileController extends Controller
 {
@@ -47,7 +46,7 @@ class ProfileController extends Controller
             $response = (new ElasticClient)->search($query);
             $response = (new \App\Core\Mappers\SearchResponseMapper($response))->buildPayload();
             if ($response['pagging']['total'] !== 1) {
-                throw "Profile Not Found";
+                throw new \Exception("Profile Not Found");
             }
             return ['success' => true, 'payload' => $response['profiles'][0]];
         } catch (\Exception $ex) {
@@ -239,41 +238,8 @@ class ProfileController extends Controller
         return $query;
     }
 
-    public function feed($platform, $relativeURL)
+    public function feed(Request $request, $platform)
     {
-
-        // if ($platform == 'TT') {
-        //     $curl = new Curl();
-        //     $params = [
-        //         'id' => $platform,
-        //         'type' => "1",
-        //         'count' => "30",
-        //         'minCursor' => "0",
-        //         'maxCursor' => "1581412209000"
-        //     ];
-        //     $curl->get('https://www.tiktok.com/share/item/list');
-        //     // $curl->set
-
-        // }
-
-        // return [$platform, $relativeURL];
-        $curl = new Curl();
-        $curl->get('https://www.youtube.com/channel/' . $relativeURL);
-
-        if ($curl->error) {
-            echo 'Error: ' . $curl->errorCode . ': ' . $curl->errorMessage . "\n";
-        } else {
-            $result = [];
-            preg_match_all('#/watch\?v=\w{11}#si', $curl->response, $result);
-            // return $result[0];
-            $urls = array_map(function ($rURL) {
-                return ['url' => 'https://www.youtube.com' . $rURL];
-            }, $result[0]);
-            return array_slice($urls, 0, 20);
-        }
+        return (new \App\Core\SocialFeedLoader)->getFeed($request->all(), $platform);
     }
 }
-
-//tTreOTL2aMY
-//Pr1NGvfvlB8
-//Rmr_tFYYqVc
