@@ -22,7 +22,6 @@ class ProfileController extends Controller
 
     public function get($platform, $relativeURL)
     {
-
         $query = [
             'query' => [
                 'bool' => [
@@ -45,17 +44,15 @@ class ProfileController extends Controller
         try {
             $response = (new ElasticClient)->search($query);
             $response = (new \App\Core\Mappers\SearchResponseMapper($response))->buildPayload();
-            if ($response['pagging']['total'] !== 1) {
+            if ($response['pagging']['total'] === 0) {
                 throw new \Exception("Profile Not Found");
             }
-            return ['success' => true, 'payload' => $response['profiles'][0]];
-        } catch (\Exception $ex) {
-            return ['success' => false, "errors" => [$ex->getMessage()]];
-        }
 
-        try {
-            $response = $response = (new ElasticClient)->get($id);;
-            return ['success' => true, 'payload' => (new \App\Core\Mappers\ProfileMapper($response))];
+            if ($response['profiles'][0]->RelativeURL !== $relativeURL) {
+                throw new \Exception("Profile Not Found");
+            }
+
+            return ['success' => true, 'payload' => $response['profiles'][0]];
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
         }
