@@ -53,5 +53,12 @@ class ProfileMapper
         $this->Company = isset($orginalDoc['company']) ? $orginalDoc['company'] : null;
         $this->PostCount = isset($orginalDoc['postcount']) ? $orginalDoc['postcount'] : null;
         $this->Category = isset($orginalDoc['category']) ? $orginalDoc['category'] : null;
+
+
+        $this->City = isset($orginalDoc['city']) ? $orginalDoc['city'] : null;
+        $this->PhotosCount = isset($orginalDoc['photoscount']) ? $orginalDoc['photoscount'] : null;
+        $this->PhotoViewsCount = isset($orginalDoc['photoviewscount']) ? $orginalDoc['photoviewscount'] : null;
+        $this->GeoTags = isset($orginalDoc['tags']) ? $orginalDoc['tags'] : null;
+        $this->FavoritesCount = isset($orginalDoc['favorites']) ? $orginalDoc['favorites'] : null;
     }
 }
