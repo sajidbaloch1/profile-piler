@@ -25,6 +25,10 @@ class SocialFeedLoader
             case 'tiktok':
                 $response = (new \App\Core\FeedLoaders\TikTokFeedLoader)->get($params);
                 break;
+            case 'twitter':
+            case 'Twitter':
+                $response = (new \App\Core\FeedLoaders\TwitterFeedLoader)->get($params);
+                break;
         }
 
         return $response;
