@@ -52,8 +52,13 @@ class HttpClient
         }
 
         $response = [];
+
         if ($curl->error) {
-            $response = ['success' => false, 'error' => 'Error: ' . $curl->errorCode . ': ' . $curl->errorMessage . "\n"];
+            $response = [
+                'success' => false,
+                'error' => 'Error: ' . $curl->errorCode . ': ' . $curl->errorMessage . "\n",
+                // 'body' => $curl->response
+            ];
         } else {
             $response = ['success' => true, 'body' => $curl->response];
         }

@@ -33,6 +33,10 @@ class SocialFeedLoader
             case 'Flickr':
                 $response = $this->getFlickr($params);
                 break;
+            case 'Pinterest':
+            case 'pinterest':
+                $response = $this->getPinterest($params);
+                break;
         }
 
         return $response;
@@ -58,6 +62,66 @@ class SocialFeedLoader
         return array_slice($urls, 0, 20);
     }
 
+
+    private function getPinterest($params)
+    {
+        $data = [
+            'options' => [
+                'isPrefetch' => false,
+                'add_vase' => true,
+                'field_set_key' => 'unauth_react',
+                'page_size' => 25,
+                'username' => $params['relativeURL']
+            ],
+            // 'context' => ''
+        ];
+        $url = 'https://www.pinterest.com/resource/UnauthProfilePinFeedResource/get/';
+        $headers = [
+            'authority' => 'authority',
+            'pragma' => 'no-cache',
+            'cache-control' => 'no-cache',
+            'accept' => 'application/json, text/javascript, */*, q=0.01',
+            'x-pinterest-appstate' => 'active',
+            'x-app-version' => '4002c1e',
+            'x-requested-with' => 'XMLHttpRequest',
+            'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36',
+            'sec-fetch-site' => 'same-origin',
+            'sec-fetch-mode' => 'cors',
+            'referer' => 'https://www.pinterest.com/',
+            // 'accept-encoding' => 'gzip, deflate, br',
+            'accept-language' => 'en-US,en;q=0.9,ur;q=0.8'
+        ];
+
+        $requestData =
+            [
+                'source_url' => '/' . $params['relativeURL'] . '/',
+                'data' => json_encode($data)
+            ];
+
+        $response = $this->_httpClient->get($url, $requestData, $headers);
+        if (!$response['success']) {
+            return [];
+        }
+
+
+        if (
+            !isset($response['body']->resource_response)
+            || !isset($response['body']->resource_response->status) ||
+            $response['body']->resource_response->status !== 'success'
+        ) {
+            return [];
+        }
+        $pins = array_map(function ($item) {
+            if (!isset($item->id)) {
+                return null;
+            }
+            return (array) ['url' => 'https://www.pinterest.com/pin/' . $item->id];
+        }, $response['body']->resource_response->data);
+
+        return array_filter($pins, function ($p) {
+            return !is_null($p);
+        });
+    }
 
     private function getFlickr($params)
     {
