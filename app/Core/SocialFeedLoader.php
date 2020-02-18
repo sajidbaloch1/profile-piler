@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use PHPHtmlParser\Dom;
+
 class SocialFeedLoader
 {
     private $_httpClient;
@@ -13,35 +15,74 @@ class SocialFeedLoader
 
     public function getFeed($params, $platform)
     {
+        $platform = strtolower($platform);
         $response = [];
         switch ($platform) {
             case 'yt':
-            case 'YT':
             case 'youtube':
                 $response = $this->getYoutueFeed($params);
                 break;
             case 'tt':
-            case 'TT':
             case 'tiktok':
                 $response = (new \App\Core\FeedLoaders\TikTokFeedLoader)->get($params);
                 break;
             case 'twitter':
-            case 'Twitter':
                 $response = (new \App\Core\FeedLoaders\TwitterFeedLoader)->get($params);
                 break;
             case 'flickr':
-            case 'Flickr':
                 $response = $this->getFlickr($params);
                 break;
-            case 'Pinterest':
             case 'pinterest':
                 $response = $this->getPinterest($params);
+                break;
+            case 'quora':
+                $response = $this->loadQuora($params);
                 break;
         }
 
         return $response;
     }
 
+    private function loadQuora($params)
+    {
+        $url = 'https://www.quora.com/profile/' . $params['relativeURL'];
+        $res = $this->_httpClient->get($url);
+        if (!$res['success']) {
+            return [];
+        }
+        $html = $res['body'];
+
+        $dom = new Dom;
+        $dom->load($html);
+        $sections = $dom->find('div.UserProfileFeed .paged_list_wrapper .pagedlist_item');
+        // return [count($sections)];
+        $posts = [];
+        foreach ($sections as $section) {
+            $textParas = $section->find('.ui_qtext_rendered_qtext p');
+            $text = '';
+            foreach ($textParas as $para) {
+                $text = $text . $para->text;
+            }
+
+            $matches = [];
+            $imgDiv = $section->find('.ui_layout_thumbnail');
+            if (count($imgDiv) > 0) {
+                $imgDiv = $imgDiv[0];
+                preg_match('/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/', $imgDiv->style, $matches);
+            }
+            $posts[] = [
+                'url' => 'https://www.quora.com' . $section->find('.question_link')->href,
+                'title' => $section->find('.question_link .ui_qtext_rendered_qtext')->text,
+                'text' => $text,
+                'image' => count($matches) > 0 ? rtrim($matches[0], ")")  : null
+            ];
+        }
+        return $posts;
+        // return array_map(function ($link) {
+        //     return $link->text;
+        // }, $questionLinks);
+        // return [['url' => 'whatever']];
+    }
     private function getYoutueFeed($params)
     {
         $response = $this->_httpClient->get('https://www.youtube.com/channel/' . $params['relativeURL']);

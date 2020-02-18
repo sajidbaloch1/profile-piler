@@ -12,6 +12,7 @@
         "fruitcake/laravel-cors": "^1.0",
         "jsq/amazon-es-php": "^0.3.0",
         "laravel/lumen-framework": "^6.0",
+        "paquettg/php-html-parser": "^2.2",
         "php-curl-class/php-curl-class": "^8.6",
         "wizacha/aws-signature-middleware": "^0.1.2"
     },

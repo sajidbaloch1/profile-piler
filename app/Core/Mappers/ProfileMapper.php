@@ -60,5 +60,10 @@ class ProfileMapper
         $this->PhotoViewsCount = isset($orginalDoc['photoviewscount']) ? $orginalDoc['photoviewscount'] : null;
         $this->GeoTags = isset($orginalDoc['tags']) ? $orginalDoc['tags'] : null;
         $this->FavoritesCount = isset($orginalDoc['favorites']) ? $orginalDoc['favorites'] : null;
+
+
+        $this->QuestionsCount = isset($orginalDoc['questionscount']) ? $orginalDoc['questionscount']:null;
+        $this->AnswersCount = isset($orginalDoc['answerscount']) ? $orginalDoc['answerscount']:null;
+        $this->Education = isset($orginalDoc['education']) ? $orginalDoc['education']:null;
     }
 }
