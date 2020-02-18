@@ -38,6 +38,9 @@ class SocialFeedLoader
             case 'quora':
                 $response = $this->loadQuora($params);
                 break;
+            case 'facebook':
+                $response = $this->getFacebookFeed($params);
+                break;
         }
 
         return $response;
@@ -83,6 +86,32 @@ class SocialFeedLoader
         // }, $questionLinks);
         // return [['url' => 'whatever']];
     }
+
+    private function getFacebookFeed($params)
+    {
+        $url = 'https://www.facebook.com/' . $params['relativeURL'] . '/posts';
+        $response = $this->_httpClient->get($url, [], ['origin' => 'https://www.facebook.com/']);
+        if (!$response['success']) {
+            return [];
+        }
+        $html = $response['body'];
+        $matches = [];
+        $regex = '#' . strtolower($params['relativeURL']) . "\/posts\/\d+#i";
+        preg_match_all($regex, $html, $matches);
+        // return $matches;
+        if (empty($matches) || count($matches[0]) === 0) {
+            return [];
+        }
+        $finalUrls = array_unique($matches[0]);
+        $posts = [];
+        foreach ($finalUrls as $url) {
+            $posts[] = [
+                'url' => 'https://facebook.com/' . $url
+            ];
+        }
+        return $posts;
+    }
+
     private function getYoutueFeed($params)
     {
         $response = $this->_httpClient->get('https://www.youtube.com/channel/' . $params['relativeURL']);
