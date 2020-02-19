@@ -20,4 +20,4 @@ $router->get('/profile/feed/{platform}', 'ProfileController@feed');
 $router->get('/profile/{platform}/{relativeURL}', 'ProfileController@get');
 $router->get('/profiles', 'ProfileController@index');
 $router->get('/profiles/count', 'ProfileController@count');
-
+$router->get('/keywords', 'KeywordController@index');
