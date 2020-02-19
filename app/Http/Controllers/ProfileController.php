@@ -62,7 +62,7 @@ class ProfileController extends Controller
     {
         $query = $this->buildQuery($request, false);
         $response = (new ElasticClient)->count($query);
-        if ($response['count']) {
+        if (isset($response['count'])) {
             return ['success' => true, 'count' => $response['count']];
         }
 
