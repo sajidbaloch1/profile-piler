@@ -116,6 +116,26 @@ class ProfileController extends Controller
                                         'match_phrase' => [
                                             'location' => $request->get('q')
                                         ]
+                                    ],
+                                    [
+                                        'match_phrase' => [
+                                            'profession' => $request->get('q')
+                                        ]
+                                    ],
+                                    [
+                                        'match_phrase' => [
+                                            'education' => $request->get('q')
+                                        ]
+                                    ],
+                                    [
+                                        'match_phrase' => [
+                                            'category' => $request->get('q')
+                                        ]
+                                    ],
+                                    [
+                                        'match_phrase' => [
+                                            'company' => $request->get('q')
+                                        ]
                                     ]
                                 ],
                                 'minimum_should_match' => 1
@@ -140,6 +160,16 @@ class ProfileController extends Controller
                 "match_phrase" => [
                     "location" => [
                         "query" => $request->get('location')
+                    ]
+                ]
+            ];
+        }
+
+        if (!empty($request->get('education'))) {
+            $filters[] = [
+                "match_phrase" => [
+                    "education" => [
+                        "query" => $request->get('education')
                     ]
                 ]
             ];
