@@ -83,7 +83,6 @@ class ProfileController extends Controller
         }
     }
 
-
     private function buildQuery(Request $request, $pagination = true)
     {
 
@@ -267,6 +266,7 @@ class ProfileController extends Controller
 
     public function feed(Request $request, $platform)
     {
-        return (new \App\Core\SocialFeedLoader)->getFeed($request->all(), $platform);
+        $feed = (new \App\Core\SocialFeedLoader)->getFeed($request->all(), $platform);
+        return response($feed)->withHeaders(['Cache-Control' => 10000]);
     }
 }

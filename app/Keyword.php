@@ -24,10 +24,25 @@ class Keyword extends Model
             }
             $groupedResults[] = [
                 'category' => $cName,
-                'keywords' => Keyword::where('category', $c)->select('keyword', 'resultsCount')->get()
+                'keywords' => Keyword::where('category', $c)->select('keyword', 'resultsCount')->where('resultsCount', '>', 0)->orderBy('resultsCount', 'desc')->get()
             ];
         }
 
         return $groupedResults;
+    }
+
+    public static function getKeywords($startWith = null)
+    {
+        $query = Keyword::where('category', null)
+            ->select('keyword', 'resultsCount')
+            ->where('resultsCount', '>', 0)
+            ->orderBy('resultsCount', 'desc');
+        // ->get();
+        if (!empty($startWith)) {
+            $query = $query->where('keyword', 'like', $startWith . '%');
+        } else {
+            $query = $query->limit(200);
+        }
+        return $query->get();
     }
 }

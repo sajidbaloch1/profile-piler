@@ -34,7 +34,7 @@ class ProfileMapper
         $this->Username = isset($orginalDoc['username']) ? $orginalDoc['username'] : null;
         $this->RelativeURL = $orginalDoc['relativeurl'];
         $this->Platform = $orginalDoc['platform'];
-        $this->Description = $orginalDoc['description'];
+        $this->Description = trim($orginalDoc['description']);
         $this->ProfilePic = $orginalDoc['profilepic'];
         $this->Followers = $orginalDoc['followers'];
         $this->Id = $profile['_id'];
