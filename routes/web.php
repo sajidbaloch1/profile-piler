@@ -22,3 +22,4 @@ $router->get('/profiles', 'ProfileController@index');
 $router->get('/profiles/count', 'ProfileController@count');
 $router->get('/categories', 'KeywordController@index');
 $router->get('/keywords', 'KeywordController@keywords');
+$router->get('/auto-complete', 'LookupController@index');

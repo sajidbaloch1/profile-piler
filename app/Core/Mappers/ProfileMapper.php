@@ -9,6 +9,7 @@ class ProfileMapper
     public $ProfilePic;
     public $Platform;
     public $Description;
+    public $ShortDescription;
     public $Followers;
     public $Id;
     public $RelativeURL;
@@ -35,6 +36,9 @@ class ProfileMapper
         $this->RelativeURL = $orginalDoc['relativeurl'];
         $this->Platform = $orginalDoc['platform'];
         $this->Description = trim($orginalDoc['description']);
+
+        // $this->ShortDescription = trim(  substr($this->Description, 0, 550));
+
         $this->ProfilePic = $orginalDoc['profilepic'];
         $this->Followers = $orginalDoc['followers'];
         $this->Id = $profile['_id'];

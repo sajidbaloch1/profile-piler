@@ -14,7 +14,8 @@ class ProfileController extends Controller
         $query = $this->buildQuery($request);
         try {
             $response = (new ElasticClient)->search($query);
-            return (new \App\Core\Mappers\SearchResponseMapper($response))->buildPayload();
+            $mappedResponse = (new \App\Core\Mappers\SearchResponseMapper($response))->buildPayload();
+            return response()->json($mappedResponse);
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
         }
@@ -268,5 +269,10 @@ class ProfileController extends Controller
     {
         $feed = (new \App\Core\SocialFeedLoader)->getFeed($request->all(), $platform);
         return response($feed)->withHeaders(['Cache-Control' => 10000]);
+    }
+
+    public function autoComplete(Request $request)
+    {
+        return (new \App\Core\AutoCompleteRequest)->get($request->all());
     }
 }
