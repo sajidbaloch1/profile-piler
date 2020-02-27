@@ -8,7 +8,7 @@ class SocialFeedLoader
 {
     private $_httpClient;
 
-    public function __construct($useProxy = false)
+    public function __construct($useProxy = true)
     {
         $this->_httpClient = new HttpClient($useProxy);
     }
@@ -41,9 +41,40 @@ class SocialFeedLoader
             case 'facebook':
                 $response = $this->getFacebookFeed($params);
                 break;
+            case 'instagram':
+            case 'ig':
+                $response = $this->getInstaFeed($params);
+                break;
         }
 
         return $response;
+    }
+
+    private function getInstaFeed($params)
+    {
+        $url = 'https://instagram.com/' . $params['relativeURL'];
+        return $res = $this->_httpClient->get($url, ['__a' => 1]);
+        if (!$res['success']) {
+            return [];
+        }
+
+        $res = $res['body'];
+        if (!isset($res->graphql->user)) {
+            return [];
+        }
+
+        $posts = $res->user->edge_owner_to_timeline_media->edges;
+        $finalPosts = [];
+        foreach ($posts as $p) {
+            $finalPosts[] = [
+                'media' => $p->node->display_url,
+                'code' => $p->node->shortcode,
+                'url' => 'https://instagram.com/p/' . $p->node->shortcode,
+                'description' => $p->node->edge_media_to_caption->edges[0]->node->text,
+                'location' => isset($p->node->location) ? $p->node->location->name : null,
+            ];
+        }
+        return $finalPosts;
     }
 
     private function loadQuora($params)

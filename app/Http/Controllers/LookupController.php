@@ -16,6 +16,10 @@ class LookupController extends Controller
         $content = json_decode(file_get_contents($absPath));
 
         $filtered = Arr::where($content->items, function ($item) use ($q) {
+            if (count(explode(' ', $q)) > 1) {
+                return strpos(strtolower($item->text), $q) !== FALSE;
+            }
+
             $first = Arr::first(explode(' ', $item->text), function ($value) use ($q) {
                 $start = substr($value, 0, strlen($q));
                 return  strtolower($start) === $q;

@@ -52,7 +52,7 @@ class HttpClient
         }
 
         $response = [];
-
+        // return $curl->getUrl();
         if ($curl->error) {
             $response = [
                 'success' => false,
