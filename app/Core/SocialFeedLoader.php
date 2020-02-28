@@ -53,25 +53,27 @@ class SocialFeedLoader
     private function getInstaFeed($params)
     {
         $url = 'https://instagram.com/' . $params['relativeURL'];
-        return $res = $this->_httpClient->get($url, ['__a' => 1]);
+        $res = $this->_httpClient->get($url, ['__a' => 1]);
         if (!$res['success']) {
             return [];
         }
-
         $res = $res['body'];
+
         if (!isset($res->graphql->user)) {
             return [];
         }
 
-        $posts = $res->user->edge_owner_to_timeline_media->edges;
+        $posts = $res->graphql->user->edge_owner_to_timeline_media->edges;
+
         $finalPosts = [];
         foreach ($posts as $p) {
+            // return $p;
             $finalPosts[] = [
-                'media' => $p->node->display_url,
-                'code' => $p->node->shortcode,
+                // 'media' => $p->node->display_url,
+                // 'code' => $p->node->shortcode,
                 'url' => 'https://instagram.com/p/' . $p->node->shortcode,
-                'description' => $p->node->edge_media_to_caption->edges[0]->node->text,
-                'location' => isset($p->node->location) ? $p->node->location->name : null,
+                // 'description' => $p->node->edge_media_to_caption->edges[0]->node->text,
+                // 'location' => isset($p->node->location) ? $p->node->location->name : null,
             ];
         }
         return $finalPosts;
@@ -80,6 +82,7 @@ class SocialFeedLoader
     private function loadQuora($params)
     {
         $url = 'https://www.quora.com/profile/' . $params['relativeURL'];
+
         $res = $this->_httpClient->get($url);
         if (!$res['success']) {
             return [];
