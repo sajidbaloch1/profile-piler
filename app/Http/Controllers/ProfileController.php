@@ -72,7 +72,8 @@ class ProfileController extends Controller
 
     public function platformStats()
     {
-        return (new \App\Features\PlatformStatsRequest)->get();
+        $respose = (new \App\Features\PlatformStatsRequest)->get();
+        return response($respose)->withHeaders(['Cache-Control' => 10000]);
     }
 
     public function feed(Request $request, $platform)
