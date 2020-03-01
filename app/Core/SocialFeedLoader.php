@@ -3,12 +3,13 @@
 namespace App\Core;
 
 use PHPHtmlParser\Dom;
+use Illuminate\Support\Facades\Cache;
 
 class SocialFeedLoader
 {
     private $_httpClient;
 
-    public function __construct($useProxy = true)
+    public function __construct($useProxy = false)
     {
         $this->_httpClient = new HttpClient($useProxy);
     }
@@ -229,21 +230,66 @@ class SocialFeedLoader
 
     private function getFlickr($params)
     {
-        $response = $this->_httpClient->get('https://www.flickr.com/photos/' . $params['relativeURL']);
+        // var_dump($params);exit;
+        /**
+         * First get the API key from flickr or cache
+         */
+        $apiKey = Cache::get('flickr_api_key');
+        if (empty($apiKey)) {
+            $url = 'https://www.flickr.com';
+            $response = $this->_httpClient->get($url);
+            if (!$response['success']) {
+                return [];
+            }
+            $body = $response['body'];
+            // $body = file_get_contents('flick.html');
+            $mathces = [];
+            preg_match('/(?<=site_key = ").*(?<!";)/', $body, $mathces,);
+            if (count($mathces) == 0) {
+                return [];
+            }
+            $apiKey = str_replace('"', '', $mathces[0]);
+            Cache::put('flickr_api_key', $apiKey, (60 * 60 * 12));
+        }
+
+        /**
+         * Now we can fetch the photos list
+         */
+
+        $requestData = [
+            'per_page' => 25,
+            'page' => 1,
+            'get_user_info' => 1,
+            'user_id' => $params['relativeURL'],
+            'view_as' => 'use_pref',
+            'sort' => 'use_pref',
+            'method' => 'flickr.people.getPhotos',
+            'api_key' => $apiKey,
+            'format' => 'json',
+            'nojsoncallback' => 1,
+
+        ];
+        $response = $this->_httpClient->get('https://api.flickr.com/services/rest', $requestData);
+        if (!$response['success']) {
+            return [];
+        }
         $body = $response['body'];
-        $regex = "/photo-list-photo-view.*background-image: url.*\.jpg/";
-        $matches = [];
-        preg_match_all($regex, $body, $matches);
-        if (!is_array($matches)) {
+        if (!isset($body->photos->photo)) {
             return [];
         }
-        $str = implode('   ', $matches[0]);
-        preg_match_all('/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/', $str, $matches);
-        if (!is_array($matches)) {
-            return [];
+        // return $body->photos->photo;
+        $photoes = [];
+        foreach ($body->photos->photo as $photo) {
+            if ($photo->ispublic !== 1) {
+                continue;
+            }
+            $photoes[] = [
+                //https://live.staticflickr.com/{{server}}/{{id}}_{{secret}}_z.jpg
+                'image' => 'https://live.staticflickr.com/' . $photo->server . '/' . $photo->id . '_' . $photo->secret . '_z.jpg',
+                'url' => 'https://www.flickr.com/photos/' . $photo->owner . '/' . $photo->id,
+                'text' => $photo->title
+            ];
         }
-        return array_map(function ($url) {
-            return ['image' => $url];
-        }, $matches[0]);
+        return $photoes;
     }
 }
