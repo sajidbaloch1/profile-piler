@@ -8,12 +8,12 @@ class Keyword extends Model
 {
     //
 
-    public static function loadByCategory()
+    public static function loadByCategory($source = '')
     {
         /**
          * First Load all distinct categories
          */
-        $categories = Keyword::groupBy('category')->select('category')->get()->pluck('category');
+        $categories = Keyword::groupBy('category')->where('source', $source)->select('category')->get()->pluck('category');
 
         $groupedResults = [];
         foreach ($categories as $c) {
