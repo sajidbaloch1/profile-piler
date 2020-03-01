@@ -1,7 +1,7 @@
 <?php
 
 use \Curl\Curl;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -25,3 +25,10 @@ $router->get('/platform-stats', 'ProfileController@platformStats');
 $router->get('/categories', 'KeywordController@index');
 $router->get('/keywords', 'KeywordController@keywords');
 $router->get('/auto-complete', 'LookupController@index');
+
+
+$router->post('/log-error', function (Request $request) {
+    $error = $request->all();
+    $error['ip'] = $request->ip();
+    return \App\ClientError::create($error);
+});
