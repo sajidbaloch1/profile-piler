@@ -15,6 +15,7 @@ class ProfileController extends Controller
         try {
             $response = (new ElasticClient)->search($query);
             $mappedResponse = (new \App\Core\Mappers\SearchResponseMapper($response))->buildPayload();
+            \App\RecentlySearchedProfile::addBulk($mappedResponse['profiles']);
             return response()->json($mappedResponse);
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
