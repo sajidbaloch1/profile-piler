@@ -29,48 +29,51 @@ class ProfileMapper
      */
     public $SecUid;
 
+    private function getValue($key, $record)
+    {
+        return isset($record[$key]) ? $record[$key] : null;
+    }
+
     function __construct($profile)
     {
         $orginalDoc = $profile['_source'];
-        $this->Username = isset($orginalDoc['username']) ? $orginalDoc['username'] : null;
-        $this->RelativeURL = $orginalDoc['relativeurl'];
-        $this->Platform = $orginalDoc['platform'];
-        $this->Description = trim($orginalDoc['description']);
+        $this->Username = $this->getValue('username', $orginalDoc);
+        $this->RelativeURL = $this->getValue('relativeurl', $orginalDoc);
+        $this->Platform = $this->getValue('platform', $orginalDoc);
+        $this->Description = $this->getValue('description', $orginalDoc);
 
-        // $this->ShortDescription = trim(  substr($this->Description, 0, 550));
-
-        $this->ProfilePic = $orginalDoc['profilepic'];
-        $this->Followers = $orginalDoc['followers'];
+        $this->ProfilePic = $this->getValue('profilepic', $orginalDoc);
+        $this->Followers = $this->getValue('followers', $orginalDoc);
         $this->Id = $profile['_id'];
-        $this->Name = $orginalDoc['name'];
-        $this->PlatformID = isset($orginalDoc['userid']) ? (string) $orginalDoc['userid'] : null;
-        $this->SecUid = isset($orginalDoc['secuid']) ? (string) $orginalDoc['secuid'] : null;
-        $this->IsVerified = isset($orginalDoc['isverified']) ? $orginalDoc['isverified'] : null;
-        $this->Location = isset($orginalDoc['location']) ? $orginalDoc['location'] : null;
-        $this->IsFamilySafe = isset($orginalDoc['isfamilysafe']) ? $orginalDoc['isfamilysafe'] : null;
-        $this->TweetCount = isset($orginalDoc['statusescount']) ? $orginalDoc['statusescount'] : null;
-        $this->ViewsCount = isset($orginalDoc['totalsview']) ? $orginalDoc['totalsview'] : null;
-        $this->VideoCount = isset($orginalDoc['videocount']) ? $orginalDoc['videocount'] : null;
-        $this->LikesCount = isset($orginalDoc['likescount']) ? $orginalDoc['likescount'] : null;
-        $this->EventsCount = isset($orginalDoc['eventscount']) ? $orginalDoc['eventscount'] : null;
-        $this->Profession = isset($orginalDoc['role']) ? $orginalDoc['role'] : null;
-        $this->Company = isset($orginalDoc['company']) ? $orginalDoc['company'] : null;
-        $this->PostCount = isset($orginalDoc['postcount']) ? $orginalDoc['postcount'] : null;
-        $this->Category = isset($orginalDoc['category']) ? $orginalDoc['category'] : null;
+        $this->Name = $this->getValue('name', $orginalDoc);
+        $this->PlatformID = $this->getValue('userid', $orginalDoc);
+        $this->SecUid = $this->getValue('secuid', $orginalDoc);
+        $this->IsVerified = $this->getValue('isverified', $orginalDoc);
+        $this->Location = $this->getValue('location', $orginalDoc);
+        $this->IsFamilySafe = $this->getValue('isfamilysafe', $orginalDoc);
+        $this->TweetCount = $this->getValue('statusescount', $orginalDoc);
+        $this->ViewsCount = $this->getValue('totalsview', $orginalDoc);
+        $this->VideoCount = $this->getValue('videocount', $orginalDoc);
+        $this->LikesCount = $this->getValue('likescount', $orginalDoc);
+        $this->EventsCount = $this->getValue('eventscount', $orginalDoc);
+        $this->Profession = $this->getValue('role', $orginalDoc);
+        $this->Company = $this->getValue('company', $orginalDoc);
+        $this->PostCount = $this->getValue('postcount', $orginalDoc);
+        $this->Category = $this->getValue('category', $orginalDoc);
+        $this->UpdatedAt = $this->getValue('crawledat', $orginalDoc);
+
+        $this->City = $this->getValue('city', $orginalDoc);
+        $this->PhotosCount = $this->getValue('photoscount', $orginalDoc);
+        $this->PhotoViewsCount = $this->getValue('photoviewscount', $orginalDoc);
+        $this->GeoTags = $this->getValue('tags', $orginalDoc);
+        $this->FavoritesCount = $this->getValue('favorites', $orginalDoc);
 
 
-        $this->City = isset($orginalDoc['city']) ? $orginalDoc['city'] : null;
-        $this->PhotosCount = isset($orginalDoc['photoscount']) ? $orginalDoc['photoscount'] : null;
-        $this->PhotoViewsCount = isset($orginalDoc['photoviewscount']) ? $orginalDoc['photoviewscount'] : null;
-        $this->GeoTags = isset($orginalDoc['tags']) ? $orginalDoc['tags'] : null;
-        $this->FavoritesCount = isset($orginalDoc['favorites']) ? $orginalDoc['favorites'] : null;
+        $this->QuestionsCount = $this->getValue('questionscount', $orginalDoc);
+        $this->AnswersCount = $this->getValue('answerscount', $orginalDoc);
+        $this->Education = $this->getValue('education', $orginalDoc);
 
-
-        $this->QuestionsCount = isset($orginalDoc['questionscount']) ? $orginalDoc['questionscount'] : null;
-        $this->AnswersCount = isset($orginalDoc['answerscount']) ? $orginalDoc['answerscount'] : null;
-        $this->Education = isset($orginalDoc['education']) ? $orginalDoc['education'] : null;
-
-        $this->CheckinsCount = isset($orginalDoc['checkinscount']) ? $orginalDoc['checkinscount'] : null;
-        $this->Rating = isset($orginalDoc['rating']) ? $orginalDoc['rating'] : null;
+        $this->CheckinsCount = $this->getValue('checkinscount', $orginalDoc);
+        $this->Rating = $this->getValue('rating', $orginalDoc);
     }
 }
