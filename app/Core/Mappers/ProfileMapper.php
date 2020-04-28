@@ -60,7 +60,7 @@ class ProfileMapper
         $this->Company = $this->getValue('company', $orginalDoc);
         $this->PostCount = $this->getValue('postcount', $orginalDoc);
         $this->Category = $this->getValue('category', $orginalDoc);
-        $this->UpdatedAt = $this->getValue('crawledat', $orginalDoc);
+        $this->UpdatedAt =  isset($orginalDoc['crawledat']) ? $this->getValue('crawledat', $orginalDoc) : $this->getTimestamp($orginalDoc);
 
         $this->City = $this->getValue('city', $orginalDoc);
         $this->PhotosCount = $this->getValue('photoscount', $orginalDoc);
@@ -75,5 +75,10 @@ class ProfileMapper
 
         $this->CheckinsCount = $this->getValue('checkinscount', $orginalDoc);
         $this->Rating = $this->getValue('rating', $orginalDoc);
+    }
+
+    private function getTimestamp($profile)
+    {
+        return $profile['@timestamp'];
     }
 }
