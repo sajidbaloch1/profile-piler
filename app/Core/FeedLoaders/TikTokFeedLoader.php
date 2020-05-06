@@ -17,16 +17,23 @@ class TikTokFeedLoader extends BaseFeedLoader
 
     private function getUserId($params)
     {
+
         $url = 'https://www.tiktok.com/@' . $params['relativeURL'];
         $response = $this->httpClient->get($url);
-        // $response = file_get_contents('tiktok.html');
-        $userIdIdx = strpos($response['body'], '"userId":"');
-        $userIDStr = substr($response['body'], $userIdIdx, 21 + 10);
-        $regex = "/\d+/";
+        $userIDStr = '';
+        $regex = "/\"userId\":\"\d+/";
         $matches = [];
-        preg_match($regex, $userIDStr, $matches);
-        // echo json_encode([$userIdIdx, $userIDStr, $matches[0]]);
-        // exit;
+        preg_match($regex, $response['body'], $matches);
+        if (!empty($matches) && count($matches) > 0) {
+            $userIDStr = $matches[0];
+        }
+
+        if (empty($userIDStr)) {
+            return null;
+        }
+
+        preg_match("/\d+/", $userIDStr, $matches);
+
         if (!empty($matches) && count($matches) > 0) {
             return $matches[0];
         }
