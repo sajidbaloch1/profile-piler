@@ -133,7 +133,7 @@ class SocialFeedLoader
         $matches = [];
         $regex = '#' . strtolower($params['relativeURL']) . "\/posts\/\d+#i";
         preg_match_all($regex, $html, $matches);
-        // return $matches;
+
         if (empty($matches) || count($matches[0]) === 0) {
             return [];
         }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCacheTable extends Migration
+class CreateRecentlySearchedProfiles extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateCacheTable extends Migration
      */
     public function up()
     {
-        Schema::create('cache', function (Blueprint $table) {
-            $table->string('key', 200)->unique();
-            $table->mediumText('value');
+        Schema::create('recently_searched_profiles', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('profileId', 255)->uniqid();
+            $table->string('platform', 50);
+            $table->date('created_at');
             $table->integer('expiration');
         });
     }
@@ -27,6 +29,6 @@ class CreateCacheTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cache');
+        //
     }
 }

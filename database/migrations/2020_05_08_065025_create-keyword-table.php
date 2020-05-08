@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCacheTable extends Migration
+class CreateKeywordTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateCacheTable extends Migration
      */
     public function up()
     {
-        Schema::create('cache', function (Blueprint $table) {
-            $table->string('key', 200)->unique();
-            $table->mediumText('value');
+        Schema::create('keywords', function (Blueprint $table) {
+            $table->integer('id')->primary();
+            $table->string('keyword');
+            $table->string('source', 50);
+            $table->string('category', 100);
+            $table->integer('resultsCount');
+            $table->date('scannedAt');
             $table->integer('expiration');
         });
     }
@@ -27,6 +31,6 @@ class CreateCacheTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cache');
+        //
     }
 }

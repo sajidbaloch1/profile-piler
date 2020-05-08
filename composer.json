@@ -1,7 +1,7 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "Profile Piler API",
+    "description": "Profile Piler API",
+    "keywords": ["API", "laravel", "lumen"],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -11,7 +11,7 @@
         "flipbox/lumen-generator": "^6.0",
         "fruitcake/laravel-cors": "^1.0",
         "jsq/amazon-es-php": "^0.3.0",
-        "laravel/lumen-framework": "^6.0",
+        "laravel/lumen-framework": "^7.0",
         "paquettg/php-html-parser": "^2.2",
         "php-curl-class/php-curl-class": "^8.6",
         "wizacha/aws-signature-middleware": "^0.1.2"
