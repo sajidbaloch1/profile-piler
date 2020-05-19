@@ -50,11 +50,20 @@ class ProfileController extends Controller
                 throw new \Exception("Profile Not Found");
             }
 
-            if ($response['profiles'][0]->RelativeURL !== $relativeURL) {
+            $profiles = array_filter($response['profiles'], function ($p) use ($relativeURL) {
+                return strtolower($p->RelativeURL) === strtolower($relativeURL);
+            });
+
+            $profiles = array_values($profiles);
+            if (count($profiles) === 0) {
                 throw new \Exception("Profile Not Found");
             }
 
-            return ['success' => true, 'payload' => $response['profiles'][0]];
+            // if ($profiles[0]->RelativeURL !== $relativeURL) {
+            //     throw new \Exception("Profile Not Found");
+            // }
+
+            return ['success' => true, 'payload' => $profiles[0]];
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
         }
