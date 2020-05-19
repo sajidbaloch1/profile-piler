@@ -86,12 +86,6 @@ class ProfileController extends Controller
         return response($respose)->withHeaders(['Cache-Control' => 10000]);
     }
 
-    public function feed(Request $request, $platform)
-    {
-        $feed = (new \App\Core\SocialFeedLoader)->getFeed($request->all(), $platform);
-        return response($feed)->withHeaders(['Cache-Control' => 10000]);
-    }
-
     public function autoComplete(Request $request)
     {
         return (new \App\Core\AutoCompleteRequest)->get($request->all());

@@ -16,17 +16,23 @@ use Illuminate\Http\Request;
 $router->get('/', function () use ($router) {
     return ['appVersion' => $router->app->version()];
 });
-$router->get('/profile/feed/{platform}', 'ProfileController@feed');
-$router->get('/profile/{platform}/{relativeURL}', 'ProfileController@get');
-$router->get('/profiles', 'ProfileController@index');
-$router->get('/profiles/count', 'ProfileController@count');
-$router->get('/platform-stats', 'ProfileController@platformStats');
 
+// Get profile details
+$router->get('/profile/{platform}/{relativeURL}', 'ProfileController@get');
+// search profiles
+$router->get('/profiles', 'ProfileController@index');
+// count profiles for a search
+$router->get('/profiles/count', 'ProfileController@count');
+// total profiles count by each platform
+$router->get('/platform-stats', 'ProfileController@platformStats');
+// categories list
 $router->get('/categories', 'KeywordController@index');
+// keyword list
 $router->get('/keywords', 'KeywordController@keywords');
+// auto-completion
 $router->get('/auto-complete', 'LookupController@index');
 
-
+// log front-end errors
 $router->post('/log-error', function (Request $request) {
     $error = $request->all();
     $error['ip'] = $request->ip();
