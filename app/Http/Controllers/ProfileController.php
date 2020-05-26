@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Core\ElasticClient;
+use App\Features\ElasticQueryBuilder;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -24,6 +25,7 @@ class ProfileController extends Controller
 
     public function get($platform, $relativeURL)
     {
+
         $query = [
             'query' => [
                 'bool' => [
@@ -34,7 +36,7 @@ class ProfileController extends Controller
                             ]
                         ], [
                             "match" => [
-                                "platform" => $platform
+                                "platform" => (new ElasticQueryBuilder)->platformValue($platform)
                             ]
                         ]
                     ]

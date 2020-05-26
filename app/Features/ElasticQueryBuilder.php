@@ -185,7 +185,7 @@ class ElasticQueryBuilder
         return $query;
     }
 
-    private function platformValue($platformName)
+    public function platformValue($platformName)
     {
         switch (strtolower($platformName)) {
             case 'youtube':
