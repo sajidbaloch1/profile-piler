@@ -13,6 +13,9 @@ class ElasticQueryBuilder
         }
 
         $pageSize = env('PAGE_SIZE', 100);
+        if (!empty($request['pageSize'])) {
+            $pageSize = $request['pageSize'];
+        }
 
         $query = [];
         if (!empty($request['q'])) {
