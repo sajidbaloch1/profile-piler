@@ -13,11 +13,13 @@ class ProfileController extends Controller
     {
 
         $query = (new \App\Features\ElasticQueryBuilder)->build($request->all());
+
         try {
             $response = (new ElasticClient)->search($query);
             $mappedResponse = (new \App\Core\Mappers\SearchResponseMapper($response))->buildPayload();
             \App\RecentlySearchedProfile::addBulk($mappedResponse['profiles']);
-            return response()->json($mappedResponse);
+            $cacheTime = 60 * 24 * 60;
+            return response()->json($mappedResponse)->withHeaders(['Cache-Control' => $cacheTime]);;
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
         }
@@ -65,7 +67,9 @@ class ProfileController extends Controller
             //     throw new \Exception("Profile Not Found");
             // }
 
-            return ['success' => true, 'payload' => $profiles[0]];
+            $cacheTime = 60 * 24 * 60;
+            $mappedResponse = ['success' => true, 'payload' => $profiles[0]];
+            return response()->json($mappedResponse)->withHeaders(['Cache-Control' => $cacheTime]);;
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
         }
@@ -76,7 +80,9 @@ class ProfileController extends Controller
         $query = (new \App\Features\ElasticQueryBuilder)->build($request->all(), false);
         $response = (new ElasticClient)->count($query);
         if (isset($response['count'])) {
-            return ['success' => true, 'count' => $response['count']];
+            $cacheTime = 60 * 24 * 60;
+            $respose = ['success' => true, 'count' => $response['count']];
+            return response($respose)->withHeaders(['Cache-Control' => $cacheTime]);
         }
 
         return ['success' => false];
