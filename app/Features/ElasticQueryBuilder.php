@@ -35,31 +35,31 @@ class ElasticQueryBuilder
                                             'name' => $request['q']
                                         ]
                                     ],
-                                    [
-                                        'match_phrase' => [
-                                            'location' => $request['q']
-                                        ]
-                                    ],
-                                    [
-                                        'match_phrase' => [
-                                            'profession' => $request['q']
-                                        ]
-                                    ],
-                                    [
-                                        'match_phrase' => [
-                                            'education' => $request['q']
-                                        ]
-                                    ],
-                                    [
-                                        'match_phrase' => [
-                                            'category' => $request['q']
-                                        ]
-                                    ],
-                                    [
-                                        'match_phrase' => [
-                                            'company' => $request['q']
-                                        ]
-                                    ]
+                                    // [
+                                    //     'match_phrase' => [
+                                    //         'location' => $request['q']
+                                    //     ]
+                                    // ],
+                                    // [
+                                    //     'match_phrase' => [
+                                    //         'profession' => $request['q']
+                                    //     ]
+                                    // ],
+                                    // [
+                                    //     'match_phrase' => [
+                                    //         'education' => $request['q']
+                                    //     ]
+                                    // ],
+                                    // [
+                                    //     'match_phrase' => [
+                                    //         'category' => $request['q']
+                                    //     ]
+                                    // ],
+                                    // [
+                                    //     'match_phrase' => [
+                                    //         'company' => $request['q']
+                                    //     ]
+                                    // ]
                                 ],
                                 'minimum_should_match' => 1
                             ]
