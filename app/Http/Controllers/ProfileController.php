@@ -19,7 +19,8 @@ class ProfileController extends Controller
             $mappedResponse = (new \App\Core\Mappers\SearchResponseMapper($response))->buildPayload();
             \App\RecentlySearchedProfile::addBulk($mappedResponse['profiles']);
             $cacheTime = 60 * 24 * 60;
-            return response()->json($mappedResponse)->withHeaders(['Cache-Control' => $cacheTime]);;
+            header("Cache-Control: max-age=" . $cacheTime);
+            return response()->json($mappedResponse);
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
         }
@@ -69,7 +70,9 @@ class ProfileController extends Controller
 
             $cacheTime = 60 * 24 * 60;
             $mappedResponse = ['success' => true, 'payload' => $profiles[0]];
-            return response()->json($mappedResponse)->withHeaders(['Cache-Control' => $cacheTime]);;
+            // header("Cache-Control: max-age=" . $cacheTime);
+
+            return response()->json($mappedResponse)->withHeaders(['Cache-Control' => "max-age=" . $cacheTime]);
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
         }
