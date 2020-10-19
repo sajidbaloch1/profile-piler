@@ -20,7 +20,7 @@ class ProfileController extends Controller
             \App\RecentlySearchedProfile::addBulk($mappedResponse['profiles']);
             $cacheTime = 60 * 24 * 60;
             // header("Cache-Control: max-age=" . $cacheTime);
-            return response()->json($mappedResponse)->withHeaders(['Cache-Control' => "max-age=$cacheTime"]);
+            return response()->json($mappedResponse)->withHeaders(['Cache-Control' => "max-age=$cacheTime, public"]);
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
         }
