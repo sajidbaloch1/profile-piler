@@ -19,7 +19,6 @@ class ProfileController extends Controller
             $mappedResponse = (new \App\Core\Mappers\SearchResponseMapper($response))->buildPayload();
             \App\RecentlySearchedProfile::addBulk($mappedResponse['profiles']);
             $cacheTime = 60 * 24 * 60;
-            // header("Cache-Control: max-age=" . $cacheTime);
             return response()->json($mappedResponse)->withHeaders(['Cache-Control' => "max-age=$cacheTime, public"]);
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
@@ -70,9 +69,7 @@ class ProfileController extends Controller
 
             $cacheTime = 60 * 24 * 60;
             $mappedResponse = ['success' => true, 'payload' => $profiles[0]];
-            // header("Cache-Control: max-age=" . $cacheTime);
-
-            return response()->json($mappedResponse)->withHeaders(['Cache-Control' => "max-age=" . $cacheTime]);
+            return response()->json($mappedResponse)->withHeaders(['Cache-Control' => "max-age=$cacheTime, public"]);
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
         }
@@ -85,7 +82,7 @@ class ProfileController extends Controller
         if (isset($response['count'])) {
             $cacheTime = 60 * 24 * 60;
             $respose = ['success' => true, 'count' => $response['count']];
-            return response($respose)->withHeaders(['Cache-Control' => $cacheTime]);
+            return response($respose)->withHeaders(['Cache-Control' => "max-age=$cacheTime, public"]);
         }
 
         return ['success' => false];
@@ -94,7 +91,7 @@ class ProfileController extends Controller
     public function platformStats()
     {
         $respose = (new \App\Features\PlatformStatsRequest)->get();
-        return response($respose)->withHeaders(['Cache-Control' => 10000]);
+        return response($respose)->withHeaders(['Cache-Control' => "max-age=1000, public"]);
     }
 
     public function autoComplete(Request $request)
