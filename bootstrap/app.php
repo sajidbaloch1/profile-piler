@@ -100,7 +100,9 @@ $app->router->group([
 ], function ($router) {
     require __DIR__ . '/../routes/web.php';
 });
-
+$app->routeMiddleware([
+    'gzip' => App\Http\Middleware\GzipMiddleware::class,
+]);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 
 return $app;

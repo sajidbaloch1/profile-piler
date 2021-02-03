@@ -29,6 +29,6 @@ class CreateRecentlySearchedProfiles extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('recently_searched_profiles');
     }
 }

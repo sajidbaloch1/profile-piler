@@ -19,8 +19,14 @@ $router->get('/', function () use ($router) {
 
 // Get profile details
 $router->get('/profile/{platform}/{relativeURL}', 'ProfileController@get');
+$router->get('/profile/get-from-cache', 'ProfileController@getFromCache');
 // search profiles
-$router->get('/profiles', 'ProfileController@index');
+// $router->get('/profiles', 'ProfileController@index');
+$router->get('/profiles', [
+    'middleware' => 'gzip',
+    // 'as' => 'data',
+    'uses'=>'ProfileController@index'
+]);
 // count profiles for a search
 $router->get('/profiles/count', 'ProfileController@count');
 // total profiles count by each platform

@@ -6,10 +6,10 @@ use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use App\Core\ElasticsearchPhpHandler;
 use Elasticsearch\ClientBuilder;
+use Illuminate\Support\Facades\Cache;
 
 class ElasticClient
 {
-
     /**
      * Elastic Search client
      *
@@ -37,7 +37,7 @@ class ElasticClient
         ];
 
         try {
-            return $this->client->get($params);
+            return $this->executeQuery('get', $params);
         } catch (\Exception $ex) {
             throw $this->buildClientException();
         }
@@ -51,7 +51,7 @@ class ElasticClient
         ];
 
         try {
-            return $this->client->search($params);
+            return $this->executeQuery('search', $params);
         } catch (\Exception $ex) {
             throw $this->buildClientException();
         }
@@ -65,12 +65,24 @@ class ElasticClient
         }
 
         try {
-            return $this->client->count($params);
+            return $this->executeQuery('count', $params);
         } catch (\Exception $ex) {
             throw $this->buildClientException();
         }
     }
 
+    private function executeQuery($methodName, $params)
+    {
+        $cacheKey = md5(serialize($params));
+        $cachedValue = Cache::get($cacheKey);
+        if (!empty($cachedValue)) {
+            return json_decode($cachedValue, true);
+        }
+        $response = $this->client->$methodName($params);
+        file_put_contents("$cacheKey.txt", serialize($params));
+        Cache::put($cacheKey, json_encode($response), (60 * 60 * 24 * 7));
+        return $response;
+    }
 
     private function buildClientException()
     {
