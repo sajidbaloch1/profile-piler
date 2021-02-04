@@ -79,7 +79,7 @@ class ElasticClient
             return json_decode($cachedValue, true);
         }
         $response = $this->client->$methodName($params);
-        file_put_contents("$cacheKey.txt", serialize($params));
+        // file_put_contents("$cacheKey.txt", serialize($params));
         Cache::put($cacheKey, json_encode($response), (60 * 60 * 24 * 7));
         return $response;
     }

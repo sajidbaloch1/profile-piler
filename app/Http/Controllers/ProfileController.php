@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Core\ElasticClient;
 use App\Features\ElasticQueryBuilder;
+use App\Features\PlatformStatsRequest;
+use App\Models\RecentlySearchedProfile;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -17,7 +19,7 @@ class ProfileController extends Controller
         try {
             $response = (new ElasticClient)->search($query);
             $mappedResponse = (new \App\Core\Mappers\SearchResponseMapper($response))->buildPayload();
-            \App\RecentlySearchedProfile::addBulk($mappedResponse['profiles']);
+            RecentlySearchedProfile::addBulk($mappedResponse['profiles']);
             $cacheTime = 60 * 24 * 60;
             return response()->json($mappedResponse)->withHeaders(['Cache-Control' => "max-age=$cacheTime, public"]);
         } catch (\Exception $ex) {
@@ -90,12 +92,28 @@ class ProfileController extends Controller
 
     public function platformStats()
     {
-        $respose = (new \App\Features\PlatformStatsRequest)->get();
+        $respose = (new PlatformStatsRequest)->get();
         return response($respose)->withHeaders(['Cache-Control' => "max-age=1000, public"]);
     }
 
     public function autoComplete(Request $request)
     {
         return (new \App\Core\AutoCompleteRequest)->get($request->all());
+    }
+
+    public function getFromCache()
+    {
+        return [
+            'profile' => [
+                'name' => 'naveed'
+            ],
+            'feeds' => [
+                [
+                    'social_media' => 'IG'
+                ], [
+                    'social_media' => 'FB'
+                ]
+            ]
+        ];
     }
 }
