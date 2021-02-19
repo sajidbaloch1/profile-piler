@@ -20,7 +20,7 @@ class ElasticClient
     public function __construct()
     {
         $provider = CredentialProvider::fromCredentials(
-            new Credentials(env('AWS_ID'), env('AWS_KEY'))
+            new Credentials(env('AWS_ACCESS_KEY_ID'), env('AWS_SECRET_ACCESS_KEY'))
         );
         $handler = new ElasticsearchPhpHandler(env('AWS_ELASTIC_REGION'), $provider);
         $builder = ClientBuilder::create();

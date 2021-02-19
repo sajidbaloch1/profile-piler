@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\SocialEntityController;
+use App\Http\Controllers\API\SocialFeedController;
 use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\LookupController;
 use App\Http\Controllers\ProfileController;
@@ -47,5 +49,8 @@ $router->get('/auto-complete', [LookupController::class, 'index']);
 $router->post('/log-error', function (Request $request) {
     $error = $request->all();
     $error['ip'] = $request->ip();
-    return \App\ClientError::create($error);
+    return \App\Models\ClientError::create($error);
 });
+
+$router->get('/social-entity/min/{platform}/{identity}', [SocialEntityController::class, 'getSocialEntity']);
+$router->get('/social-feed/{platform}', [SocialFeedController::class, 'feed']);
