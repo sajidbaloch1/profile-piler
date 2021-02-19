@@ -1,7 +1,8 @@
 <?php
 
-use App\RecentlySearchedProfile;
-use Laravel\Lumen\Testing\DatabaseMigrations;
+use App\Models\RecentlySearchedProfile;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class ProfileTest extends TestCase
 {
@@ -14,7 +15,7 @@ class ProfileTest extends TestCase
      */
     public function testSearchProfileWorking()
     {
-        $response = $this->call('GET', '/profiles');
+        $response = $this->call('GET', 'api/profiles');
         $data = json_decode($response->content());
         $this->assertEquals(200, $response->status());
         $this->assertEquals(count($data->profiles), 10);
@@ -30,7 +31,7 @@ class ProfileTest extends TestCase
     public function testPlatformFilterApplied()
     {
         $platform = 'Facebook';
-        $response = $this->call('GET', '/profiles', ['platforms' => $platform]);
+        $response = $this->call('GET', 'api/profiles', ['platforms' => $platform]);
         $this->assertEquals(200, $response->status());
 
         $data = json_decode($response->content());
