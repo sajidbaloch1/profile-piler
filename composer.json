@@ -10,14 +10,15 @@
     "require": {
         "php": "^7.3|^8.0",
         "aws/aws-sdk-php": "^3.173",
+        "elasticsearch/elasticsearch": "^7.5",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
-        "wizacha/aws-signature-middleware": "^0.1.2",
+        "livewire/livewire": "^2.4",
         "php-curl-class/php-curl-class": "^8.6",
-        "elasticsearch/elasticsearch": "^7.5"
+        "wizacha/aws-signature-middleware": "^0.1.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Core\ElasticClient;
+use App\Core\FeedApiClient;
 use App\Features\ElasticQueryBuilder;
 use App\Features\PlatformStatsRequest;
 use App\Models\RecentlySearchedProfile;
@@ -52,6 +53,7 @@ class ProfileController extends Controller
         try {
             $response = (new ElasticClient)->search($query);
             $response = (new \App\Core\Mappers\SearchResponseMapper($response))->buildPayload();
+
             if ($response['pagging']['total'] === 0) {
                 throw new \Exception("Profile Not Found");
             }
@@ -65,9 +67,8 @@ class ProfileController extends Controller
                 throw new \Exception("Profile Not Found");
             }
 
-            // if ($profiles[0]->RelativeURL !== $relativeURL) {
-            //     throw new \Exception("Profile Not Found");
-            // }
+            $endPoint = "/social-entity/min/$platform/$relativeURL";
+            // $socialEntityRs = (new FeedApiClient())->get($endPoint);
 
             $cacheTime = 60 * 24 * 60;
             $mappedResponse = ['success' => true, 'payload' => $profiles[0]];
@@ -99,21 +100,5 @@ class ProfileController extends Controller
     public function autoComplete(Request $request)
     {
         return (new \App\Core\AutoCompleteRequest)->get($request->all());
-    }
-
-    public function getFromCache()
-    {
-        return [
-            'profile' => [
-                'name' => 'naveed'
-            ],
-            'feeds' => [
-                [
-                    'social_media' => 'IG'
-                ], [
-                    'social_media' => 'FB'
-                ]
-            ]
-        ];
     }
 }
