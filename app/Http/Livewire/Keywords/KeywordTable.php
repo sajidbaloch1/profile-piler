@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Lists;
+namespace App\Http\Livewire\Keywords;
 
+use App\Http\Livewire\DataTable;
 use App\Models\Keyword;
-use Livewire\Component;
-use Livewire\WithPagination;
 
-class ShowLists extends Component
+class KeywordTable extends DataTable
 {
-    use WithPagination;
-    protected $paginationTheme = 'bootstrap';
     protected $queryString = ['search'];
 
     public $search;
@@ -21,13 +18,14 @@ class ShowLists extends Component
 
     public function render()
     {
-        return view('livewire.lists.show-lists', [
+        return view('livewire.keywords.keyword-table', [
             'keywords' => $this->loadRecords(),
         ]);
     }
 
     private function loadRecords()
     {
+        // sleep(4);
         if (!empty($this->search)) {
             return Keyword::where('keyword', 'like', "%$this->search%")->paginate(10);
         }

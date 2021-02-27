@@ -13,12 +13,11 @@ class CreateCuratedListProfilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('curated_list_profile', function (Blueprint $table) {
+        Schema::create('curated_list_profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title', 255);
-            $table->text('profile_json', 255);
-            $table->string('tags');
-            $table->string('seo_url', 255)->uniqid();
+            $table->bigInteger("curated_list_id");
+            $table->longText('profile_json');
+            $table->timestamp('updated_at');
         });
     }
 
@@ -29,6 +28,6 @@ class CreateCuratedListProfilesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('curated_list_profile');
     }
 }

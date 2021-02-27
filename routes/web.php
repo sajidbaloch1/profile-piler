@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CuratedListController;
+use App\Http\Controllers\KeywordController;
+use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +21,11 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/curated-list', [CuratedListController::class, 'index'])->name('curated-list');
+    // resources
+    Route::resource('keywords', KeywordController::class);
+    Route::resource('curated-lists', CuratedListController::class);
+    Route::get("curated-lists/{id}/profiles", [CuratedListController::class, 'updateProfile'])->name('curated-lists.profiles');
+    Route::resource('tags', TagsController::class);
 
     Route::get('/dashboard', function () {
         return view('dashboard');

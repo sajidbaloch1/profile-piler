@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\KeywordApiController;
 use App\Http\Controllers\API\SocialEntityController;
 use App\Http\Controllers\API\SocialFeedController;
 use App\Http\Controllers\KeywordController;
@@ -39,9 +40,9 @@ $router->get('/profiles/count', [ProfileController::class, 'count']);
 // total profiles count by each platform
 $router->get('/platform-stats', [ProfileController::class, 'platformStats']);
 // categories list
-$router->get('/categories', [KeywordController::class, 'index']);
+$router->get('/categories', [KeywordApiController::class, 'index']);
 // keyword list
-$router->get('/keywords', [KeywordController::class, 'keywords']);
+$router->get('/keywords', [KeywordApiController::class, 'keywords']);
 // auto-completion
 $router->get('/auto-complete', [LookupController::class, 'index']);
 

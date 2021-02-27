@@ -16,8 +16,8 @@ class CreateCuratedListTable extends Migration
         Schema::create('curated_lists', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title', 255);
-            $table->text('description', 255);
-            $table->string('tags');
+            $table->string('sub_heading', 255);
+            $table->text('description');
             $table->string('seo_url', 255)->uniqid();
         });
     }
@@ -29,6 +29,6 @@ class CreateCuratedListTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('curated_lists');
     }
 }

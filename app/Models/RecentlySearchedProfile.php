@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RecentlySearchedProfile extends Model
+class RecentlySearchedProfile extends BaseModel
 {
     public static function addBulk(array $profiles)
     {
