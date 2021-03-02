@@ -1,13 +1,11 @@
 <?php
 
 use App\Http\Controllers\API\KeywordApiController;
+use App\Http\Controllers\API\ProfileApiController;
 use App\Http\Controllers\API\SocialEntityController;
 use App\Http\Controllers\API\SocialFeedController;
-use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\LookupController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,19 +24,19 @@ $router->get('/', function () use ($router) {
 });
 
 // Get profile details
-$router->get('/profile/{platform}/{relativeURL}', [ProfileController::class, 'get']);
-$router->get('/profile/get-from-cache', [ProfileController::class, 'getFromCache']);
+$router->get('/profile/{platform}/{relativeURL}', [ProfileApiController::class, 'get']);
+$router->get('/profile/get-from-cache', [ProfileApiController::class, 'getFromCache']);
 // search profiles
-$router->get('/profiles', [ProfileController::class, 'index']);
+$router->get('/profiles', [ProfileApiController::class, 'index']);
 // $router->get('/profiles', [
 //     'middleware' => 'gzip',
 //     // 'as' => 'data',
-//     'uses'=>'ProfileController@index'
+//     'uses'=>'ProfileApiController@index'
 // ]);
 // count profiles for a search
-$router->get('/profiles/count', [ProfileController::class, 'count']);
+$router->get('/profiles/count', [ProfileApiController::class, 'count']);
 // total profiles count by each platform
-$router->get('/platform-stats', [ProfileController::class, 'platformStats']);
+$router->get('/platform-stats', [ProfileApiController::class, 'platformStats']);
 // categories list
 $router->get('/categories', [KeywordApiController::class, 'index']);
 // keyword list

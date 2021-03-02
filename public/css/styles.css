@@ -56,3 +56,96 @@
     display: none;
 }
 
+.box-widget {
+    border: none;
+    position: relative;
+}
+
+.box {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+}
+
+.box-header.with-border {
+    border-bottom: 1px solid #f4f4f4;
+}
+.box-header {
+    color: #444;
+    display: block;
+    padding: 10px;
+    position: relative;
+}
+
+.box-header > .box-tools {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+.box-header > .box-tools [data-toggle="tooltip"] {
+    position: relative;
+}
+.btn-box-tool {
+    padding: 5px;
+    font-size: 12px;
+    background: transparent;
+    color: #97a0b3;
+}
+.box-body {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 10px;
+}
+.box-header:before,
+.box-body:before,
+.box-footer:before,
+.box-header:after,
+.box-body:after,
+.box-footer:after {
+    content: " ";
+    display: table;
+}
+.user-block {
+    float: none;
+}
+.user-block .username {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.user-block .username,
+.user-block .description,
+.user-block .comment {
+    display: block;
+    margin-left: 50px;
+}
+
+.user-block .description {
+    color: #999;
+    font-size: 13px;
+}
+.user-block img {
+    width: 40px;
+    height: 40px;
+    float: left;
+}
+.user-block:before,
+.user-block:after {
+    content: " ";
+    display: table;
+}
+
+.flex {
+    display: flex;
+}
+
+.profile-list-container {
+    max-height: 600px;
+    overflow-y: auto;
+}

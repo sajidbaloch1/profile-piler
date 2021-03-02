@@ -49,6 +49,10 @@
                     @endforeach
                 </td>
                 <td>
+                    <a class="btn btn-flat btn-xs bg-indigo"
+                        href="{{ route('curated-lists.profiles', ['id' => $list->id]) }}">
+                        Edit Profiles</a>
+
                     <a class="btn btn-flat btn-xs btn-primary bg-indigo"
                         href="{{ route('curated-lists.edit', ['curated_list' => $list->id]) }}">
                         <i class="fa fa-pencil-alt"></i></a>

@@ -25,6 +25,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('keywords', KeywordController::class);
     Route::resource('curated-lists', CuratedListController::class);
     Route::get("curated-lists/{id}/profiles", [CuratedListController::class, 'updateProfile'])->name('curated-lists.profiles');
+    Route::post("curated-lists/{id}/profiles", [CuratedListController::class, 'storeProfile'])->name('curated-lists.store-profiles');
+    Route::get("curated-lists/{id}/get-profiles", [CuratedListController::class, 'profiles']);
     Route::resource('tags', TagsController::class);
 
     Route::get('/dashboard', function () {

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Features\CuratedList\UpdateCuratedListProfile;
 use App\Models\CuratedList;
+use App\Models\CuratedListProfile;
 use App\Models\CuratedListTag;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -119,5 +121,19 @@ class CuratedListController extends Controller
     public function updateProfile($id)
     {
         return view('curated-list.profiles', ['list' => CuratedList::find($id)]);
+    }
+
+    public function storeProfile($id, Request $request)
+    {
+        return (new UpdateCuratedListProfile($id, $request->get('selectedProfiles')))->execute();
+    }
+
+    public function profiles($id)
+    {
+        // return CuratedListProfile::where("curated_list_id", $id)->get();
+        // return [$id];
+        return CuratedListProfile::where("curated_list_id", $id)->get()->map(function ($p) {
+            return json_decode($p->profile_json);
+        });
     }
 }
