@@ -49,15 +49,15 @@
                     @endforeach
                 </td>
                 <td>
-                    <a class="btn btn-flat btn-xs bg-indigo"
+                    <a title="Manage Profiles" class="btn btn-flat btn-xs bg-indigo"
                         href="{{ route('curated-lists.profiles', ['id' => $list->id]) }}">
-                        Edit Profiles</a>
+                        <i class="fa fa-users"></i></a>
 
                     <a class="btn btn-flat btn-xs btn-primary bg-indigo"
                         href="{{ route('curated-lists.edit', ['curated_list' => $list->id]) }}">
                         <i class="fa fa-pencil-alt"></i></a>
-                    <a href="{{ env('FE_URL') }}/lists/{{ $list->seo_url }}?preview=true" target="_blank"
-                        class="btn btn-flat btn-xs btn-secondary">Preview</a>
+                    <a title="Preview" href="{{ env('FE_URL') }}/lists/{{ $list->seo_url }}?preview=true" target="_blank"
+                        class="btn btn-flat btn-xs btn-secondary"><i class="fa fa-eye"></i></a>
                 </td>
             </tr>
         @endforeach

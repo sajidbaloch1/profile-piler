@@ -60,10 +60,11 @@ class CuratedListController extends Controller
         $list->save();
 
         if ($request->filled('tags')) {
-            foreach ($request->get('tags') as $tagId) {
+            foreach ($request->get('tags') as $tag) {
+                $dbTag = $this->addOrLoadTag($tag);
                 $tag = new CuratedListTag();
                 $tag->curated_list_id = $list->id;
-                $tag->tag_id = $tagId;
+                $tag->tag_id = $dbTag->id;
                 $tag->save();
             }
         }
@@ -71,6 +72,26 @@ class CuratedListController extends Controller
         DB::commit();
 
         return redirect()->route("curated-lists.profiles", ['id' => $list->id]);
+    }
+
+    private function addOrLoadTag($tagIdentity)
+    {
+        $tagDb = null;
+        if (is_numeric($tagIdentity)) {
+            $tag = Tag::find($tagIdentity);
+            if (!is_numeric($tag)) {
+                $tagDb = $tag;
+            }
+        } else {
+            $tagRow = Tag::where('name', $tagIdentity)->first();
+            if (is_null($tagRow)) {
+                $tagRow = new Tag;
+                $tagRow->name = $tagIdentity;
+                $tagRow->save();
+            }
+            $tagDb = $tagRow;
+        }
+        return $tagDb;
     }
 
     /**
@@ -92,7 +113,11 @@ class CuratedListController extends Controller
      */
     public function edit($id)
     {
-        //
+        $list = CuratedList::with('tags')->find($id);
+        return view('curated-list.edit', [
+            'tags' => Tag::all()->diff($list->tags),
+            'list' => CuratedList::find($id)
+        ]);
     }
 
     /**
@@ -104,7 +129,37 @@ class CuratedListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'seo_url' => 'required',
+            'sub_heading' => 'required',
+            'description' => 'required'
+        ]);
+
+        DB::beginTransaction();
+
+        $list = CuratedList::find($id);
+        $list->title = $request->get('title');
+        $list->seo_url = $request->get('seo_url');
+        $list->sub_heading = $request->get('sub_heading');
+        $list->description = $request->get('description');
+        $list->is_active =  $request->get('is_active') === 'on';
+        $list->save();
+        $list->listTags()->delete();
+
+        if ($request->filled('tags')) {
+            foreach ($request->get('tags') as $tag) {
+                $dbTag = $this->addOrLoadTag($tag);
+                $tag = new CuratedListTag();
+                $tag->curated_list_id = $list->id;
+                $tag->tag_id = $dbTag->id;
+                $tag->save();
+            }
+        }
+
+        DB::commit();
+
+        return redirect()->route("curated-lists.index");
     }
 
     /**
@@ -130,8 +185,6 @@ class CuratedListController extends Controller
 
     public function profiles($id)
     {
-        // return CuratedListProfile::where("curated_list_id", $id)->get();
-        // return [$id];
         return CuratedListProfile::where("curated_list_id", $id)->get()->map(function ($p) {
             return json_decode($p->profile_json);
         });

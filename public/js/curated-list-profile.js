@@ -36,7 +36,7 @@ var app = new Vue({
     el: "#curated-list-profile",
     data: {
         filters: {
-            q: "karachi",
+            q: "",
         },
         loading: false,
         updating: false,

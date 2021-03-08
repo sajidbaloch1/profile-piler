@@ -16,4 +16,14 @@ class CuratedList extends BaseModel
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    public function listTags()
+    {
+        return $this->hasMany(CuratedListTag::class);
+    }
+
+    public function profiles()
+    {
+        return $this->hasMany(CuratedListProfile::class);
+    }
 }

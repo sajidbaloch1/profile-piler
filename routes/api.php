@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\API\CuratedListApiController;
 use App\Http\Controllers\API\KeywordApiController;
 use App\Http\Controllers\API\ProfileApiController;
 use App\Http\Controllers\API\SocialEntityController;
 use App\Http\Controllers\API\SocialFeedController;
+use App\Http\Controllers\CuratedListController;
 use App\Http\Controllers\LookupController;
 use Illuminate\Http\Request;
 
@@ -53,3 +55,4 @@ $router->post('/log-error', function (Request $request) {
 
 $router->get('/social-entity/min/{platform}/{identity}', [SocialEntityController::class, 'getSocialEntity']);
 $router->get('/social-feed/{platform}', [SocialFeedController::class, 'feed']);
+$router->get('/curated-list/{seo_url}', [CuratedListApiController::class, 'index']);

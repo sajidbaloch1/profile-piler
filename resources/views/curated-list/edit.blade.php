@@ -6,11 +6,11 @@
     </x-slot>
 
     <x-slot name="title">
-        {{ __('Create List') }}
+        {{ __('Edit List') }}
     </x-slot>
 
     <x-slot name="breadcrumbs">
-        <li class="breadcrumb-item"><a href="{{ route('curated-lists.index') }}">{{ __('Create Curated') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('curated-lists.index') }}">{{ $list->name }}</a></li>
     </x-slot>
 
     <x-card>
@@ -19,30 +19,31 @@
 
         <x-validation-error></x-validation-error>
 
-        <form id="create-tag-form" action="{{ route('curated-lists.store') }}" method="Post">
+        <form id="edit-tag-form" action="{{ route('curated-lists.update', $list->id) }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="form-group">
                 <label for="title">{{ __('Title') }}</label>
                 <input name="title" type="text" class="form-control" id="title" placeholder="Name"
-                    value="{{ old('title') }}">
+                    value="{{ $list->title }}">
             </div>
 
             <div class="form-group">
                 <label for="seo_url">{{ __('SEO URL') }}</label>
                 <input name="seo_url" type="text" class="form-control" id="seo_url" placeholder="SEO URL"
-                    value="{{ old('seo_url') }}">
+                    value="{{ $list->seo_url }}">
             </div>
 
             <div class="form-group">
                 <label for="sub_heading">{{ __('Sub Heading') }}</label>
                 <input name="sub_heading" type="text" class="form-control" id="sub_heading" placeholder="Sub Heading"
-                    value="{{ old('sub_heading') }}">
+                    value="{{ $list->sub_heading }}">
             </div>
 
             <div class="form-group">
                 <label for="description">{{ __('Description') }}</label>
                 <textarea class="form-control" id="description" name="description" cols="30"
-                    rows="10">{{ old('description') }}</textarea>
+                    rows="10">{{ $list->description }}</textarea>
 
             </div>
 
@@ -50,6 +51,9 @@
                 <label for="tags">{{ __('Tags') }}</label>
                 <select id="tags" name="tags[]" class="select2" multiple="multiple" data-placeholder="Select a State"
                     style="width: 100%;">
+                    @foreach ($list->tags as $tag)
+                        <option selected value="{{ $tag->id }}">{{ $tag->name }}</option>
+                    @endforeach
                     @foreach ($tags as $tag)
                         <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                     @endforeach
@@ -57,13 +61,13 @@
             </div>
             <div class="form-group">
                 <label for="is_active">{{ __('Is Active') }}</label>
-                <input type="checkbox" id="is_active" name="is_active">
+                <input {{ $list->is_active ? 'checked' : '' }} type="checkbox" id="is_active" name="is_active">
             </div>
         </form>
 
         <x-slot name="footer">
-            <button onclick="document.getElementById('create-tag-form').submit()" type="submit"
-                class="btn btn-flat btn-primary">Create</button>
+            <button onclick="document.getElementById('edit-tag-form').submit()" type="submit"
+                class="btn btn-flat btn-primary">Update</button>
             <a href="{{ route('tags.index') }}" class="btn btn-flat btn-secondary">Cancel</a>
 
         </x-slot>
