@@ -4,14 +4,12 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\CuratedList;
-use App\Models\CuratedListProfile;
-use Illuminate\Http\Request;
 
 class CuratedListApiController extends Controller
 {
     public function index($seo_url)
     {
-        $list = CuratedList::with('profiles')
+        $list = CuratedList::with('profiles', 'tags')
             ->where("seo_url", $seo_url)
             ->where('is_active', true)
             ->first();
@@ -31,7 +29,10 @@ class CuratedListApiController extends Controller
             'title' => $list->title,
             'description' => $list->description,
             'subTitle' => $list->sub_heading,
-            'profiles' => $profiles
+            'profiles' => $profiles,
+            'tags' => $list->tags->map(function ($tag) {
+                return $tag->name;
+            })
         ];
 
         return [
@@ -39,5 +40,4 @@ class CuratedListApiController extends Controller
             'list' => $list
         ];
     }
-
 }
