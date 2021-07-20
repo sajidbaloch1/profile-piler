@@ -82,7 +82,6 @@ class ElasticClient
         if (empty($cachedValue)) {
             $response = $this->client->$methodName($params);
             Cache::put($cacheKey, json_encode($response), (60 * 60 * 24 * 7));
-            file_put_contents("logs/" . time() . "-" . uniqid("elastic-search") . ".json", json_encode($response));
         } else {
             $response = json_decode($cachedValue, true);
         }
