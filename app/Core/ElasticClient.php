@@ -5,6 +5,7 @@ namespace App\Core;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use App\Core\ElasticsearchPhpHandler;
+use App\Jobs\ProcessElasticSearchLog;
 use Elasticsearch\ClientBuilder;
 use Illuminate\Support\Facades\Cache;
 
@@ -51,8 +52,11 @@ class ElasticClient
         ];
 
         try {
-            return $this->executeQuery('search', $params);
+            $response = $this->executeQuery('search', $params);
+            ProcessElasticSearchLog::dispatch($params, $response);
+            return $response;
         } catch (\Exception $ex) {
+            throw $ex;
             throw $this->buildClientException();
         }
     }
@@ -75,12 +79,14 @@ class ElasticClient
     {
         $cacheKey = md5(serialize($params));
         $cachedValue = Cache::get($cacheKey);
-        if (!empty($cachedValue)) {
-            return json_decode($cachedValue, true);
+        if (empty($cachedValue)) {
+            $response = $this->client->$methodName($params);
+            Cache::put($cacheKey, json_encode($response), (60 * 60 * 24 * 7));
+            file_put_contents("logs/" . time() . "-" . uniqid("elastic-search") . ".json", json_encode($response));
+        } else {
+            $response = json_decode($cachedValue, true);
         }
-        $response = $this->client->$methodName($params);
 
-        Cache::put($cacheKey, json_encode($response), (60 * 60 * 24 * 7));
         return $response;
     }
 

@@ -44,6 +44,15 @@
                     </p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('search-logs.index') }}"
+                    class="nav-link {{ request()->routeIs('search-logs.*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        {{ __('Search Logs') }}
+                    </p>
+                </a>
+            </li>
         </ul>
     </nav>
     <!-- /.sidebar-menu -->

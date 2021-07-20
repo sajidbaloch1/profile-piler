@@ -5,7 +5,7 @@
                 onerror="if (this.src != '{{ asset('imgs/no-image.png') }}') this.src = '{{ asset('imgs/no-image.png') }}';">
             <span class="username"><a href="#">{{ $profile->Name }}</a></span>
             <span class="description">
-                Followers {{ $profile->Followers }}
+                Followers {{ number_format($profile->Followers, 2) }}
             </span>
         </div>
         <!-- /.user-block -->
@@ -27,6 +27,6 @@
         @endif
         <br>
         <br>
-        <span class="pull-right text-muted">{{ $profile->Followers }} likes - 2 comments</span>
+        <span class="pull-right text-muted">{{ number_format($profile->Followers,2) }} likess</span>
     </div>
 </div>

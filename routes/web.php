@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CuratedListController;
+use App\Http\Controllers\ElasticSearchLogController;
 use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
@@ -21,13 +22,15 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    // resources
     Route::resource('keywords', KeywordController::class);
     Route::resource('curated-lists', CuratedListController::class);
+    Route::resource('tags', TagsController::class);
+
     Route::get("curated-lists/{id}/profiles", [CuratedListController::class, 'updateProfile'])->name('curated-lists.profiles');
     Route::post("curated-lists/{id}/profiles", [CuratedListController::class, 'storeProfile'])->name('curated-lists.store-profiles');
     Route::get("curated-lists/{id}/get-profiles", [CuratedListController::class, 'profiles']);
-    Route::resource('tags', TagsController::class);
+
+    Route::get('search-logs', [ElasticSearchLogController::class, 'index'])->name('search-logs.index');
 
     Route::get('/dashboard', function () {
         return view('dashboard');

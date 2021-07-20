@@ -6,18 +6,15 @@ use App\Core\ElasticClient;
 use App\Features\ElasticQueryBuilder;
 use App\Features\PlatformStatsRequest;
 use App\Features\Profile\ProfileSearcher;
-use App\Models\RecentlySearchedProfile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ProfileApiController extends Controller
 {
-    //
     public function index(Request $request)
     {
         try {
             $mappedResponse = (new ProfileSearcher($request->all()))->load();
-            RecentlySearchedProfile::addBulk($mappedResponse['profiles']);
             $cacheTime = 60 * 24 * 60;
             return response()->json($mappedResponse)
                 ->withHeaders(['Cache-Control' => "max-age=$cacheTime, public"]);

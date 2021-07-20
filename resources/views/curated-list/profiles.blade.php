@@ -84,7 +84,7 @@
                 </span>
                 <br>
                 <br>
-                <span class="pull-right text-muted">@{{ profile . Followers }} likes - 2 comments</span>
+                <span class="pull-right text-muted">@{{ profile . Followers }} likes</span>
             </div>
 
         </div>
