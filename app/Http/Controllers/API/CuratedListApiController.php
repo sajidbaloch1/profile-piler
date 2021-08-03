@@ -3,11 +3,22 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CuratedListCollection;
+use App\Http\Resources\CuratedListResource;
 use App\Models\CuratedList;
+use Illuminate\Http\Request;
 
 class CuratedListApiController extends Controller
 {
-    public function index($seo_url)
+    public function index(Request $request)
+    {
+        $list = CuratedList::with('profiles', 'tags')
+            ->where('is_active', true)
+            ->paginate(2);
+        return new CuratedListCollection($list);
+    }
+
+    public function show($seo_url)
     {
         $list = CuratedList::with('profiles', 'tags')
             ->where("seo_url", $seo_url)
@@ -20,24 +31,6 @@ class CuratedListApiController extends Controller
                 'error' => "List not found in our records"
             ];
         }
-
-        $profiles = $list->profiles->map(function ($p) {
-            return json_decode($p->profile_json);
-        });
-
-        $list = [
-            'title' => $list->title,
-            'description' => $list->description,
-            'subTitle' => $list->sub_heading,
-            'profiles' => $profiles,
-            'tags' => $list->tags->map(function ($tag) {
-                return $tag->name;
-            })
-        ];
-
-        return [
-            'success' => true,
-            'list' => $list
-        ];
+        return new CuratedListResource($list);
     }
 }

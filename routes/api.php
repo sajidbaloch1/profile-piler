@@ -46,4 +46,6 @@ $router->post('/log-error', function (Request $request) {
 $router->get('/social-entity/min/{platform}/{identity}', [SocialEntityController::class, 'getSocialEntity']);
 $router->post('/social-entity/load-bulk', [SocialEntityController::class, 'loadBulk']);
 $router->get('/social-feed/{platform}', [SocialFeedController::class, 'feed']);
-$router->get('/curated-list/{seo_url}', [CuratedListApiController::class, 'index']);
+
+$router->get('/curated-lists', [CuratedListApiController::class, 'index']);
+$router->get('/curated-list/{seo_url}', [CuratedListApiController::class, 'show']);
