@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 $router->get('/', function () use ($router) {
     return ['appVersion' => $router->app->version()];
 });
@@ -49,4 +50,7 @@ $router->get('/social-feed/{platform}', [SocialFeedController::class, 'feed']);
 
 $router->get('/curated-lists', [CuratedListApiController::class, 'index']);
 $router->get('/curated-list/{seo_url}', [CuratedListApiController::class, 'show']);
+$router->post('/test-cors', function () {
+    return ['ok'];
+});
 // testing CD
