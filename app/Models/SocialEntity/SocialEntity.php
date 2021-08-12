@@ -16,4 +16,11 @@ class SocialEntity extends Model
      * @var string
      */
     protected $connection = 'socialentities';
+
+    public static function searchByPlatform($platform, $relativeURL)
+    {
+        return SocialEntity::select(self::SOCIAL_ENTITY_COLS)
+            ->where($platform, $relativeURL)
+            ->first();
+    }
 }

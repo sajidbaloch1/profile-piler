@@ -8,6 +8,7 @@ use App\Features\PlatformStatsRequest;
 use App\Features\Profile\ProfileSearcher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modules\Profiles\ProfileSearch;
 
 class ProfileApiController extends Controller
 {
@@ -25,48 +26,16 @@ class ProfileApiController extends Controller
 
     public function get($platform, $relativeURL)
     {
-        $query = [
-            'query' => [
-                'bool' => [
-                    "must" => [
-                        [
-                            "match_phrase" => [
-                                "relativeurl" => $relativeURL
-                            ]
-                        ], [
-                            "match" => [
-                                "platform" => (new ElasticQueryBuilder)->platformValue($platform)
-                            ]
-                        ]
-                    ]
-                ]
-
-            ]
-        ];
-
         try {
-            $response = (new ElasticClient)->search($query);
-            $response = (new \App\Core\Mappers\SearchResponseMapper($response))->buildPayload();
-
-            if ($response['pagging']['total'] === 0) {
+            $profile = (new ProfileSearch)->get($platform, $relativeURL);
+            if (empty($profile)) {
                 throw new \Exception("Profile Not Found");
             }
-
-            $profiles = array_filter($response['profiles'], function ($p) use ($relativeURL) {
-                return strtolower($p->RelativeURL) === strtolower($relativeURL);
-            });
-
-            $profiles = array_values($profiles);
-            if (count($profiles) === 0) {
-                throw new \Exception("Profile Not Found");
-            }
-
-            $endPoint = "/social-entity/min/$platform/$relativeURL";
-            // $socialEntityRs = (new FeedApiClient())->get($endPoint);
-
             $cacheTime = 60 * 24 * 60;
-            $mappedResponse = ['success' => true, 'payload' => $profiles[0]];
-            return response()->json($mappedResponse)->withHeaders(['Cache-Control' => "max-age=$cacheTime, public"]);
+            $mappedResponse = ['success' => true, 'payload' => $profile];
+            return response()
+                ->json($mappedResponse)
+                ->withHeaders(['Cache-Control' => "max-age=$cacheTime, public"]);
         } catch (\Exception $ex) {
             return ['success' => false, "errors" => [$ex->getMessage()]];
         }
