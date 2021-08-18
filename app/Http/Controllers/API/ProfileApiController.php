@@ -74,7 +74,7 @@ class ProfileApiController extends Controller
             'subject' => 'required|max:255',
             'message' => 'required',
         ]);
-        Mail::to('naveed@octraves.com')->send(new ContactUs($request->all()));
+        Mail::to('trendpiler@gmail.com')->send(new ContactUs($request->all()));
         return ['success' => true];
     }
 }

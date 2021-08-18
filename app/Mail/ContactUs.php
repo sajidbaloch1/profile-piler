@@ -30,6 +30,7 @@ class ContactUs extends Mailable
     public function build()
     {
         $this->from('notifications@travelcompute.com', "ProfilePiler - Contact Us");
+        $this->cc("naveed@octraves.com");
         return $this->view('mail.contact-us');
     }
 }
