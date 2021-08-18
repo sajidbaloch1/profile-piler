@@ -40,7 +40,7 @@ class ElasticClient
         try {
             return $this->executeQuery('get', $params);
         } catch (\Exception $ex) {
-            throw $this->buildClientException();
+            throw $this->buildClientException($ex);
         }
     }
 
@@ -54,8 +54,7 @@ class ElasticClient
         try {
             return $this->executeQuery('search', $params);
         } catch (\Exception $ex) {
-            throw $ex;
-            throw $this->buildClientException();
+            throw $this->buildClientException($ex);
         }
     }
 
@@ -69,7 +68,7 @@ class ElasticClient
         try {
             return $this->executeQuery('count', $params);
         } catch (\Exception $ex) {
-            throw $this->buildClientException();
+            throw $this->buildClientException($ex);
         }
     }
 
@@ -89,14 +88,14 @@ class ElasticClient
         return $response;
     }
 
-    private function buildClientException()
+    private function buildClientException($ex)
     {
         $last = $this->client->transport->getLastConnection()->getLastRequestInfo();
         if (isset($last['response']['body'])) {
-            return new \Exception($last['response']['body']);
+            return new \Exception("Exception:" . $ex . ", LastBody:" . $last['response']['body']);
         } else if (isset($last['response']['transfer_stats']['error'])) {
-            return new \Exception($last['response']['transfer_stats']['error']);
+            return new \Exception("Exception:" . $ex . ",ElasticError: " . $last['response']['transfer_stats']['error']);
         }
-        return new \Exception("ElasticSearch: Unknown Connection error");
+        return new \Exception("Exception:" . $ex . "ElasticSearch: Unknown Connection error");
     }
 }
