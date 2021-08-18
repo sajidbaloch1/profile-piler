@@ -79,7 +79,7 @@ class ElasticClient
 
         if (empty($cachedValue)) {
             $response = $this->client->$methodName($params);
-            ProcessElasticSearchLog::dispatch($params, $response);
+            if (isset($response['hits']['hits'])) ProcessElasticSearchLog::dispatch($params, $response);
             Cache::put($cacheKey, json_encode($response), (60 * 60 * 24 * 7));
         } else {
             $response = json_decode($cachedValue, true);
