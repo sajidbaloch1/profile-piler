@@ -52,9 +52,7 @@ class ElasticClient
         ];
 
         try {
-            $response = $this->executeQuery('search', $params);
-            ProcessElasticSearchLog::dispatch($params, $response);
-            return $response;
+            return $this->executeQuery('search', $params);
         } catch (\Exception $ex) {
             throw $ex;
             throw $this->buildClientException();
@@ -79,8 +77,10 @@ class ElasticClient
     {
         $cacheKey = md5(serialize($params));
         $cachedValue = Cache::get($cacheKey);
+
         if (empty($cachedValue)) {
             $response = $this->client->$methodName($params);
+            ProcessElasticSearchLog::dispatch($params, $response);
             Cache::put($cacheKey, json_encode($response), (60 * 60 * 24 * 7));
         } else {
             $response = json_decode($cachedValue, true);

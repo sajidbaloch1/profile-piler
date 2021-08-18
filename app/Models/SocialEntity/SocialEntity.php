@@ -20,7 +20,21 @@ class SocialEntity extends Model
     public static function searchByPlatform($platform, $relativeURL)
     {
         return SocialEntity::select(self::SOCIAL_ENTITY_COLS)
-            ->where($platform, $relativeURL)
+            ->where(self::platformColName($platform), $relativeURL)
             ->first();
+    }
+
+    private static function platformColName($platformName)
+    {
+        switch (strtolower($platformName)) {
+            case 'yt':
+                return 'Youtube';
+            case 'ig':
+                return 'Instagram';
+            case 'tt':
+                return 'Tiktok';
+            default:
+                return $platformName;
+        }
     }
 }

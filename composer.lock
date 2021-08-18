@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "697c41960ff97dc12a672fdb02cb20f6",
+    "content-hash": "9aa5750ad3a1084e08c49c726619ef83",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -64,16 +64,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.173.7",
+            "version": "3.190.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "854b9f827438d1d69df6550d9ada40deaa6d44fe"
+                "reference": "b66a54a7825ce5a639fe929906746249d903ae5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/854b9f827438d1d69df6550d9ada40deaa6d44fe",
-                "reference": "854b9f827438d1d69df6550d9ada40deaa6d44fe",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/b66a54a7825ce5a639fe929906746249d903ae5d",
+                "reference": "b66a54a7825ce5a639fe929906746249d903ae5d",
                 "shasum": ""
             },
             "require": {
@@ -81,9 +81,9 @@
                 "ext-pcre": "*",
                 "ext-simplexml": "*",
                 "guzzlehttp/guzzle": "^5.3.3|^6.2.1|^7.0",
-                "guzzlehttp/promises": "^1.0",
-                "guzzlehttp/psr7": "^1.4.1",
-                "mtdowling/jmespath.php": "^2.5",
+                "guzzlehttp/promises": "^1.4.0",
+                "guzzlehttp/psr7": "^1.7.0",
+                "mtdowling/jmespath.php": "^2.6",
                 "php": ">=5.5"
             },
             "require-dev": {
@@ -148,9 +148,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.173.7"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.190.4"
             },
-            "time": "2021-02-11T19:13:05+00:00"
+            "time": "2021-08-17T18:17:31+00:00"
         },
         {
             "name": "brick/math",

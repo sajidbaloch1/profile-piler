@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Core\ElasticClient;
-use App\Features\ElasticQueryBuilder;
 use App\Features\PlatformStatsRequest;
 use App\Features\Profile\ProfileSearcher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\ContactUs;
 use App\Modules\Profiles\ProfileSearch;
+use Illuminate\Support\Facades\Mail;
 
 class ProfileApiController extends Controller
 {
@@ -63,5 +64,17 @@ class ProfileApiController extends Controller
     public function autoComplete(Request $request)
     {
         return (new \App\Core\AutoCompleteRequest)->get($request->all());
+    }
+
+    public function contactUs(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email',
+            'subject' => 'required|max:255',
+            'message' => 'required',
+        ]);
+        Mail::to('naveed@octraves.com')->send(new ContactUs($request->all()));
+        return ['success' => true];
     }
 }

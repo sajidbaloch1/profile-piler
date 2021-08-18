@@ -6,7 +6,6 @@ class ElasticQueryBuilder
 {
     public function build(array $request, $pagination = true)
     {
-
         $sortFieldName = 'followers';
         if (!empty($request['sort'])) {
             $sortFieldName = $request['sort'];
@@ -201,4 +200,5 @@ class ElasticQueryBuilder
                 return $platformName;
         }
     }
+
 }
