@@ -1,5 +1,6 @@
 <?php
 
+use App\Core\SiteMapGenerator;
 use App\Http\Controllers\CuratedListController;
 use App\Http\Controllers\ElasticSearchLogController;
 use App\Http\Controllers\KeywordController;
@@ -38,7 +39,10 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('sitemap.xml', [SitemapController::class, 'index']);
+    // sitemaps
+    Route::get('sitemap/curated-list.xml', [SitemapController::class, 'curatedList']);
+    Route::get('sitemap', [SitemapController::class, 'index']);
+    Route::get('sitemap/{platform}', [SitemapController::class, 'index']);
 });
 
 require __DIR__ . '/auth.php';

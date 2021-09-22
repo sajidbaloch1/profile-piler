@@ -17,21 +17,18 @@ class SiteMapGenerator
     public function __construct()
     {
         $this->urlset = new \SimpleXMLElement('<urlset/>');
+        $this->urlset->addAttribute('xml', "http://www.sitemaps.org/schemas/sitemap/0.9");
         $this->frontendAppUrl = env('FE_URL');
     }
 
-    public function build()
+    public function build($platform = null)
     {
-        $this->addCuratedList();
-
         $keywords = Keyword::select('keyword')->get()->pluck('keyword');
-        $this->addKeywords($keywords);
-        foreach (self::PLATFORM_LIST as $platform)
-            $this->addKeywords($keywords, $platform);
+        $this->addKeywords($keywords, $platform);
         return $this->urlset->asXML();
     }
 
-    private function addCuratedList()
+    public function buildCuratedList()
     {
         $curaltedLigs = CuratedList::where('is_active', 1)->get();
         foreach ($curaltedLigs as $list) {
@@ -39,6 +36,8 @@ class SiteMapGenerator
             $absUrl = "{$this->frontendAppUrl}/lists/{$list->seo_url}";
             $url->addChild('loc', htmlspecialchars($absUrl));
         }
+
+        return $this->urlset->asXML();
     }
 
     private function addKeywords($keywords, $platform = null)

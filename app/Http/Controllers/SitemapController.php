@@ -3,15 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Core\SiteMapGenerator;
-use App\Models\Keyword;
-use Illuminate\Http\Request;
 
 class SitemapController extends Controller
 {
-    public function index()
+    public function index($platform = null)
     {
-        Header('Content-type: text/xml');
-        print((new SiteMapGenerator)->build());
-        exit;
+        $fileName = empty($platform) ? 'sitemap-keywords' : "sitemap-{$platform}";
+        return response()->streamDownload(function () use ($platform) {
+            echo (new SiteMapGenerator)->build($platform);
+        }, "$fileName.xml");
+    }
+
+    public function curatedList()
+    {
+        return response()->streamDownload(function () {
+            echo (new SiteMapGenerator)->buildCuratedList();
+        }, 'curated-list.xml');
     }
 }
