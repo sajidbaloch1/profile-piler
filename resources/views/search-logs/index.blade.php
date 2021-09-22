@@ -31,9 +31,9 @@
                 <th>Query</th>
             </tr>
             @foreach ($records as $record)
-                <tr>
+                <tr class="{{ $record->query_time_ms > 500 ? 'bg-warning' : '' }}">
                     <td>{{ $record->created_at }}</td>
-                    <td>{{ $record->query_time }}</td>
+                    <td>{{ $record->query_time_ms }}</td>
                     @php
                         $modalId = uniqid('m-');
                         $textid = uniqid('t-');
@@ -47,7 +47,8 @@
                                     <div class="modal-body">
                                         <button onclick="copyText(event,'{{ $textid }}')"
                                             class="btn btn-secondary btn-xs">copy</button>
-                                        <textarea style="width: 100%;height:400px;border:none;"  name="textarea" id="{{ $textid }}">{{ json_encode(json_decode($record->query), JSON_PRETTY_PRINT) }}</textarea>
+                                        <textarea style="width: 100%;height:400px;border:none;" name="textarea"
+                                            id="{{ $textid }}">{{ json_encode(json_decode($record->query), JSON_PRETTY_PRINT) }}</textarea>
                                     </div>
                                 </div>
                             </div>
