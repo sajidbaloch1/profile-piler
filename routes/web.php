@@ -3,6 +3,8 @@
 use App\Http\Controllers\CuratedListController;
 use App\Http\Controllers\ElasticSearchLogController;
 use App\Http\Controllers\KeywordController;
+use App\Http\Controllers\Sitemap;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +37,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('sitemap.xml', [SitemapController::class, 'index']);
 });
 
 require __DIR__ . '/auth.php';
