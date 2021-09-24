@@ -28,24 +28,28 @@ class SiteMapGenerator
         return $this->urlset->asXML();
     }
 
-    public function buildCuratedList()
+    public function buildCuratedList(): string
     {
-        $curaltedLigs = CuratedList::where('is_active', 1)->get();
-        foreach ($curaltedLigs as $list) {
-            $url = $this->urlset->addChild('url');
-            $absUrl = "{$this->frontendAppUrl}/lists/{$list->seo_url}";
-            $url->addChild('loc', htmlspecialchars($absUrl));
+        $curaltedLigsUrls = CuratedList::where('is_active', 1)->get()->pluck('seo_url');
+        $this->addUrl("{$this->frontendAppUrl}/lists");
+        foreach ($curaltedLigsUrls as $url) {
+            $absUrl = "{$this->frontendAppUrl}/lists/{$url}";
+            $this->addUrl($absUrl);
         }
-
         return $this->urlset->asXML();
+    }
+
+    private function addUrl($absUrl)
+    {
+        $url = $this->urlset->addChild('url');
+        $url->addChild('loc', htmlspecialchars($absUrl));
     }
 
     private function addKeywords($keywords, $platform = null)
     {
         foreach ($keywords as $keyword) {
             $absUrl = $this->buildUrl($keyword, $platform);
-            $url = $this->urlset->addChild('url');
-            $url->addChild('loc', htmlspecialchars($absUrl));
+            $this->addUrl($absUrl);
         }
     }
 
@@ -63,7 +67,7 @@ class SiteMapGenerator
         return "{$this->frontendAppUrl}/{$slug}{$urlFriendlyKeyword}";
     }
 
-    private function getProfileTypeByPlatform($platformName)
+    private function getProfileTypeByPlatform($platformName): string
     {
         switch ($platformName) {
             case "facebook":

@@ -40,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
     // sitemaps
-    Route::get('sitemap/curated-list.xml', [SitemapController::class, 'curatedList']);
+    Route::get('sitemap/curated-list', [SitemapController::class, 'curatedList']);
     Route::get('sitemap', [SitemapController::class, 'index']);
     Route::get('sitemap/{platform}', [SitemapController::class, 'index']);
 });

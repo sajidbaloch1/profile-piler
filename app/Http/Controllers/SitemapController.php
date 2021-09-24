@@ -16,6 +16,7 @@ class SitemapController extends Controller
 
     public function curatedList()
     {
+        (new SiteMapGenerator)->buildCuratedList();
         return response()->streamDownload(function () {
             echo (new SiteMapGenerator)->buildCuratedList();
         }, 'curated-list.xml');
