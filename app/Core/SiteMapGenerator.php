@@ -60,11 +60,11 @@ class SiteMapGenerator
 
         $urlFriendlyKeyword = urlencode(str_replace(' ', '-', strtolower($keyword)));
         if ($platform === null) {
-            return "{$this->frontendAppUrl}/{$topProfileSlug}{$urlFriendlyKeyword}";
+            return "{$this->frontendAppUrl}{$topProfileSlug}{$urlFriendlyKeyword}";
         }
         $slug = str_replace("{platform-name}", $platform, $topProfileByPlatformSlug);
         $slug = str_replace("{profile-type}", $this->getProfileTypeByPlatform($platform), $slug);
-        return "{$this->frontendAppUrl}/{$slug}{$urlFriendlyKeyword}";
+        return "{$this->frontendAppUrl}{$slug}{$urlFriendlyKeyword}";
     }
 
     private function getProfileTypeByPlatform($platformName): string
