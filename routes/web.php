@@ -24,6 +24,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// sitemaps
+Route::get('sitemap/curated-list', [SitemapController::class, 'curatedList']);
+Route::get('sitemap', [SitemapController::class, 'index']);
+Route::get('sitemap/{platform}', [SitemapController::class, 'index']);
+
 Route::middleware(['auth'])->group(function () {
     Route::resource('keywords', KeywordController::class);
     Route::resource('curated-lists', CuratedListController::class);
@@ -38,11 +43,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-
-    // sitemaps
-    Route::get('sitemap/curated-list', [SitemapController::class, 'curatedList']);
-    Route::get('sitemap', [SitemapController::class, 'index']);
-    Route::get('sitemap/{platform}', [SitemapController::class, 'index']);
 });
 
 require __DIR__ . '/auth.php';
