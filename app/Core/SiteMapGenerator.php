@@ -12,7 +12,6 @@ class SiteMapGenerator
 
     const TopProfileByPlatformSlug = "top-{platform-name}-{profile-type}-for-";
     const TopProfileSlug = "top-social-media-profiles-for-";
-    const PLATFORM_LIST = ["instagram", "youtube", "twitter", "facebook", "flickr", "quora", "pinterest", "tiktok", "TravelMassive"];
 
     public function __construct()
     {

@@ -24,10 +24,11 @@ class ElasticClient
             new Credentials(env('AWS_ACCESS_KEY_ID'), env('AWS_SECRET_ACCESS_KEY'))
         );
         $handler = new ElasticsearchPhpHandler(env('AWS_ELASTIC_REGION'), $provider);
-        $builder = ClientBuilder::create();
-        $builder->setHosts([env('AWS_ELASTIC_HOSTS')]);
-        $builder->setHandler($handler);
-        $this->client = $builder->build();
+
+        $this->client = ClientBuilder::create()
+            ->setHosts([env('AWS_ELASTIC_HOSTS')])
+            ->setHandler($handler)
+            ->build();
     }
 
     public function get($id, $index = 'influencers')
@@ -90,11 +91,14 @@ class ElasticClient
 
     private function buildClientException($ex)
     {
-        $last = $this->client->transport->getLastConnection()->getLastRequestInfo();
-        if (isset($last['response']['body'])) {
-            return new \Exception("Exception:" . $ex . ", LastBody:" . $last['response']['body']);
-        } else if (isset($last['response']['transfer_stats']['error'])) {
-            return new \Exception("Exception:" . $ex . ",ElasticError: " . $last['response']['transfer_stats']['error']);
+        $lastConnection = $this->client->transport->lastConnection;
+        if (!empty($lastConnection)) {
+            $last = $lastConnection->getLastRequestInfo();
+            if (isset($last['response']['body'])) {
+                return new \Exception("Exception:" . $ex . ", LastBody:" . $last['response']['body']);
+            } else if (isset($last['response']['transfer_stats']['error'])) {
+                return new \Exception("Exception:" . $ex . ",ElasticError: " . $last['response']['transfer_stats']['error']);
+            }
         }
         return new \Exception("Exception:" . $ex . "ElasticSearch: Unknown Connection error");
     }
