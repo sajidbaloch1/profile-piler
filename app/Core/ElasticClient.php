@@ -75,18 +75,20 @@ class ElasticClient
 
     private function executeQuery($methodName, $params)
     {
-        $cacheKey = md5(serialize($params));
-        $cachedValue = Cache::get($cacheKey);
+        return $this->client->$methodName($params);
 
-        if (empty($cachedValue)) {
-            $response = $this->client->$methodName($params);
-            if (isset($response['hits']['hits'])) ProcessElasticSearchLog::dispatch($params, $response);
-            Cache::put($cacheKey, json_encode($response), (60 * 60 * 24 * 7));
-        } else {
-            $response = json_decode($cachedValue, true);
-        }
+        // $cacheKey = md5(serialize($params));
+        // $cachedValue = Cache::get($cacheKey);
 
-        return $response;
+        // if (empty($cachedValue)) {
+        //     $response = $this->client->$methodName($params);
+        //     if (isset($response['hits']['hits'])) ProcessElasticSearchLog::dispatch($params, $response);
+        //     Cache::put($cacheKey, json_encode($response), (60 * 60 * 24 * 7));
+        // } else {
+        //     $response = json_decode($cachedValue, true);
+        // }
+
+        // return $response;
     }
 
     private function buildClientException($ex)
