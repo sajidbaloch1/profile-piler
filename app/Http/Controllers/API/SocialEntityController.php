@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Core\ElasticClient;
-use App\Core\FeedApiClient;
-use App\Core\Mappers\SearchResponseMapper;
-use App\Features\ElasticQueryBuilder;
 use App\Http\Controllers\Controller;
 use App\Models\SocialEntity\SocialEntity;
+use App\Models\Youtube\Channel;
 use App\Modules\Profiles\ProfileSearch;
 use Illuminate\Http\Request;
 
@@ -43,5 +40,26 @@ class SocialEntityController extends Controller
             $socialEntities[$profile['Id']] = SocialEntity::searchByPlatform($profile['Platform'], $profile['RelativeURL']);
         }
         return $socialEntities;
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'platform' => "required|in:youtube,facebook,instagram,twitter",
+            "data" => 'required',
+            "data.ChannelId" => "exclude_unless:platform,youtube|required"
+        ]);
+        switch ($request->platform) {
+            case "youtube":
+                Channel::where('ChannelId', $request->data['ChannelId'])
+                    ->update(
+                        array_merge(['CrawledAt' => gmdate('Y-m-d H:i:s')], $request->data)
+                    );
+                break;
+        }
+
+        return [
+            'success' => true,
+        ];
     }
 }
