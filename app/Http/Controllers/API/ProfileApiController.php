@@ -25,6 +25,9 @@ class ProfileApiController extends Controller
         }
     }
 
+    /**
+     * Return a single profile
+     */
     public function get($platform, $relativeURL)
     {
         try {
@@ -42,6 +45,9 @@ class ProfileApiController extends Controller
         }
     }
 
+    /**
+     * Return count of profile based on filters
+     */
     public function count(Request $request)
     {
         $query = (new \App\Features\ElasticQueryBuilder)->build($request->all(), false);
@@ -55,6 +61,9 @@ class ProfileApiController extends Controller
         return ['success' => false];
     }
 
+    /**
+     * Return count of profiles by each platform
+     */
     public function platformStats()
     {
         $respose = (new PlatformStatsRequest)->get();
@@ -66,6 +75,9 @@ class ProfileApiController extends Controller
         return (new \App\Core\AutoCompleteRequest)->get($request->all());
     }
 
+    /**
+     * Contact us request handler
+     */
     public function contactUs(Request $request)
     {
         $request->validate([
