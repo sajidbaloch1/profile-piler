@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ProcessProfileScrapperData;
 use App\Models\SocialEntity\SocialEntity;
 use App\Models\Youtube\Channel;
 use App\Modules\Profiles\ProfileSearch;
@@ -42,6 +43,10 @@ class SocialEntityController extends Controller
         return $socialEntities;
     }
 
+    /**
+     * Receives the data from profile scrapper and queue ProcessProfileScrapperData
+     * job to be processed
+     */
     public function update(Request $request)
     {
         $request->validate([
@@ -49,14 +54,9 @@ class SocialEntityController extends Controller
             "data" => 'required',
             "data.ChannelId" => "exclude_unless:platform,youtube|required"
         ]);
-        switch ($request->platform) {
-            case "youtube":
-                Channel::where('ChannelId', $request->data['ChannelId'])
-                    ->update(
-                        array_merge(['CrawledAt' => gmdate('Y-m-d H:i:s')], $request->data)
-                    );
-                break;
-        }
+        file_put_contents('requet-data.json', json_encode($request->all()));
+        // queue a job
+        ProcessProfileScrapperData::dispatch($request->all());
 
         return [
             'success' => true,

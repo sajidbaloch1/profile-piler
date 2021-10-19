@@ -73,6 +73,21 @@ class ElasticClient
         }
     }
 
+    public function update($docId, $data, $index = 'influencers')
+    {
+        $params = [
+            'index' => $index,
+            'id'    => $docId,
+            'body'  => [
+                'doc' => $data
+            ]
+        ];
+        file_put_contents('count.json', json_encode($params));
+        $response = $this->client->update($params);
+        // TODO: remove this line
+        file_put_contents('es-update-response.json', json_encode($response));
+    }
+
     private function executeQuery($methodName, $params)
     {
         $response = $this->client->$methodName($params);
