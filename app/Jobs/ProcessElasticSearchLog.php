@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Core\ScrapperQueueService;
 use App\Models\ElasticSearchLog;
 use App\Models\RecentlySearchedProfile;
 use Illuminate\Bus\Queueable;
@@ -27,7 +28,9 @@ class ProcessElasticSearchLog implements ShouldQueue
         $this->searchedProfiles = array_map(function ($profile) {
             return [
                 'profileId' => $profile['_id'],
-                'platform' => $profile['_source']['platform']
+                'relativeurl' => $profile['_source']['relativeurl'],
+                'platform' => $profile['_source']['platform'],
+                'crawledat' => isset($profile['_source']['crawledat']) ? $profile['_source']['crawledat'] : null
             ];
         }, $response['hits']['hits']);
 
@@ -59,7 +62,32 @@ class ProcessElasticSearchLog implements ShouldQueue
 
         $log->save();
 
+        $queues = $this->buildQueues();
+        ScrapperQueueService::getInstance()->queue($queues);
+    }
 
-        RecentlySearchedProfile::insertOrIgnore($this->searchedProfiles);
+    private function buildQueues()
+    {
+        $recrawledAfter = strtotime('now') - (60 * 60 * 24 * 7);
+        $profilesToUpdate = array_values(array_filter($this->searchedProfiles, function ($profile) use ($recrawledAfter) {
+            $platformScrapperSupported = in_array($profile['platform'], ScrapperQueueService::SUPPORTED_PLATFORMS);
+            $profile['crawledat'] = empty($profile['crawledat']) ? date('Y-m-d', strtotime('-70 years')) : $profile['crawledat'];
+            return strtotime($profile['crawledat']) < $recrawledAfter && $platformScrapperSupported;
+        }));
+
+
+        $queues = array_map(function ($profile) {
+            return [
+                "Status" => "PENDING",
+                "Url" => "https://www.{$profile['platform']}.com/{$profile['relativeurl']}",
+                "Handler" => "profile-piler",
+                "Tag" => http_build_query([
+                    'platform' => $profile['platform'],
+                    'relativeUrl' => $profile['relativeurl']
+                ]),
+                // 'Type' => ScrapperQueueService::QUEUE_TYPE_UNIQUE
+            ];
+        }, $profilesToUpdate);
+        return $queues;
     }
 }

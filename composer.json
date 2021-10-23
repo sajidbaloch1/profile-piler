@@ -17,8 +17,7 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.4",
-        "php-curl-class/php-curl-class": "^8.6",
-        "wizacha/aws-signature-middleware": "^0.1.2"
+        "php-curl-class/php-curl-class": "^8.6"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
