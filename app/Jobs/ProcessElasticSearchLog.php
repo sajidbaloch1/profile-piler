@@ -62,8 +62,8 @@ class ProcessElasticSearchLog implements ShouldQueue
 
         $log->save();
 
-        $queues = $this->buildQueues();
-        ScrapperQueueService::getInstance()->queue($queues);
+        // $queues = $this->buildQueues();
+        // ScrapperQueueService::getInstance()->queue($queues);
     }
 
     private function buildQueues()
