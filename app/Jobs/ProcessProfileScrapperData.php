@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Core\ElasticClient;
+use App\Models\Quora\User as QuoraUser;
 use App\Models\Youtube\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -40,7 +41,12 @@ class ProcessProfileScrapperData implements ShouldQueue
 
         switch ($this->data['platform']) {
             case "youtube":
+            case "YT":
+            case "yt":
                 $esDocId = $this->handleYoutube($data);
+                break;
+            case "quora":
+                $esDocId = $this->handleQuora($data);
                 break;
             default:
                 throw new \Exception("Handler not implemented for the platform: {$this->data['platform']}", 1);
@@ -63,6 +69,23 @@ class ProcessProfileScrapperData implements ShouldQueue
         }
         return $newData;
     }
+
+    private function handleQuora($data)
+    {
+        $user = QuoraUser::where('UserName', $data['UserName'])->first();
+        if (empty($user))
+            throw new \Exception("User not found with Username {$data['UserName']}", 1);
+        $user->update(
+            array_merge(
+                [
+                    'CrawledAt' => gmdate('Y-m-d H:i:s')
+                ],
+                $data
+            )
+        );
+        return "qu{$user->id}";
+    }
+
     private function handleYoutube($data)
     {
         $channel = Channel::where('ChannelId', $data['ChannelId'])->first();
@@ -98,7 +121,14 @@ class ProcessProfileScrapperData implements ShouldQueue
             'Title' => 'Name',
             'ChannelId' => 'RelativeURL',
             'Thumbnail' => 'ProfilePic',
-            'SubscriberCount' => 'Followers'
+            'SubscriberCount' => 'Followers',
+            'Username' => 'RelativeURL',
+            'Credentials' => 'Education',
+            'Work' => 'Role',
+            'Answers' => 'AnswersCount',
+            'Questions' => 'QuestionsCount',
+            'Posts' => 'PostCounts',
+            'UserName' => 'RelativeURL',
         ];
         foreach ($map as $dbKey => $esKey) {
             if (isset($data[$dbKey])) {

@@ -66,6 +66,7 @@ return [
         'mysql' => $defaultDbConfig,
         'socialentities' => array_merge($defaultDbConfig, ['database' => env('SOCIAL_ENTITY_DB', 'forge')]),
         'youtube_db' => array_merge($defaultDbConfig, ['database' => env('YOUTUBE_DB', 'forge')]),
+        'quora_db' => array_merge($defaultDbConfig, ['database' => env('QUORA_DB', 'forge')]),
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
