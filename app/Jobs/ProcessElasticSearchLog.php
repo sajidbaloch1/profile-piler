@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Core\ScrapperQueueService;
 use App\Models\ElasticSearchLog;
-use App\Models\RecentlySearchedProfile;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -62,15 +61,15 @@ class ProcessElasticSearchLog implements ShouldQueue
 
         $log->save();
 
-        // $queues = $this->buildQueues();
-        // ScrapperQueueService::getInstance()->queue($queues);
+        $queues = $this->buildQueues();
+        ScrapperQueueService::getInstance()->queue($queues);
     }
 
     private function buildQueues()
     {
         $recrawledAfter = strtotime('now') - (60 * 60 * 24 * 7);
         $profilesToUpdate = array_values(array_filter($this->searchedProfiles, function ($profile) use ($recrawledAfter) {
-            $platformScrapperSupported = in_array($profile['platform'], ScrapperQueueService::SUPPORTED_PLATFORMS);
+            $platformScrapperSupported = in_array(strtolower($profile['platform']), ScrapperQueueService::SUPPORTED_PLATFORMS);
             $profile['crawledat'] = empty($profile['crawledat']) ? date('Y-m-d', strtotime('-70 years')) : $profile['crawledat'];
             return strtotime($profile['crawledat']) < $recrawledAfter && $platformScrapperSupported;
         }));

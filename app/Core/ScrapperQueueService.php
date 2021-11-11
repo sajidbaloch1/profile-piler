@@ -12,7 +12,7 @@ class ScrapperQueueService
     const QUEUE_TYPE_UNIQUE = 'UNIQUE';
     const QUEUE_TYPE_NORMAL = 'NORMAL';
     const AUTH_TOKEN_FILE_NAME = 'scrapper-auth-token';
-    const SUPPORTED_PLATFORMS = ['yt', 'YT', 'youtube'];
+    const SUPPORTED_PLATFORMS = ['yt', 'youtube', 'quora'];
     private $authToken;
     private $apiClient;
 
@@ -34,7 +34,6 @@ class ScrapperQueueService
     public function queue($queues)
     {
         $response = $this->sendRequest('queue/add', ['queue' => $queues]);
-        file_put_contents('queue-response.json', json_encode($response));
         if (!$response->success) {
             throw new \Exception($response->message);
         }
