@@ -5,6 +5,8 @@ namespace App\Core;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\RequestOptions;
 use stdClass;
+use Illuminate\Support\Facades\Storage;
+
 
 class ScrapperQueueService
 {
@@ -42,13 +44,14 @@ class ScrapperQueueService
 
     private function getAuthToken(): string
     {
-        if (file_exists(self::AUTH_TOKEN_FILE_NAME)) return file_get_contents(self::AUTH_TOKEN_FILE_NAME);
+        if (Storage::disk('local')->exists(self::AUTH_TOKEN_FILE_NAME))
+            return Storage::disk('local')->get(self::AUTH_TOKEN_FILE_NAME);
         return '';
     }
 
     private function setAuthToken(string $token)
     {
-        return file_put_contents(self::AUTH_TOKEN_FILE_NAME, $token);
+        Storage::disk('local')->put(self::AUTH_TOKEN_FILE_NAME, $token);
     }
 
     private function sendRequest($uri, $params): stdClass
