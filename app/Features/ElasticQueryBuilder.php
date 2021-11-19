@@ -11,7 +11,7 @@ class ElasticQueryBuilder
             $sortFieldName = $request['sort'];
         }
 
-        $pageSize = env('PAGE_SIZE', 100);
+        $pageSize = env('PAGE_SIZE', 30);
         if (!empty($request['pageSize'])) {
             $pageSize = $request['pageSize'];
         }
