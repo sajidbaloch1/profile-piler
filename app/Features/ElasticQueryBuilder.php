@@ -17,6 +17,7 @@ class ElasticQueryBuilder
         }
 
         $query = [];
+
         if (!empty($request['q'])) {
             $query = [
                 'query' => [
@@ -69,10 +70,6 @@ class ElasticQueryBuilder
         }
 
         if ($pagination) {
-            $query['sort'] =
-                [
-                    $sortFieldName => 'desc'
-                ];
             $query['size'] = $pageSize;
         }
 
@@ -180,10 +177,19 @@ class ElasticQueryBuilder
             }
         }
 
-        if (!empty($request['page_no'])) {
-            $pageNo = $request['page_no'] > 4 ? 4 : $request['page_no'];
+        if ($pagination && !empty($request['page'])) {
+            $pageNo = $request['page'] > 4 ? 4 : $request['page'];
             $query['from'] = $pageNo * $pageSize;
         }
+
+        if ($pagination) {
+            $query['size'] = $pageSize;
+            $query['sort'] = [
+                $sortFieldName => 'desc'
+            ];
+        }
+
+        // file_put_contents('query.json', json_encode($query));
         return $query;
     }
 
@@ -200,5 +206,4 @@ class ElasticQueryBuilder
                 return $platformName;
         }
     }
-
 }

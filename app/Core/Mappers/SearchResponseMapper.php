@@ -18,7 +18,7 @@ class SearchResponseMapper
             'profiles' => $this->buildProfiles(),
             'pagging' => [
                 'total' => $this->response['hits']['total']['value'],
-                'pageSize' => (int) env('PAGE_SIZE', 100)
+                'pageSize' => (int) env('PAGE_SIZE', 30)
             ]
         ];
     }
