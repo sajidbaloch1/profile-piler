@@ -50,11 +50,10 @@ class SocialEntityController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'platform' => "required|in:youtube,facebook,instagram,twitter,yt,quora",
+            'platform' => "required|in:youtube,facebook,instagram,twitter,yt,quora,flickr",
             "data" => 'required',
             "data.ChannelId" => "exclude_unless:platform,youtube|required"
         ]);
-        file_put_contents('requet-data.json', json_encode($request->all()));
         // queue a job
         ProcessProfileScrapperData::dispatch($request->all());
 

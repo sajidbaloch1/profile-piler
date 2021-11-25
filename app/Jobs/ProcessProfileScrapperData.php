@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Core\ElasticClient;
 use App\Models\Quora\User as QuoraUser;
+use App\Models\Flickr\User as FlickrUser;
 use App\Models\Youtube\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -48,16 +49,29 @@ class ProcessProfileScrapperData implements ShouldQueue
             case "quora":
                 $esDocId = $this->handleQuora($data);
                 break;
+            case "flickr":
+                $esDocId = $this->handleFlickr($data);
+                break;
             default:
                 throw new \Exception("Handler not implemented for the platform: {$this->data['platform']}", 1);
         }
 
-        (new ElasticClient)->update($esDocId, $this->buildEsData($data));
+        (new ElasticClient)->update($esDocId, $this->buildEsData($data, $this->data['platform']));
     }
 
-    private function buildEsData($data)
+    private function buildEsData($data, $platform)
     {
+        $fieldsToRemove = [];
         $esData = $this->databaseColumnToElasticSearchMapper($data);
+        switch ($platform) {
+            case "flickr":
+                $fieldsToRemove = ['RealName', 'ProfileDescriptionExpanded', 'ProfileDescription', 'FirstName', 'LastName', 'NsID'];
+                break;
+        }
+        // remove any fields that should not go to ES
+        if (count($fieldsToRemove) > 0)
+            foreach ($fieldsToRemove as $fieldName)
+                if (isset($esData[$fieldName])) unset($esData[$fieldName]);
         return $this->toSmallCaseKeys(array_merge($esData, ['crawledat' => gmdate('Y-m-d\TH:i:s')]));
     }
 
@@ -104,6 +118,21 @@ class ProcessProfileScrapperData implements ShouldQueue
         return "yt{$channel->id}";
     }
 
+    private function handleFlickr($data)
+    {
+        $user = FlickrUser::where('NsID', $data['NsID'])->first();
+        if (empty($user))
+            throw new \Exception("User not found with NsID {$data['NsID']}", 1);
+        $updateData = array_merge(
+            $data,
+            [
+                'CrawledAt' => gmdate('Y-m-d H:i:s')
+            ]
+        );
+        $user->update($updateData);
+        return "flkr{$user->Id}";
+    }
+
     private function removeEmptyValues($data)
     {
         $newData = [];
@@ -129,6 +158,11 @@ class ProcessProfileScrapperData implements ShouldQueue
             'Questions' => 'QuestionsCount',
             'Posts' => 'PostCounts',
             'UserName' => 'RelativeURL',
+            'Image' => 'ProfilePic',
+            'Name' => 'RealName',
+            'Description' => 'ProfileDescriptionExpanded',
+            'RelativeURL' => 'NsID',
+            'Location' => 'Country',
         ];
         foreach ($map as $dbKey => $esKey) {
             if (isset($data[$dbKey])) {
@@ -136,6 +170,7 @@ class ProcessProfileScrapperData implements ShouldQueue
                 unset($data[$dbKey]);
             }
         }
+
         return $data;
     }
 }
