@@ -68,6 +68,7 @@ return [
         'youtube_db' => array_merge($defaultDbConfig, ['database' => env('YOUTUBE_DB', 'forge')]),
         'quora_db' => array_merge($defaultDbConfig, ['database' => env('QUORA_DB', 'forge')]),
         'flickr_db' => array_merge($defaultDbConfig, ['database' => env('FLICKR_DB', 'forge')]),
+        'pinterest_db' => array_merge($defaultDbConfig, ['database' => env('PINTEREST_DB', 'forge')]),
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

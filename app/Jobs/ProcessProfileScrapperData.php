@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Core\ElasticClient;
 use App\Models\Quora\User as QuoraUser;
 use App\Models\Flickr\User as FlickrUser;
+use App\Models\Pinterest\User as PinterestUser;
 use App\Models\Youtube\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -52,6 +53,9 @@ class ProcessProfileScrapperData implements ShouldQueue
             case "flickr":
                 $esDocId = $this->handleFlickr($data);
                 break;
+            case "pinterest":
+                $esDocId = $this->handlePinterest($data);
+                break;
             default:
                 throw new \Exception("Handler not implemented for the platform: {$this->data['platform']}", 1);
         }
@@ -66,6 +70,9 @@ class ProcessProfileScrapperData implements ShouldQueue
         switch ($platform) {
             case "flickr":
                 $fieldsToRemove = ['RealName', 'ProfileDescriptionExpanded', 'ProfileDescription', 'FirstName', 'LastName', 'NsID'];
+                break;
+            case 'pinterest':
+                $fieldsToRemove = ['LastName', 'FirstName', 'Website', 'Country'];
                 break;
         }
         // remove any fields that should not go to ES
@@ -160,9 +167,13 @@ class ProcessProfileScrapperData implements ShouldQueue
             'UserName' => 'RelativeURL',
             'Image' => 'ProfilePic',
             'Name' => 'RealName',
-            'Description' => 'ProfileDescriptionExpanded',
-            'RelativeURL' => 'NsID',
-            'Location' => 'Country',
+            'ProfileDescriptionExpanded' => 'Description',
+            'NsID' => 'RelativeURL',
+            'Country' => 'Location',
+            'PinterestID' => 'UserId',
+            'FullName' => 'Name',
+            'PinCount' => 'PostCount',
+            'ProfileViewedCount' => 'ProfileViews'
         ];
         foreach ($map as $dbKey => $esKey) {
             if (isset($data[$dbKey])) {
@@ -172,5 +183,21 @@ class ProcessProfileScrapperData implements ShouldQueue
         }
 
         return $data;
+    }
+
+
+    private function handlePinterest($data)
+    {
+        $user = PinterestUser::where('UserName', $data['UserName'])->first();
+        if (empty($user))
+            throw new \Exception("User not found with UserName {$data['UserName']}", 1);
+        $updateData = array_merge(
+            $data,
+            [
+                'CrawledAt' => gmdate('Y-m-d H:i:s')
+            ]
+        );
+        $user->update($updateData);
+        return "pt{$user->id}";
     }
 }
