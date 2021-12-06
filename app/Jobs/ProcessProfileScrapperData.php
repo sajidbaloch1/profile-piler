@@ -6,6 +6,7 @@ use App\Core\ElasticClient;
 use App\Models\Quora\User as QuoraUser;
 use App\Models\Flickr\User as FlickrUser;
 use App\Models\Pinterest\User as PinterestUser;
+use App\Models\TravelMassive\User as TravelMassiveUser;
 use App\Models\Youtube\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -41,9 +42,8 @@ class ProcessProfileScrapperData implements ShouldQueue
         $data = $this->removeEmptyValues($this->data['data']);
         $esDocId = null;
 
-        switch ($this->data['platform']) {
+        switch (strtolower($this->data['platform'])) {
             case "youtube":
-            case "YT":
             case "yt":
                 $esDocId = $this->handleYoutube($data);
                 break;
@@ -56,6 +56,9 @@ class ProcessProfileScrapperData implements ShouldQueue
             case "pinterest":
                 $esDocId = $this->handlePinterest($data);
                 break;
+            case 'travelmassive':
+                $esDocId = $this->handleTravelMassive($data);
+                break;
             default:
                 throw new \Exception("Handler not implemented for the platform: {$this->data['platform']}", 1);
         }
@@ -67,12 +70,15 @@ class ProcessProfileScrapperData implements ShouldQueue
     {
         $fieldsToRemove = [];
         $esData = $this->databaseColumnToElasticSearchMapper($data);
-        switch ($platform) {
+        switch (strtolower($platform)) {
             case "flickr":
                 $fieldsToRemove = ['RealName', 'ProfileDescriptionExpanded', 'ProfileDescription', 'FirstName', 'LastName', 'NsID'];
                 break;
             case 'pinterest':
                 $fieldsToRemove = ['LastName', 'FirstName', 'Website', 'Country'];
+                break;
+            case 'travelmassive':
+                $fieldsToRemove = ['JoinedAt', 'LinkedInURL', 'TwitterURL', 'InstagramURL', 'FacebookURL', 'WebsiteURL', 'YoutubeURL', 'VimeoURL', 'SnapchatURL'];
                 break;
         }
         // remove any fields that should not go to ES
@@ -173,7 +179,11 @@ class ProcessProfileScrapperData implements ShouldQueue
             'PinterestID' => 'UserId',
             'FullName' => 'Name',
             'PinCount' => 'PostCount',
-            'ProfileViewedCount' => 'ProfileViews'
+            'ProfileViewedCount' => 'ProfileViews',
+            'Approved' => 'IsVerified',
+            'Picture' => 'ProfilePic',
+            'FollowerCount' => 'Followers',
+            'About' => 'Description',
         ];
         foreach ($map as $dbKey => $esKey) {
             if (isset($data[$dbKey])) {
@@ -199,5 +209,30 @@ class ProcessProfileScrapperData implements ShouldQueue
         );
         $user->update($updateData);
         return "pt{$user->id}";
+    }
+
+    private function handleTravelMassive($data)
+    {
+        $user = TravelMassiveUser::where('Username', $data['Username'])->first();
+        if (empty($user))
+            throw new \Exception("User not found with Username {$data['Username']}", 1);
+
+        $docId = "tt{$user->id}";
+
+        if ($data['Private']) {
+            $user->delete($docId);
+            (new ElasticClient)->delete($docId);
+        }
+
+        return $docId;
+
+        $updateData = array_merge(
+            $data,
+            [
+                'CrawledAt' => gmdate('Y-m-d H:i:s')
+            ]
+        );
+        $user->update($updateData);
+        return "tt{$user->id}";
     }
 }

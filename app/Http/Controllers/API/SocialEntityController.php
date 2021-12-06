@@ -49,7 +49,7 @@ class SocialEntityController extends Controller
      */
     public function update(Request $request)
     {
-        $platforms = "youtube,facebook,instagram,twitter,yt,quora,flickr,pinterest";
+        $platforms = "youtube,facebook,instagram,twitter,yt,quora,flickr,pinterest,TravelMassive";
         $request->validate([
             'platform' => "required|in:$platforms",
             "data" => 'required',

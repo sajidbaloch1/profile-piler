@@ -82,7 +82,16 @@ class ElasticClient
                 'doc' => $data
             ]
         ];
-        $response = $this->client->update($params);
+        return $this->client->update($params);
+    }
+
+    public function delete($docId, $index = 'influencers')
+    {
+        $params = [
+            'index' => $index,
+            'id'    => $docId,
+        ];
+        return $this->client->delete($params);
     }
 
     private function executeQuery($methodName, $params)
