@@ -30,5 +30,4 @@ class JobTable extends DataTable
         }
         return Job::paginate(10);
     }
-
 }
