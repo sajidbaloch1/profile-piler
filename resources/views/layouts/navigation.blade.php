@@ -59,6 +59,11 @@
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                         {{ __('Jobs') }}
+                <a href="{{ route('failed-jobs.index') }}"
+                    class="nav-link {{ request()->routeIs('failed-job.*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        {{ __('Failed Jobs') }}
                     </p>
                 </a>
             </li>
