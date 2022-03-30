@@ -37,7 +37,7 @@ class DashboardController extends Controller
             });
             $fAvgQueryMs[] = [
                 "label" => date('M d', strtotime($k)),
-                "value" => number_format($avgQueryMs->collect()->avg(), 2)
+                "value" => number_format($avgQueryMs->collect()->avg(),2,'.',false)
             ];
         };
         return $fAvgQueryMs;
