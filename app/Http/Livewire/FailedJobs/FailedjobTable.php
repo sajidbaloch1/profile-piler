@@ -25,8 +25,9 @@ class FailedjobTable extends Component
     }
 
     private function loadRecords(){
+        $query = FailedJob::query();
       if(!empty($this->search)){
-          return FailedJob::where('uuid','like',"%$this->search%")->paginate(10);
+          return $query = $query->where('uuid','like',"%$this->search%")->paginate(10);
       }
       return FailedJob::paginate(10);
     }
