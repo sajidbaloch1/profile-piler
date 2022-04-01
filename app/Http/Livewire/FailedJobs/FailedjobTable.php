@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\FailedJobs;
 
 use App\Models\FailedJob;
-use Illuminate\Auth\Events\Failed;
 use Livewire\Component;
 
 class FailedjobTable extends Component
@@ -19,16 +18,17 @@ class FailedjobTable extends Component
 
     public function render()
     {
-        return view('livewire.failed-jobs.failedjob-table',[
-            'failedJobs' => $this->loadRecords()
+        return view('livewire.failed-jobs.failedjob-table', [
+            'failedJobs' => $this->loadRecords(),
         ]);
     }
 
-    private function loadRecords(){
+    private function loadRecords()
+    {
         $query = FailedJob::query();
-      if(!empty($this->search)){
-          return $query = $query->where('uuid','like',"%$this->search%")->paginate(10);
-      }
-      return FailedJob::paginate(10);
+        if (!empty($this->search)) {
+            return $query = $query->where('uuid', 'like', "%$this->search%")->paginate(10);
+        }
+        return FailedJob::paginate(10);
     }
 }
