@@ -3,6 +3,7 @@
 use App\Http\Controllers\CuratedListController;
 use App\Http\Controllers\ElasticSearchLogController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\FailedJobController;
 use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TagsController;
@@ -33,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('curated-lists', CuratedListController::class);
     Route::resource('tags', TagsController::class);
     Route::resource('jobs', JobController::class);
+    Route::resource('failed-jobs', FailedJobController::class);
 
     Route::get("curated-lists/{id}/profiles", [CuratedListController::class, 'updateProfile'])->name('curated-lists.profiles');
     Route::post("curated-lists/{id}/profiles", [CuratedListController::class, 'storeProfile'])->name('curated-lists.store-profiles');
