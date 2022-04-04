@@ -22,24 +22,16 @@ class DashboardController extends Controller
 
     public function getElasticSearchLogs()
     {
-        $elasticSearch = ElasticSearchLog::select('query_time_ms', 'created_at')
+        $elasticSearch = ElasticSearchLog::select(DB::raw('AVG(query_time_ms) as value , created_at as label'))
             ->where('created_at', '>=', date('Y-m-d', strtotime('-7 days')))
-            ->get()->map(function ($e) {
+            ->groupBy(DB::raw('CAST(created_at AS DATE)'))
+            ->get()
+            ->map(function ($e) {
                 return [
-                    "created_at" => date('Y-m-d', strtotime($e->created_at)),
-                    "query_ms" => $e->query_time_ms
+                    "label" => date('M d', strtotime($e->label)),
+                    "value" => $e->value
                 ];
-            })->collect()->sortBy('created_at')->groupBy('created_at');
-        $fAvgQueryMs = [];
-        foreach ($elasticSearch as $k => $e) {
-            $avgQueryMs = $e->map(function ($v) {
-                return $v['query_ms']++;
             });
-            $fAvgQueryMs[] = [
-                "label" => date('M d', strtotime($k)),
-                "value" => number_format($avgQueryMs->collect()->avg(),2,'.',false)
-            ];
-        };
-        return $fAvgQueryMs;
+        return $elasticSearch;
     }
 }

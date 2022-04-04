@@ -56,38 +56,39 @@ function initElasticSearchLogsChart(dataArr) {
         options: {
             maintainAspectRatio: false,
             responsive: true,
-            legend: { display: false },
+            plugins: {
+                legend: {
+                    display: false,
+                },
+            },
             scales: {
-                xAxes: [
-                    {
-                        ticks: { fontColor: "#efefef" },
-                        gridLines: {
-                            display: false,
-                            color: "#efefef",
-                            drawBorder: false,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Days",
-                            fontColor: "#efefef",
-                        },
+                x: {
+                    ticks: { color: "#efefef" },
+                    title: {
+                        display: true,
+                        text: "Days",
+                        color: "#efefef",
                     },
-                ],
-                yAxes: [
-                    {
-                        ticks: { stepSize: 0, fontColor: "#efefef" },
-                        gridLines: {
-                            display: true,
-                            color: "#efefef",
-                            drawBorder: false,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Mile Sec",
-                            fontColor: "#efefef",
-                        },
+                    gridLines: {
+                        display: false,
+                        color: "#efefef",
+                        drawBorder: false,
                     },
-                ],
+                },
+
+                y: {
+                    ticks: { stepSize: 0, color: "#efefef" },
+                    title: {
+                        display: true,
+                        text: "Mile Sec",
+                        color: "#efefef",
+                    },
+                    gridLines: {
+                        display: true,
+                        color: "#efefef",
+                        drawBorder: false,
+                    },
+                },
             },
         },
     });
