@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CuratedListController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ElasticSearchLogController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\FailedJobController;
@@ -41,10 +42,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get("curated-lists/{id}/get-profiles", [CuratedListController::class, 'profiles']);
 
     Route::get('search-logs', [ElasticSearchLogController::class, 'index'])->name('search-logs.index');
-
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get("dashboard", [DashboardController::class, 'index'])->name('dashboard');
+    Route::get("dashboard/get-elastic-search-logs", [DashboardController::class, 'getElasticSearchLogs'])->name('dashboard.get-elastic-search-logs');
 });
 
 require __DIR__ . '/auth.php';
