@@ -1,6 +1,8 @@
 {
   "version": 2,
   "projects": {
+    "admin-panel": "apps/admin-panel",
+    "admin-panel-e2e": "apps/admin-panel-e2e",
     "website": "apps/website",
     "website-be": "apps/website-be",
     "website-e2e": "apps/website-e2e"
