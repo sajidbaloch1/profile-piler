@@ -207,7 +207,7 @@ export class ListService {
   private async loadAndPublishData() {
     this.$dataLoadingStream.next(true);
     const params = this.buildParams(this.activeRoute.snapshot);
-    const data = await this.loadData(params).toPromise<IListPageData>();
+    const data = await this.loadData(params).toPromise();
     this.bulkLoadSocialEntities(data);
     this.$dataStream.next(data);
     this.$dataLoadingStream.next(false);

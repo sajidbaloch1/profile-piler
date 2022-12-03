@@ -40,7 +40,10 @@ export class TransferStateService {
     if (!this.has(key)) {
       return defaultValue || null;
     }
-    return this.transferState.get<T>(this.getStateKey(key), defaultValue);
+    return this.transferState.get<T>(
+      (this.getStateKey(key) as unknown) as StateKey<T>,
+      defaultValue
+    );
   }
 
   has(key: string): boolean {

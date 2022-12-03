@@ -76,7 +76,7 @@ export class ProfilePageDataService {
     const data = await this.getProfile(
       this.activeRoute.snapshot.params.platform,
       this.activeRoute.snapshot.params.relativeURL
-    ).toPromise<IGetProfileResponse>();
+    ).toPromise();
     this.$dataStream.next(data.payload);
     this.loadSocialEntity(data.payload);
   }

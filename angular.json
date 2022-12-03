@@ -2,6 +2,7 @@
   "version": 1,
   "projects": {
     "website": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/website",
       "sourceRoot": "apps/website/src",
@@ -105,6 +106,7 @@
       "tags": []
     },
     "website-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/website-e2e",
       "sourceRoot": "apps/website-e2e/src",
       "projectType": "application",
