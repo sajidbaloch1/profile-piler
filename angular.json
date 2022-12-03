@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "website": "apps/website",
+    "website-be": "apps/website-be",
     "website-e2e": "apps/website-e2e"
   }
 }
