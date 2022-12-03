@@ -1,0 +1,31 @@
+<div
+  class="card embedo-container {{ platform | lowercase }}"
+  [class.hide]="showCustom"
+>
+  <div *ngIf="loading === true" class="loader-container">
+    <app-profile-skeleton></app-profile-skeleton>
+  </div>
+
+  <div #container class="inner-container" [class.hide]="loading"></div>
+</div>
+<!-- <div #container class="inner-container" [class.hide]="loading"></div> -->
+
+<a
+  [href]="feed.url"
+  style="cursor: pointer;"
+  target="_blank"
+  *ngIf="showCustom"
+>
+  <div class="card">
+    <img
+      *ngIf="feed.image"
+      class="card-img-top"
+      [src]="feed.image | toFullUrl"
+      alt="Feed Image"
+    />
+    <div class="card-body">
+      <h5 *ngIf="feed.title" class="card-title" [innerHTML]="feed.title"></h5>
+      <p class="card-text" [innerHTML]="parseLineBreaks(feed.text)"></p>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,120 @@
+<span *ngIf="socialEntity.Youtube" title="Youtube">
+  <a
+    href="{{ generateExternalLink('Youtube', socialEntity.Youtube) }}"
+    target="_blank"
+  >
+    <app-platform-icon platform="Youtube"></app-platform-icon>
+  </a>
+</span>
+
+<span *ngIf="socialEntity.Facebook" title="Facebook">
+  <a href="https://facebook.com/{{ socialEntity.Facebook }}" target="_blank">
+    <app-platform-icon platform="Facebook"></app-platform-icon>
+  </a>
+</span>
+
+<span *ngIf="socialEntity.Instagram" title="Instagram">
+  <a
+    href="https://www.instagram.com/{{ socialEntity.Instagram }}"
+    target="_blank"
+  >
+    <app-platform-icon platform="Instagram"></app-platform-icon>
+  </a>
+</span>
+<span *ngIf="socialEntity.Twitter" title="Twitter">
+  <a href="https://twitter.com/{{ socialEntity.Twitter }}" target="_blank">
+    <app-platform-icon platform="Twitter"></app-platform-icon>
+  </a>
+</span>
+
+<span *ngIf="socialEntity.Tiktok" title="Tiktok">
+  <a href="https://www.tiktok.com/@{{ socialEntity.Tiktok }}" target="_blank">
+    <app-platform-icon platform="TT"></app-platform-icon>
+  </a>
+</span>
+<span *ngIf="socialEntity.Flickr" title="Flickr">
+  <a
+    href="https://www.flickr.com/photos/{{ socialEntity.Flickr }}"
+    target="_blank"
+  >
+    <app-platform-icon platform="Flickr"></app-platform-icon>
+  </a>
+</span>
+
+<span *ngIf="socialEntity.LinkedIn" title="LinkedIn">
+  <a
+    href="https://www.linkedin.com/{{ socialEntity.LinkedIn }}"
+    target="_blank"
+  >
+    <app-platform-icon platform="LinkedIn"></app-platform-icon>
+  </a>
+</span>
+
+<span *ngIf="socialEntity.Medium" title="Medium">
+  <a href="https://medium.com/@{{ socialEntity.Medium }}" target="_blank">
+    <app-platform-icon platform="Medium"></app-platform-icon>
+  </a>
+</span>
+
+<span *ngIf="socialEntity.Pinterest" title="Pinterest">
+  <a
+    href="https://www.pinterest.com/{{ socialEntity.Pinterest }}"
+    target="_blank"
+  >
+    <app-platform-icon platform="Pinterest"></app-platform-icon>
+  </a>
+</span>
+
+<span *ngIf="socialEntity.Quora" title="Quora">
+  <a
+    href="https://www.quora.com/profile/{{ socialEntity.Quora }}"
+    target="_blank"
+  >
+    <app-platform-icon platform="Quora"></app-platform-icon>
+  </a>
+</span>
+
+<span *ngIf="socialEntity.Reddit" title="Reddit">
+  <a href="https://www.reddit.com/r/{{ socialEntity.Reddit }}" target="_blank">
+    <app-platform-icon platform="Reddit"></app-platform-icon>
+  </a>
+</span>
+
+<span *ngIf="socialEntity.TravelMassive" title="TravelMassive">
+  <a
+    href="https://travelmassive.com/{{ socialEntity.TravelMassive }}"
+    target="_blank"
+  >
+    <app-platform-icon platform="TravelMassive"></app-platform-icon>
+  </a>
+</span>
+
+<span *ngIf="socialEntity.Tumblr" title="Tumblr">
+  <a [href]="socialEntity.Tumblr" target="_blank">
+    <app-platform-icon platform="Tumblr"></app-platform-icon>
+  </a>
+</span>
+<span *ngIf="socialEntity.Vimeo" title="Vimeo">
+  <a href="https://vimeo.com/{{ socialEntity.Vimeo }}" target="_blank">
+    <app-platform-icon platform="Vimeo"></app-platform-icon>
+  </a>
+</span>
+<span *ngIf="socialEntity.DailyMotion" title="DailyMotion">
+  <a
+    href="https://www.dailymotion.com/{{ socialEntity.DailyMotion }}"
+    target="_blank"
+  >
+    <app-platform-icon platform="DailyMotion"></app-platform-icon>
+  </a>
+</span>
+<span *ngIf="socialEntity.Website" title="Website">
+  <a [href]="website" target="_blank">
+    <i class="fas fa-globe"></i>
+  </a>
+</span>
+
+<span *ngIf="socialEntity.Email" title="Email">
+  <a href="mailto:{{ socialEntity.Email }}" target="_blank">
+    <i class="fas fa-envelope-square"></i>
+  </a>
+</span>

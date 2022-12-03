@@ -1,0 +1,16 @@
+<div class="search-bar min pl-4 pr-4">
+  <div class="row">
+    <div class="col-md-4  pt-3 pb-3">
+      <div>
+        <app-platform-selector
+          [(ngModel)]="params.selectedPlatforms"
+        ></app-platform-selector>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-dark btn-block">
+        Search
+      </button>
+    </div>
+  </div>
+</div>

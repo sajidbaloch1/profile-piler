@@ -5,7 +5,7 @@
       "projectType": "application",
       "root": "apps/website",
       "sourceRoot": "apps/website/src",
-      "prefix": "profile-piler",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

@@ -1,0 +1,16 @@
+.alphabet-btn {
+  margin: 10px;
+  font-weight: bolder;
+}
+.alphabet-btn.selected {
+  background-color: #4f0098;
+  color: white;
+}
+h3.heading {
+  display: flex;
+  align-items: center;
+}
+app-platform-icon {
+  margin-right: 20px;
+  color: #4f0098;
+}

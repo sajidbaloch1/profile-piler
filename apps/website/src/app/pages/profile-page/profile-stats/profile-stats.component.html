@@ -1,0 +1,305 @@
+<!-- show stats for all platforms -->
+<div
+  class="stats-panel border-top pt-4 mt-4"
+  *ngIf="entity; else profileStatsBlock"
+>
+  <div class="row">
+    <ng-container *ngIf="entity.Stats?.Youtube">
+      <div class="col-md-2 col-sm-6">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            <app-platform-icon platform="youtube"></app-platform-icon>
+            Subscribers
+            <br />
+            <strong>
+              {{ entity.Stats.Youtube.Followers | toShortNumber }}
+            </strong>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-6" *ngIf="entity.Stats.Youtube.ViewsCount">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            <app-platform-icon platform="youtube"></app-platform-icon>
+            Views
+            <br />
+            <strong>
+              {{ entity.Stats.Youtube.ViewsCount | toShortNumber }}
+            </strong>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container
+      *ngIf="entity.Stats.Facebook && entity.Stats.Facebook.Followers"
+    >
+      <div class="col-md-2 col-sm-6">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            <app-platform-icon platform="facebook"></app-platform-icon>
+            Followers
+            <br />
+            <strong>
+              {{ entity.Stats.Facebook.Followers | toShortNumber }}
+            </strong>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container
+      *ngIf="entity.Stats?.Instagram?.Followers"
+    >
+      <div class="col-md-2 col-sm-6">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            <app-platform-icon platform="instagram"></app-platform-icon>
+            Followers
+            <br />
+            <strong>
+              {{ entity.Stats.Instagram.Followers | toShortNumber }}
+            </strong>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="entity.Stats.Tiktok">
+      <div class="col-md-2 col-sm-6">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            <app-platform-icon platform="tiktok"></app-platform-icon>
+            Followers
+            <br />
+            <strong>
+              {{ entity.Stats.Tiktok.Followers | toShortNumber }}
+            </strong>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="entity.Stats.TravelMassive">
+      <div class="col-md-2 col-sm-6">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            <app-platform-icon platform="TravelMassive"></app-platform-icon>
+            Followers
+            <br />
+            <strong>
+              {{ entity.Stats.TravelMassive.Followers | toShortNumber }}
+            </strong>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="entity.Stats.Flickr">
+      <div class="col-md-2 col-sm-6">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            <app-platform-icon platform="Flickr"></app-platform-icon>
+            Followers
+            <br />
+            <strong>
+              {{ entity.Stats.Flickr.Followers | toShortNumber }}
+            </strong>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="entity.Stats.Pinterest">
+      <div class="col-md-2 col-sm-6">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            <app-platform-icon platform="Pinterest"></app-platform-icon>
+            Followers
+            <br />
+            <strong>
+              {{ entity.Stats.Pinterest.Followers | toShortNumber }}
+            </strong>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="entity.Stats.Quora">
+      <div class="col-md-2 col-sm-6">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            <app-platform-icon platform="Quora"></app-platform-icon>
+            Followers
+            <br />
+            <strong>
+              {{ entity.Stats.Quora.Followers | toShortNumber }}
+            </strong>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="entity.Stats.Twitter">
+      <div class="col-md-2 col-sm-6">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            <app-platform-icon platform="twitter"></app-platform-icon>
+            Followers
+            <br />
+            <strong>
+              {{ entity.Stats.Twitter.Followers | toShortNumber }}
+            </strong>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<!-- show stats only for selected platform -->
+<ng-template #profileStatsBlock>
+  <div class="stats-panel border-top pt-4 mt-4">
+    <div class="row">
+      <div class="col-md-2 col-sm-6" *ngIf="profile.Followers">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            <ng-container *ngIf="profile.Platform === 'YT'">
+              Subscribers
+            </ng-container>
+            <ng-container *ngIf="profile.Platform !== 'YT'">
+              Followers
+            </ng-container>
+            <br />
+            <strong>
+              {{ profile.Followers | toShortNumber }}
+            </strong>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-6" *ngIf="profile.TweetCount">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Tweets<br /><strong>
+              {{ profile.TweetCount | toShortNumber }}
+            </strong>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-6" *ngIf="profile.LikesCount">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Likes<br /><strong>{{ profile.LikesCount | toShortNumber }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 col-sm-6" *ngIf="profile.EventsCount">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Events<br /><strong>{{
+              profile.EventsCount | toShortNumber
+            }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 col-sm-6" *ngIf="profile.AnswersCount">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Answers<br /><strong>{{ profile.AnswersCount | number }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 col-sm-6" *ngIf="profile.QuestionsCount">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Questions<br /><strong>{{ profile.QuestionsCount }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 col-sm-6" *ngIf="profile.CheckinsCount">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Checked-in<br /><strong>{{ profile.CheckinsCount }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 col-sm-6" *ngIf="profile.Rating">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Rating<br /><strong>{{ profile.Rating | number: "1.1-1" }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 col-sm-6" *ngIf="profile.ViewsCount">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Views<br /><strong>{{ profile.ViewsCount | toShortNumber }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 col-sm-6" *ngIf="profile.PostCount">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Posts<br /><strong>{{ profile.PostCount | toShortNumber }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 col-sm-6" *ngIf="profile.VideoCount">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Videos<br /><strong>{{
+              profile.VideoCount | toShortNumber
+            }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 col-sm-6" *ngIf="profile.PhotosCount">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Photos<br /><strong>{{
+              profile.PhotosCount | toShortNumber
+            }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 col-sm-6" *ngIf="profile.PhotoViewsCount">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Photo Views<br /><strong>{{
+              profile.PhotoViewsCount | toShortNumber
+            }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 col-sm-6" *ngIf="profile.FavoritesCount">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Favorites<br /><strong>{{
+              profile.FavoritesCount | toShortNumber
+            }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 col-sm-6" *ngIf="profile.GeoTags">
+        <div class="card mb-4 theme-bg">
+          <div class="card-body">
+            Tags<br /><strong>
+              {{ profile.GeoTags | toShortNumber }}
+            </strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

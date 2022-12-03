@@ -1,0 +1,66 @@
+<div class="content">
+  <div class="bread-crumbs pt-3 pb-2">
+    <ul>
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/lists">Curated List</a></li>
+    </ul>
+  </div>
+
+  <br />
+
+  <h1>Curated Lists</h1>
+  <p>
+    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo consectetur
+    eius sit blanditiis facere necessitatibus odit, iure facilis non delectus
+    ullam? Facilis, beatae. Nobis nam praesentium obcaecati, asperiores ratione
+    saepe?
+  </p>
+  <ng-container *ngIf="loadingData === false">
+    <div class="row mt-4" *ngFor="let list of lists">
+      <div class="col-12">
+        <div class="card shadow mb-4">
+          <div class="card-body">
+            <h5 class="card-title">{{ list.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ list.subTitle }}</h6>
+            <p class="card-text">
+              {{ list.description }}
+            </p>
+            <p>
+              Tags:
+              <a
+                *ngFor="let tagName of list.tags"
+                [routerLink]="['/lists']"
+                [queryParams]="{ tag: tagName }"
+                class="tag"
+              >
+                <span class="badge bg-primary">
+                  {{ tagName }}
+                </span>
+              </a>
+            </p>
+            <a [routerLink]="['/lists', list.slug]" class="card-link">
+              View Profiles
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <nav class="paging float-right">
+          <ngb-pagination
+            [(page)]="paginationData.current_page"
+            [pageSize]="paginationData.per_page"
+            [collectionSize]="paginationData.total"
+            (pageChange)="pageChange($event)"
+          >
+          </ngb-pagination>
+        </nav>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="loadingData"> Loading... </ng-container>
+  <p class="bg-error">
+    {{ this.dataError }}
+  </p>
+</div>

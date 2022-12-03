@@ -1,0 +1,207 @@
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <div class="profile-img float-left">
+      <a href="" title="Updated: {{ profile.UpdatedAt | fromNow }}">
+        <img
+          style="width: 90px; height: 90px"
+          [src]="profile.ProfilePic | toFullUrl"
+          onerror="this.src='/assets/img/no-image.png';"
+          alt=""
+        />
+      </a>
+    </div>
+    <app-platform-icon
+      [platform]="profile.Platform"
+      cssClasses="float-right icon-circle"
+    >
+    </app-platform-icon>
+    <!-- <i class="fab fa-{{ getPlatformIconName() }} float-right icon-circle"></i> -->
+    <div class="desc">
+      <h4>
+        <a
+          href=""
+          [routerLink]="['/profile', profile.Platform, profile.RelativeURL]"
+          [innerHTML]="
+            (profile.Name ? profile.Name : profile.RelativeURL)
+              | highlighter: searchTerm
+          "
+        >
+        </a>
+        <a [href]="generateExternalLink()" target="_blank" class="ex-link"
+          >&nbsp;<i class="fas fa-external-link-alt"></i
+        ></a>
+      </h4>
+      <ul class="mb-2">
+        <li *ngIf="profile.IsVerified">
+          <span>
+            <i
+              *ngIf="profile.IsVerified"
+              class="fa fa-check-circle verified-indicator"
+            >
+            </i>
+          </span>
+          <span>Verified</span>
+        </li>
+        <li *ngIf="profile.Followers">
+          <span>{{ profile.Followers | toShortNumber }}</span>
+          <span>
+            <ng-container *ngIf="profile.Platform === 'YT'">
+              Subscriber(s)
+            </ng-container>
+            <ng-container *ngIf="profile.Platform !== 'YT'">
+              Followers
+            </ng-container>
+          </span>
+        </li>
+
+        <li *ngIf="profile.LikesCount">
+          <span>{{ profile.LikesCount | toShortNumber }}</span>
+          <span>Likes(s)</span>
+        </li>
+
+        <li *ngIf="profile.PostCount">
+          <span>{{ profile.PostCount | toShortNumber }}</span>
+          <span>Post(s)</span>
+        </li>
+        <li *ngIf="profile.Category">
+          <span [innerHTML]="profile.Category | highlighter: searchTerm"></span>
+          <span>Category</span>
+        </li>
+        <li *ngIf="profile.TweetCount">
+          <span>{{ profile.TweetCount | toShortNumber }}</span>
+          <span>Tweet(s)</span>
+        </li>
+
+        <li *ngIf="profile.ViewsCount">
+          <span>{{ profile.ViewsCount | toShortNumber }}</span>
+          <span>View(s)</span>
+        </li>
+        <li *ngIf="profile.VideoCount">
+          <span>{{ profile.VideoCount | toShortNumber }}</span>
+          <span>Video(s)</span>
+        </li>
+
+        <li *ngIf="profile.Profession">
+          <span [innerHTML]="profile.Profession | highlighter: searchTerm">
+          </span>
+          <span> Profession </span>
+        </li>
+
+        <li *ngIf="profile.Company">
+          <span [innerHTML]="profile.Company | highlighter: searchTerm"> </span>
+          <span> Company </span>
+        </li>
+
+        <li *ngIf="profile.EventsCount">
+          <span>{{ profile.EventsCount | toShortNumber }}</span>
+          <span>Event(s)</span>
+        </li>
+
+        <li *ngIf="profile.FavoritesCount">
+          <span>{{ profile.PhotosCount }}</span>
+          <span>Photos</span>
+        </li>
+        <li *ngIf="profile.PhotoViewsCount">
+          <span>{{ profile.PhotoViewsCount | toShortNumber }}</span>
+          <span>Photo Views</span>
+        </li>
+        <li *ngIf="profile.FavoritesCount">
+          <span>{{ profile.FavoritesCount }}</span>
+          <span>Favorites</span>
+        </li>
+        <li *ngIf="profile.Rating">
+          <span>{{ profile.Rating | number: "1.1-1" }}</span>
+          <span>Rating</span>
+        </li>
+
+        <li *ngIf="profile.CheckinsCount">
+          <span>{{ profile.CheckinsCount | toShortNumber }}</span>
+          <span>Checked-in</span>
+        </li>
+        <li *ngIf="profile.AnswersCount">
+          <span>{{ profile.AnswersCount }}</span>
+          <span>Answers</span>
+        </li>
+        <li *ngIf="profile.QuestionsCount">
+          <span>{{ profile.QuestionsCount }}</span>
+          <span>Questions</span>
+        </li>
+        <li *ngIf="profile.Education">
+          <span
+            [innerHTML]="profile.Education | highlighter: searchTerm"
+          ></span>
+          <span>Education</span>
+        </li>
+        <li *ngIf="profile.City || profile.Location">
+          <span
+            [innerHTML]="locationText() | titlecase | highlighter: searchTerm"
+          >
+          </span>
+          <span>Location</span>
+        </li>
+
+        <li>
+          <span
+            [innerHTML]="
+              getPlatformIconName() | uppercase | highlighter: searchTerm
+            "
+          >
+          </span>
+          <span>Platform</span>
+        </li>
+
+        <li
+          *ngIf="profile.Platform === 'IG' || profile.Platform === 'Facebook'"
+        >
+          <span> {{ profile.RelativeURL }} </span>
+          <span>Username</span>
+        </li>
+      </ul>
+
+      <ng-container *ngIf="socialEntity">
+        <app-social-entity-renderer [socialEntity]="socialEntity">
+        </app-social-entity-renderer>
+      </ng-container>
+      <span title="Profile Score">
+        <a
+          [routerLink]="['/profile', profile.Platform, profile.RelativeURL]"
+          [queryParams]="{ stats: 1 }"
+          target="_blank"
+          style="cursor: pointer; margin-right: 10px; font-size: 25px"
+        >
+          <i class="fas fa-chart-bar"></i>
+        </a>
+      </span>
+      <br />
+
+      <ng-container
+        *ngIf="
+          showDescription &&
+          profile.Description &&
+          profile.Description.length > 0
+        "
+      >
+        <strong>Description</strong>
+        <ng-container
+          *ngIf="profile.Description.length > 550 && !showFullDescription"
+        >
+          <p
+            [innerHTML]="
+              parseShortDescription(profile.Description)
+                | highlighter: searchTerm
+            "
+          ></p>
+          <a style="cursor: pointer" (click)="showFullDescription = true">
+            ...more
+          </a>
+        </ng-container>
+        <p
+          *ngIf="profile.Description.length <= 550 || showFullDescription"
+          [innerHTML]="
+            parseLineBreaks(profile.Description) | highlighter: searchTerm
+          "
+        ></p>
+      </ng-container>
+    </div>
+  </div>
+</div>

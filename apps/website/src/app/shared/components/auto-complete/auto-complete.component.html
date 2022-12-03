@@ -1,0 +1,11 @@
+<div class="iconField">
+  <input
+    type="text"
+    class="form-control"
+    [disabled]="isDisabled"
+    [class.is-invalid]="searchFailed"
+    [(ngModel)]="model"
+    [ngbTypeahead]="search"
+  />
+  <i class="fas fa-list"></i>
+</div>

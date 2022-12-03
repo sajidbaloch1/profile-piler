@@ -1,0 +1,147 @@
+<div class="search-panel">
+  <div class="row justify-content-md-center">
+    <div class="col-md"></div>
+    <div class="col-md-8 col-xs">
+      <app-search-form [showFilters]="true"></app-search-form>
+    </div>
+    <div class="col-md"></div>
+  </div>
+</div>
+<div class="content" id="top-heading">
+  <div class="bread-crumbs pt-3 pb-2">
+    <ul>
+      <li><a href="">Home</a></li>
+      <li><a href="">Results</a></li>
+    </ul>
+  </div>
+  <br />
+  <ng-container *ngIf="title">
+    <div class="row">
+      <div class="col">
+        <h2>Top Profiles For: {{ title | titlecase }}</h2>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="error" *ngIf="errors && errors.length > 0">
+    <p *ngFor="let err of errors">
+      {{ err }}
+    </p>
+  </div>
+
+  <div class="top-profiles pb-4">
+    <div class="row">
+      <div class="col-md-8">
+        <ng-container *ngIf="filteredRecordsCount && totalSearchTime">
+          <br />
+          <div style="font-weight: 700">
+            {{ filteredRecordsCount | number }} profile matches | Scanned
+            {{ totalRecords | toShortNumber: true }} profiles | Processed in
+            {{ totalSearchTime }} seconds
+          </div>
+        </ng-container>
+      </div>
+      <div class="col-md-4">
+        <span>Sort By</span>
+        <div class="select">
+          <select
+            [(ngModel)]="sort"
+            (change)="onSortChange()"
+            class="form-control mt-2"
+            id="exampleFormControlSelect1"
+          >
+            <!-- facebook -->
+            <ng-container *ngIf="platforms == 'facebook'">
+              <option value="likescount">Likes</option>
+            </ng-container>
+
+            <!-- flickr -->
+            <ng-container *ngIf="platforms == 'flickr'">
+              <option value="photoviewscount">Photo Views</option>
+            </ng-container>
+
+            <option value="followers">Followers</option>
+            <option value="_score">Relevance</option>
+
+            <ng-container [ngSwitch]="platforms">
+              <!-- quora -->
+              <ng-container *ngSwitchCase="'quora'">
+                <option value="questionscount">Questions</option>
+                <option value="answerscount">Answers</option>
+              </ng-container>
+
+              <!-- flickr -->
+              <ng-container *ngSwitchCase="'flickr'">
+                <option value="photoscount">Photos</option>
+                <option value="favorites">Favorites</option>
+              </ng-container>
+              <ng-container *ngSwitchCase="'pinterest'">
+                <option value="postcount">Posts</option>
+              </ng-container>
+              <!-- facebook -->
+              <ng-container *ngSwitchCase="'facebook'">
+                <option value="checkinscount">Checked-ins</option>
+              </ng-container>
+              <!-- youtube -->
+              <ng-container *ngSwitchCase="'youtube'">
+                <option value="videocount">Videos Count</option>
+                <option value="totalsview">Views Count</option>
+              </ng-container>
+              <!-- instag -->
+              <ng-container *ngSwitchCase="'instagram'">
+                <option value="postcount">Post Count</option>
+              </ng-container>
+
+              <!-- tiktok -->
+              <ng-container *ngSwitchCase="'tiktok'">
+                <option value="likescount">Likes Count</option>
+                <option value="videocount">Videos Count</option>
+              </ng-container>
+
+              <!-- twitter -->
+              <ng-container *ngSwitchCase="'twitter'">
+                <option value="statusescount">Tweets Count</option>
+              </ng-container>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="profile-list-container" class="profile-list mt-3">
+      <p
+        style="font-size: 24px; font-weight: 500"
+        *ngIf="filteredRecordsCount === 0 && !loadingResults"
+      >
+        Sorry, no matches for the search term. Please try changing the search
+        term
+      </p>
+
+      <ng-container *ngIf="loadingResults">
+        <div
+          class="shadow"
+          style="padding: 10px; margin-bottom: 30px; border-radius: 12px"
+          *ngFor="let a of [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 1, 1, 1]"
+        >
+          <app-profile-skeleton></app-profile-skeleton>
+        </div>
+      </ng-container>
+
+      <ng-container *ngFor="let profile of profiles">
+        <app-profile-list-item
+          [profile]="profile"
+          [socialEntity]="profile.SocialEntity"
+          [searchTerm]="query"
+        >
+        </app-profile-list-item>
+      </ng-container>
+    </div>
+    <div class="paging float-right pb-5 pt-4" *ngIf="pageSize">
+      <app-pagination-renderer
+        [PageSize]="pageSize"
+        [TotalRecords]="filteredRecordsCount"
+        [currentPage]="currentPage"
+        (pageSelected)="onPageChanged($event)"
+      ></app-pagination-renderer>
+    </div>
+  </div>
+</div>

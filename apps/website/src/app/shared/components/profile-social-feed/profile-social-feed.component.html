@@ -1,0 +1,31 @@
+<ul ngbNav class="nav-tabs" [(activeId)]="currentTab">
+  <li [ngbNavItem]="index" *ngFor="let t of tabs; let index = index">
+    <a ngbNavLink>
+      <app-platform-icon [platform]="t.platform"></app-platform-icon>
+    </a>
+  </li>
+</ul>
+
+<!-- <ngb-tabset (tabChange)="changeTab($event)">
+  <ngb-tab *ngFor="let t of tabs; let index = index" [id]="index">
+    <ng-template ngbTabTitle>
+      <app-platform-icon [platform]="t.platform"></app-platform-icon>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset> -->
+
+<!-- <app-social-platform-feed
+  [platform]="profile.Platform"
+  [username]="profile.RelativeURL"
+>
+</app-social-platform-feed> -->
+
+<div *ngFor="let t of tabs; let index = index">
+  <app-social-platform-feed
+    [visible]="currentTab === index"
+    [platform]="t.platform"
+    [username]="t.username"
+    [profile]="profile"
+  >
+  </app-social-platform-feed>
+</div>

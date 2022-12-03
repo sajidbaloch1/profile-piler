@@ -1,0 +1,20 @@
+.card.selectable {
+  cursor: pointer;
+}
+
+.card.selectable:hover {
+  background: #9452d1;
+  color: white;
+}
+
+.card.selectable:hover h5 {
+  color: white;
+}
+
+.card.selectable:hover span {
+  color: white;
+}
+
+.card.selectable:hover .icon-circle {
+  background-color: #4f0098;
+}
