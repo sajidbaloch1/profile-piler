@@ -95,11 +95,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/website"
-          ],
+          "outputs": ["coverage/apps/website"],
           "options": {
-            "jestConfig": "apps/website/jest.config.js",
+            "jestConfig": "apps/website/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -127,16 +125,12 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/website-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/website-e2e/**/*.{js,ts}"]
           }
         }
       },
       "tags": [],
-      "implicitDependencies": [
-        "website"
-      ]
+      "implicitDependencies": ["website"]
     }
   }
 }
