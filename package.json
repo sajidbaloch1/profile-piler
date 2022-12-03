@@ -49,7 +49,7 @@
     "bootstrap": "^4.6.0",
     "embedo": "^1.14.0",
     "mysql2": "^2.3.3",
-    "ngx-masonry": "^14.0.1",
+    "ngx-masonry": "^13.0.0",
     "ngx-skeleton-loader": "^2.6.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",
