@@ -8,6 +8,11 @@
       "prefix": "app",
       "architect": {
         "build": {
+          "allowedCommonJsDependencies": [
+            "embedo",
+            "masonry-layout",
+            "ngx-masonry"
+          ],
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/apps/website",
@@ -20,7 +25,7 @@
               "apps/website/src/favicon.ico",
               "apps/website/src/assets"
             ],
-            "styles": ["apps/website/src/styles.scss"],
+            "styles": ["apps/website/src/styles.scss", "apps/website/src/assets/css/main.css"],
             "scripts": []
           },
           "configurations": {
