@@ -1,9 +1,15 @@
 import { Controller, Get } from '@nestjs/common';
 import { KeywordBeService } from './keyword-be.service';
 
-@Controller('keywords')
+@Controller()
 export class KeywordBeController {
   constructor(private keywordService: KeywordBeService) {}
+
+  @Get('keywords')
+  async getKeywords() {
+    return this.keywordService.findAll();
+  }
+
 
   @Get('categories')
   async getCategories() {
