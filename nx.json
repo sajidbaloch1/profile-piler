@@ -54,5 +54,6 @@
     "build": {
       "dependsOn": ["^build"]
     }
-  }
+  },
+  "defaultProject": "website"
 }
