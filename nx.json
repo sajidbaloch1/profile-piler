@@ -23,7 +23,6 @@
       }
     }
   },
-  "defaultProject": "website",
   "generators": {
     "@nrwl/angular": {
       "application": {

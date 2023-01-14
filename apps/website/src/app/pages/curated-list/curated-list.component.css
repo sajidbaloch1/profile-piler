@@ -1,9 +1,0 @@
-.tag > .badge {
-  display: inline-block;
-  margin-right: 10px;
-  color: white;
-}
-
-.tag > .badge.bg-primary {
-  background-color: #4f0098 !important;
-}

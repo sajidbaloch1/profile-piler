@@ -1,9 +1,0 @@
-span {
-  cursor: pointer;
-  margin-right: 10px;
-  font-size: 25px;
-}
-
-span:hover {
-  color: #4f0098;
-}
