@@ -15,6 +15,7 @@ export class HeaderComponent {
       },
       {
         label: 'Curated Lists',
+        routerLink: 'curated-list'
       },
       {
         label: 'Stats',
