@@ -19,7 +19,7 @@
         "styles": [
         "apps/website/src/styles.scss",
         "node_modules/primeicons/primeicons.css",
-        "primeng/resources/themes/lara-light-blue/theme.css",
+        "primeng/resources/themes/bootstrap4-light-purple/theme.css",
         "node_modules/primeng/resources/primeng.min.css"],
         "scripts": []
       },

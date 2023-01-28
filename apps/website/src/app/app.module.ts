@@ -16,12 +16,20 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CuratedListComponent } from './pages/curated-list/curated-list.component';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent, LandingPageComponent],
+  declarations: [
+    AppComponent,
+    NxWelcomeComponent,
+    LandingPageComponent,
+    CuratedListComponent,
+  ],
   imports: [
     BrowserModule,
     ButtonModule,
+    PaginatorModule,
     FormsModule,
     InputTextModule,
     StyleClassModule,
