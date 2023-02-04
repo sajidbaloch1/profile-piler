@@ -1,2 +1,11 @@
-<profile-piler-nx-welcome></profile-piler-nx-welcome>
-<router-outlet></router-outlet>
+<div class="layout-wrapper" [ngClass]="containerClass">
+  <profile-piler-header></profile-piler-header>
+  <div class="layout-sidebar">
+    <profile-piler-sidebar></profile-piler-sidebar>
+  </div>
+  <div class="layout-main-container">
+    <div class="layout-main">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
