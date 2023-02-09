@@ -1,13 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'pp-plateform-icon',
   templateUrl: './plateform-icon.component.html',
-  styleUrls: ['./plateform-icon.component.scss']
+  styleUrls: ['./plateform-icon.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlateformIconComponent {
   @Input() plateform?: string;
-  @Input() cssClasses?: string;
+  @Input() cssClasses = '';
 
   getPlatformIconName() {
     if (!this.plateform) {

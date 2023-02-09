@@ -1,90 +1,145 @@
-import { Component,Input } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PrimeNGConfig } from 'primeng/api';
 import { PlateFormEnum } from '../models/plateform.enum';
-
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+// import{DialogService}from 'primeng/dynamicdialog'
 @Component({
   selector: 'pp-platform-selector',
   templateUrl: './platform-selector.component.html',
-  styleUrls: ['./platform-selector.component.scss']
+  styleUrls: ['./platform-selector.component.scss'],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => PlatformSelectorComponent),
+    multi: true
+  }]
 })
-export class PlatformSelectorComponent {
+export class PlatformSelectorComponent implements ControlValueAccessor {
+  @Input() placeholder = 'All'
   @Input() mode: 'One' | 'Multi' = 'Multi'
   constructor(
-    private primeConfig: PrimeNGConfig
-  ){}
+    private primeConfig: PrimeNGConfig,
+    private ngModal: NgbModal
+    // private dialogService: DialogService
+  ) { }
+  writeValue(arr: []): void {
+    if (!arr || arr.length === 0) {
+      arr = [];
+      this.plateforms.forEach((p) => (p.selected = false))
 
-  plateforms:PlateFromSelectItem[]=[
+    }
+    this._selectedPlatForms = arr
+    this.markPlatfromsSelected();
+
+  }
+  registerOnTouched(fn: any): void { }
+  setDisabledState?(isDisabled: boolean): void { }
+  plateforms: PlateFromSelectItem[] = [
     {
       value: 'instagram',
       name: 'Instagram',
       selected: false,
       plateform: PlateFormEnum.Instagram,
-    },{
+    }, {
       value: 'twitter',
       name: 'Twitter',
       selected: false,
       plateform: PlateFormEnum.Twitter,
-    },{
+    }, {
       value: 'youtube',
       name: 'Youtube',
-      selected:false,
+      selected: false,
       plateform: PlateFormEnum.Youtube,
     },
     {
-      value:'tiktok',
+      value: 'tiktok',
       name: 'TikTok',
-      selected:false,
+      selected: false,
       plateform: PlateFormEnum.Tiktok
-    },{
+    }, {
       value: 'travelmassive',
       name: 'Travel Messive',
       selected: false,
-      plateform:PlateFormEnum.TravelMassive,
+      plateform: PlateFormEnum.TravelMassive,
     },
     {
-      value:'facebook',
-      name:'Facebook',
+      value: 'facebook',
+      name: 'Facebook',
       selected: false,
       plateform: PlateFormEnum.Facebook,
-    },{
+    }, {
       value: 'flickr',
       name: 'Flickr',
       selected: false,
       plateform: PlateFormEnum.Flickr,
-    },{
+    }, {
       value: 'pinterest',
       name: 'Pinterest',
       selected: false,
-      plateform:PlateFormEnum.Pinterest,
-    },{
+      plateform: PlateFormEnum.Pinterest,
+    }, {
       value: 'quora',
       name: 'Quora',
-      selected:false,
+      selected: false,
       plateform: PlateFormEnum.Quora
     }
   ]
 
-  ngOnInit(){
+  private _selectedPlatForms: any = [];
+  propogateChange = (_: string[]) => { };
+  registerOnChange(fn: any): void {
+    this.propogateChange = fn
+  }
+  private markPlatfromsSelected() {
+    this.plateforms.forEach((p) => (p.selected = false));
+    this._selectedPlatForms.forEach((pVal: any) => {
+      this.plateforms.filter((p) => p.value === pVal).forEach((p) => p.selected = true)
+    })
+  }
+
+  ngOnInit() {
     this.primeConfig.ripple = true
   }
+
   BasicShow: boolean = false
 
-  showDialog(){
+  showDialog(content: any) {
+    this.markPlatfromsSelected()
     this.BasicShow = true
+    this.ngModal.open(content).result.then(() => {
+      this.markSelection();
+    }, () =>{ this.markSelection();})
   }
-  onItemClicked(plateform:PlateFromSelectItem){
-    plateform.selected = !plateform.selected;
-    if(this.mode === 'One'){
-      this.plateforms.forEach((p)=>(p.selected = false));
-      plateform.selected = !plateform.selected;
 
+  markSelection() {
+    this._selectedPlatForms = this.plateforms
+      .filter((p) => p.selected)
+      .map((p) => p.value);
+    this.propogateChange(this._selectedPlatForms);
+  }
+  onItemClicked(plateform: PlateFromSelectItem) {
+    plateform.selected = !plateform.selected;
+    if (this.mode === 'One') {
+      this.plateforms.forEach((p) => (p.selected = false));
+      plateform.selected = !plateform.selected;
+      // console.log(plateform.selected);
     }
 
   }
+
+  getText(): string {
+    if (this._selectedPlatForms.length === this.plateforms.length) {
+      return 'All';
+    } else if (this._selectedPlatForms.length === 0) {
+      return this.placeholder;
+    }
+    return this._selectedPlatForms.join(', ');
+  }
+
 }
-interface PlateFromSelectItem{
+interface PlateFromSelectItem {
   value: string;
-  name:string;
+  name: string;
   selected: boolean;
-  plateform:PlateFormEnum
+  plateform: PlateFormEnum
 }
