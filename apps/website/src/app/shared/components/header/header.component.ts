@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { StyleClass } from 'primeng/styleclass';
 @Component({
   selector: 'pp-header',
   templateUrl: './header.component.html',
@@ -19,6 +20,13 @@ export class HeaderComponent {
       },
       {
         label: 'Stats',
+      },
+      {
+        label:'Login',
+        icon:'pi pi-key'
+      },{
+        label:'Sign Up',
+        icon: 'pi pi-user'
       }
     ];
   }

@@ -1,0 +1,39 @@
+
+.search-bar {
+  border-radius: 50px;
+  background: #fff;
+  overflow: auto;
+}
+.border-right {
+  border-right: 1px solid #dee2e6;
+}
+@media (max-width: 575.98px) {
+  .search-bar {
+    padding: 10px 0;
+    border-radius: 20px;
+  }
+}
+@media (max-width: 575.98px) {
+  .border-right {
+    border: none;
+  }
+}
+:host::ng-deep{
+  .p-inputtext{
+    border: none !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.31px !important;
+    color: #6f6f6f !important;
+    font-style: normal !important;
+    font-size: 22px !important;
+  }
+}
+.plateform h2{
+  font-weight: 600 !important;
+  letter-spacing: 0.31px !important;
+  color: #6f6f6f !important;
+  font-style: normal !important;
+  font-size: 17px !important;
+  margin-left: 10px;
+  margin-top: 15px;
+}

@@ -12,8 +12,11 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { RippleModule } from 'primeng/ripple';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import { HttpClientModule } from '@angular/common/http';
+import { PlatformSelectorComponent } from './components/platform-selector/platform-selector.component';
+import{DialogModule} from 'primeng/dialog';
+import { PlateformIconComponent } from './components/plateform-icon/plateform-icon.component';
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, SearchProfileComponent,SearchFormComponent],
+  declarations: [HeaderComponent, FooterComponent, SearchProfileComponent,SearchFormComponent, PlatformSelectorComponent, PlateformIconComponent],
   imports: [CommonModule, MenubarModule,ButtonModule,
     FormsModule,
     InputTextModule,
@@ -21,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     RippleModule,
     OverlayPanelModule,
     HttpClientModule,
+    DialogModule,
   ],
   exports: [HeaderComponent, FooterComponent, SearchFormComponent],
 })

@@ -1,4 +1,27 @@
-<div class="bg-white h-4rem lg:flex lg:mx-8 lg:mb-8 bg-blue-600 mt-5" style="border-radius: 50px;">
+<div class="search-bar pl-4 pr-4">
+  <div class="grid">
+    <div class="col-12 md:col-12 lg:col-6 pt-3 border-right">
+      <i class="pi pi-search text-purple-500 font-bold text-2xl lg:p-2"></i>
+      <input
+        type="text"
+        class="border-none lg:border-right-2 lg:border-gray-300 text-1xl lg:px-5"
+        pInputText="pInputText"
+        placeholder="Search"
+      />
+    </div>
+    <div class="col-12 md:col-12 lg:col-4 ">
+        <div class="plateform">
+          <!-- <h2>All PlateForms</h2> -->
+            <pp-platform-selector></pp-platform-selector>
+        </div>
+    </div>
+    <div class="col-12 md:col-12 lg:col-2">
+        <button pButton="pButton" pRipple="pRipple" type="button" label="Search" class="p-button-rounded p-button-dark px-5 bg-gray-900" style="border-radius: 2rem; margin-top: 13px;"></button>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="bg-white h-4rem lg:flex lg:mx-8 lg:mb-8 bg-blue-600 mt-5" style="border-radius: 50px;">
     <div class="grid">
         <div class="col-6 lg:w-30rem md:w-full">
             <div class="p-inputgroup md:w-full">
@@ -15,8 +38,8 @@
     <div class="col-2">
         <button pButton="pButton" pRipple="pRipple" type="button" label="Search" class="p-button-rounded p-button-dark px-5 ml-8 bg-gray-900" style="border-radius: 2rem;"></button>
     </div>
-</div>
-
+</div> -->
+<!-- 
 <p-overlayPanel #op [showCloseIcon]="true" class="lg:w-30rem mr-8" [style]="{width: '1000px'}">
     <ng-template pTemplate>
         <div class="font-bold border-gray-400 border-bottom-1 text-2xl py-3">Platforms</div>
@@ -53,4 +76,4 @@
             </div>
         </div>
     </ng-template>
-</p-overlayPanel>
+</p-overlayPanel> -->

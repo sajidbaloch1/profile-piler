@@ -1,0 +1,59 @@
+.icon-circle {
+    /* display: block; */
+    height: 52px;
+    width: 52px;
+    border-radius: 40px;
+    text-align: center;
+    padding-top: 13px;
+    background: #d4d4d4;
+    color: #fff;
+    font-size: 28px;
+  }
+  /* social icons color defination */
+.fa-twitter.colored {
+    background: #00b0f3 !important;
+  }
+  .fa-instagram.colored {
+    background: #f86b75 !important;
+  }
+  .fa-facebook.colored {
+    background: #295dc0 !important;
+  }
+  .fa-youtube.colored {
+    background: #f3594c !important;
+  }
+  .fa-tumblr.colored {
+    background: #3b5876 !important;
+  }
+  
+  .fa-flickr.colored {
+    background: #0063db !important;
+  }
+  .fa-tiktok.colored {
+    background: gray !important;
+    color: white;
+  }
+  
+  .fa-quora.colored {
+    background: #b92b26 !important;
+  }
+  
+  .fa-pinterest.colored {
+    background: #f86b75 !important;
+  }
+  
+  .fa-tm.colored,
+  .fa-travelmassive.colored {
+    background: #f1678a !important;
+    color: white;
+  }
+  .close:hover {
+    color: white;
+  }
+
+
+  .selected .platfrom-selector,
+.platfrom-selector:hover {
+  cursor: pointer;
+  background: #640ab6 !important;
+}
