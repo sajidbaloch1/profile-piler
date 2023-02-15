@@ -1,0 +1,29 @@
+:host::ng-deep{
+ .p-breadcrumb{
+    max-width: 1200px !important;
+    margin: auto !important;
+    font-weight: bold !important;
+    background-color: white !important;
+ }   
+ .p-breadcrumb .p-breadcrumb-chevron:before {
+    content: ">";
+    font-weight: 800;
+}
+.p-menuitem-text{
+    color: #4f0098 !important;
+}
+.p-menuitem-text:hover{
+    text-decoration: underline;
+}
+.grid{
+    max-width: 1200px;
+    margin: auto;
+}
+}
+h1{
+    margin: 0px;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+        font-size: 2.5rem;
+}

@@ -1,18 +1,4 @@
-.card.selectable {
-  cursor: pointer;
-}
 
-.card.selectable:hover {
-  background: #9452d1 !important;
-  color: white;
-}
-
-.card.selectable:hover .icon-circle {
-  background-color: #4f0098 !important;
-}
-.theme-color {
-  color: #4f0098 !important;
-}
 .search-panel {
   padding: 50px;
   background: rgb(255, 255, 255);
@@ -48,4 +34,7 @@
   h1 {
     font-size: 30px !important;
   }
+}
+a{
+color: black;
 }

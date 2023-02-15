@@ -18,6 +18,7 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CuratedListComponent } from './pages/curated-list/curated-list.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { ContactUsModule } from './pages/contact-us/contact-us.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { PaginatorModule } from 'primeng/paginator';
     TreeSelectModule,
     SplitButtonModule,
     SharedModule,
+    ContactUsModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
   ],

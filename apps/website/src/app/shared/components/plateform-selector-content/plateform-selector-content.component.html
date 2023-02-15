@@ -1,0 +1,24 @@
+  <div class="grid">
+    <ng-container *ngFor="let p of plateforms">
+      <div
+        class="col-4 md:col-4 lg:col-4 text-center selectable"
+        [class.selected]="p.selected"
+        (click)="onItemClicked(p)"
+      >
+        <pp-plateform-icon [plateform]="p.plateform" cssClasses="social-icon icon-circle platfrom-selector"></pp-plateform-icon>
+        <div>{{ p.name }}</div>
+        <i *ngIf="p.selected" class="checkbox fa fa-check-circle"></i>
+      </div>
+    </ng-container>
+  </div>
+<div class="p-dialog-footer">
+    <ng-container *ngIf="mode == 'Multi'">
+        <p-button
+        label="Select"
+        type="button"
+        class="button"
+        styleClass="p-button-outlined"
+        >
+    </p-button>
+</ng-container>
+</div>

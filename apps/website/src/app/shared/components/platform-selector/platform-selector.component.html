@@ -1,4 +1,4 @@
-<div class="grid" (click)="showDialog(content)">
+<div class="grid" (click)="show()">
   <div class="col-10 text">
     {{ getText() | titlecase }}
   </div>
@@ -6,39 +6,3 @@
     <i class="pi pi-angle-down"></i>
   </div>
 </div>
-
-<p-dialog
-  header="PlateForms"
-  [(visible)]="BasicShow"
-  [style]="{ width: '60vw' }"
-  [draggable]="false"
-  [resizable]="false"
-  [responsive]="true"
-  [closeOnEscape]="false"
-  [modal]="true"#content
->
-  <div class="grid">
-    <ng-container *ngFor="let p of plateforms">
-      <div
-        class="col-4 md:col-4 lg:col-4 text-center selectable"
-        [class.selected]="p.selected"
-        (click)="onItemClicked(p)"
-      >
-        <pp-plateform-icon [plateform]="p.plateform" cssClasses="social-icon icon-circle platfrom-selector"></pp-plateform-icon>
-        <div>{{ p.name }}</div>
-        <i *ngIf="p.selected" class="checkbox fa fa-check-circle"></i>
-      </div>
-    </ng-container>
-  </div>
-
-  <ng-template pTemplate="footer" *ngIf="mode == 'Multi'">
-    <p-button
-      (click)="BasicShow = false"
-      label="Select"
-      type="button"
-      class="button"
-      styleClass="p-button-outlined"
-    >
-    </p-button>
-  </ng-template>
-</p-dialog>

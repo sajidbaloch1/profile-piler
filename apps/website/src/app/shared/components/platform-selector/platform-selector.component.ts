@@ -1,9 +1,9 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { PlateFormEnum } from '../../models/plateform.enum';
+import { DialogService } from 'primeng/dynamicdialog';
+import { PlateformSelectorContentComponent } from '../plateform-selector-content/plateform-selector-content.component';
 import { PrimeNGConfig } from 'primeng/api';
-import { PlateFormEnum } from '../models/plateform.enum';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-// import{DialogService}from 'primeng/dynamicdialog'
 @Component({
   selector: 'pp-platform-selector',
   templateUrl: './platform-selector.component.html',
@@ -19,8 +19,8 @@ export class PlatformSelectorComponent implements ControlValueAccessor {
   @Input() mode: 'One' | 'Multi' = 'Multi'
   constructor(
     private primeConfig: PrimeNGConfig,
-    private ngModal: NgbModal
-    // private dialogService: DialogService
+
+    private dialogService: DialogService,
   ) { }
   writeValue(arr: []): void {
     if (!arr || arr.length === 0) {
@@ -85,7 +85,7 @@ export class PlatformSelectorComponent implements ControlValueAccessor {
     }
   ]
 
-  private _selectedPlatForms: any = [];
+  public _selectedPlatForms : string[] = [];
   propogateChange = (_: string[]) => { };
   registerOnChange(fn: any): void {
     this.propogateChange = fn
@@ -93,6 +93,7 @@ export class PlatformSelectorComponent implements ControlValueAccessor {
   private markPlatfromsSelected() {
     this.plateforms.forEach((p) => (p.selected = false));
     this._selectedPlatForms.forEach((pVal: any) => {
+      console.log(pVal)
       this.plateforms.filter((p) => p.value === pVal).forEach((p) => p.selected = true)
     })
   }
@@ -103,26 +104,34 @@ export class PlatformSelectorComponent implements ControlValueAccessor {
 
   BasicShow: boolean = false
 
-  showDialog(content: any) {
+  show() {
     this.markPlatfromsSelected()
-    this.BasicShow = true
-    this.ngModal.open(content).result.then(() => {
+    const ref = this.dialogService.open(PlateformSelectorContentComponent, {
+      width: '70%',
+      contentStyle: { "overflow": "auto" },
+      baseZIndex: 10000,
+      maximizable: true
+
+    })
+    ref.onClose.subscribe(() => {
       this.markSelection();
-    }, () =>{ this.markSelection();})
+    },()=>{
+      this.markSelection()
+    })
   }
 
   markSelection() {
-    this._selectedPlatForms = this.plateforms
+      this._selectedPlatForms = this.plateforms
       .filter((p) => p.selected)
       .map((p) => p.value);
-    this.propogateChange(this._selectedPlatForms);
-  }
+      this.propogateChange(this._selectedPlatForms)
+    }
+
   onItemClicked(plateform: PlateFromSelectItem) {
     plateform.selected = !plateform.selected;
     if (this.mode === 'One') {
       this.plateforms.forEach((p) => (p.selected = false));
       plateform.selected = !plateform.selected;
-      // console.log(plateform.selected);
     }
 
   }

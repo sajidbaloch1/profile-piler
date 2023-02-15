@@ -1,0 +1,72 @@
+.selectable {
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .selected,
+  .selectable:hover,
+  .selected .social-icon,
+  .selectable .social-icon:hover {
+    cursor: pointer;
+    color: #640ab6;
+  }
+  
+  .selectable i.checkbox {
+    font-size: 23px;
+  }
+  .dropdown-arrow {
+    cursor: pointer;
+    padding-top: 24px;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #6c757d;
+  }
+  .col {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+  }
+  .text {
+    font-weight: 600 !important;
+    letter-spacing: 0.31px !important;
+    color: #6f6f6f !important;
+    font-style: normal !important;
+    font-size: 17px !important;
+    margin-left: 10px;
+    margin-top: 15px;
+    cursor: pointer;
+  }
+  
+  :host::ng-deep {
+    .p-dialog-content {
+      overflow-y: hidden !important;
+    }
+    .p-element {
+      color: black !important;
+    }
+    .p-button:hover {
+      color: white !important;
+      background-color: #4f0098 !important;
+    }
+    .p-dialog-title {
+      font-size: 30px !important;
+      font-weight: bold !important;
+      font-stretch: normal !important;
+      font-style: normal !important;
+      line-height: normal !important;
+      letter-spacing: 0.27px;
+      letter-spacing: 0.27px;
+    }
+    .p-dialog-mask{
+      overflow-y: auto;
+    }
+    .p-dialog{
+      max-height: 200% !important;
+    }
+  }
+  

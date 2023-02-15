@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { initFilters, ListPageFilterModel } from '../models/filter-model';
+import { initFilters, ListPageFilterModel } from '../../models/filter-model';
 
 @Component({
   selector: 'pp-search-form',

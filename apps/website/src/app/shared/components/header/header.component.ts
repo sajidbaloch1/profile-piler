@@ -21,13 +21,7 @@ export class HeaderComponent {
       {
         label: 'Stats',
       },
-      {
-        label:'Login',
-        icon:'pi pi-key'
-      },{
-        label:'Sign Up',
-        icon: 'pi pi-user'
-      }
+      
     ];
   }
 }
