@@ -4,16 +4,18 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { LandingPageComponent } from './landing-page.component';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-  declarations: [],
+  declarations: [LandingPageComponent],
   imports: [
     CommonModule,
     HttpClientModule,
     RouterModule.forChild([{
       path: '',
       component: LandingPageComponent
-    }])
+    }]),
+    SharedModule
   ],
 })
 export class LandingPageModule {}

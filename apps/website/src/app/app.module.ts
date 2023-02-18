@@ -13,19 +13,16 @@ import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CuratedListComponent } from './pages/curated-list/curated-list.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { ContactUsModule } from './pages/contact-us/contact-us.module';
-
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 @NgModule({
   declarations: [
     AppComponent,
     NxWelcomeComponent,
-    LandingPageComponent,
-    CuratedListComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

@@ -13,12 +13,9 @@ export const appRoutes: Route[] = [
     data: { state: "home-page", title: "Home" },
   },
   {
-    path: 'search-profile',
-    component: SearchProfileComponent
-  },
-  {
-    path: 'curated-list',
-    component: CuratedListComponent
+    path: 'lists',
+    loadChildren: () =>
+      import("../app/pages/curated-list/curated-list.module").then((m) => m.CuratedListModule)
   },
   {
     path: 'contact-us',
@@ -40,5 +37,9 @@ export const appRoutes: Route[] = [
     path: 'search-profiles',
     loadChildren: () =>
       import("../app/pages/search-profiles-page/search-profiles-page.module").then((m) => m.SearchProfilesPageModule), data: { state: 'search-profiles-page', title: 'Search Profiles' }
+  }, {
+    path: 'search-profiles/network',
+    loadChildren: () =>
+      import("../app/pages/network-page/network-page.module").then((m) => m.NetworkPageModule), data: { state: "network-page", title: "Network" },
   }
 ];

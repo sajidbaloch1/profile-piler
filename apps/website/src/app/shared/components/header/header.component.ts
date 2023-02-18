@@ -12,14 +12,15 @@ export class HeaderComponent {
     this.items = [
       {
         label: 'Search Profiles',
-        routerLink: 'search-profile',
+        routerLink: 'search-profiles',
       },
       {
         label: 'Curated Lists',
-        routerLink: 'curated-list'
+        routerLink: 'lists'
       },
       {
         label: 'Stats',
+        routerLink: 'search-profiles/network'
       },
       
     ];
