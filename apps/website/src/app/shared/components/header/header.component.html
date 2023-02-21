@@ -1,12 +1,11 @@
-
 <div class="grid bg-gray-50 m-0 lg:h-2rem align-content-center text-sm">
-  <div class="col-7 md:col-4 lg:col-4 lg:text-center md:text-right">
+  <div class="col-7 md:col-4 lg:col-4 lg:text-center ">
     <a href="" class="no-underline font-normal">
       <i class="pi pi-envelope"></i>
       info@profilerpiler.com
     </a>
   </div>
-  <div class="col-5 lg:col-7">
+  <div class="col-5 md:col-8 lg:col-7 lg:col-7">
     <ul class="list-none flex m-0 justify-content-end">
       <li>
         <a
@@ -30,17 +29,23 @@
         >
       </li>
       <li>
-        <a routerLink="contact-us" class="text-900 px-3 no-underline top-link">Contact</a>
+        <a routerLink="contact-us" class="text-900 px-3 no-underline top-link"
+          >Contact</a
+        >
       </li>
     </ul>
   </div>
 </div>
 
-
 <div class="border-bottom-1 border-gray-300 py-3">
-    <p-menubar [model]="items">
-        <ng-template pTemplate="start">
-            <img src="../assets/img/logo.png" alt="" routerlink="/" class="lg:px-8 mr-8 img">
-        </ng-template>
-    </p-menubar>
+  <p-menubar [model]="items">
+    <ng-template pTemplate="start">
+      <img
+        src="../assets/img/logo.png"
+        alt=""
+        routerlink="/"
+        class="lg:px-8 mr-8 img"
+      />
+    </ng-template>
+  </p-menubar>
 </div>

@@ -16,6 +16,7 @@ export interface ICuratedListItem {
 }
 
 export interface ICuratedListItemRs {
+  meta: IPaginationData | undefined;
   data?: ICuratedListItem;
 }
 

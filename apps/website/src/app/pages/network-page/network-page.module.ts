@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NetworkPageComponent } from './network-page.component';
 import { RouterModule, Routes } from '@angular/router';
+import { NetworkPageRoutingModule } from './network-page-routing.module';
+import { SharedModule } from 'primeng/api';
 
-const routes: Routes = [{ path: "", component: NetworkPageComponent }]
 
 @NgModule({
   declarations: [
@@ -11,8 +12,8 @@ const routes: Routes = [{ path: "", component: NetworkPageComponent }]
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
-    
+    NetworkPageRoutingModule,
+    SharedModule,
   ]
 })
 export class NetworkPageModule { }
