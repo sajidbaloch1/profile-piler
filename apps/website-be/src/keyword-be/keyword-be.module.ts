@@ -5,9 +5,9 @@ import { KeywordBeController } from './keyword-be.controller';
 import { KeywordBeService } from './keyword-be.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([KeywordEntity])],
+  imports: [TypeOrmModule.forFeature([KeywordEntity],'PP')],
   controllers: [KeywordBeController],
   providers: [KeywordBeService],
-  exports: [KeywordBeService],
+  // exports: [KeywordBeService],
 })
 export class KeywordBeModule {}

@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { KeywordEntity } from '../entities/keyword.entity';
 import { KeywordBeModule } from '../keyword-be/keyword-be.module';
-import { ElasticsearchModule } from '@nestjs/elasticsearch';
+import { MapperModule } from '../mapper/mapper.module';
 const defaultOptions = {
   type: 'mysql',
   host: 'localhost',
@@ -16,20 +16,11 @@ const defaultOptions = {
   imports: [
     KeywordBeModule,
     ConfigModule,
-    ElasticsearchModule.registerAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        node: configService.get('AWS_ELASTIC_HOSTS'),
-        secretkey: configService.get('AWS_ACCESS_KEY_ID'),
-        secretAcceskey: configService.get('AWS_SECRET_ACCESS_KEY'),
-        region: configService.get('AWS_ELASTIC_REGION'),
-      }),
-      inject: [ConfigService]
-    }),
+    MapperModule,
     TypeOrmModule.forRoot({
       ...defaultOptions,
       database: 'social_entity_db',
-      entities: [KeywordEntity],
+      entities: [],
     } as any), TypeOrmModule.forRoot({
       ...defaultOptions,
       name: 'YT',
@@ -44,9 +35,9 @@ const defaultOptions = {
     } as any),
     TypeOrmModule.forRoot({
       ...defaultOptions,
-      database: 'profile-piler',
+      database: 'profile_piler',
       name: 'PP',
-      entities: [],
+      entities: [KeywordEntity],
     } as any)
   ],
 })

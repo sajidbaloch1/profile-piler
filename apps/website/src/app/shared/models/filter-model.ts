@@ -14,7 +14,7 @@ export interface ListPageFilterModel {
 
 export function initFilters(): ListPageFilterModel {
     return {
-        q: '',
+        q: "",
         platforms: '',
         isVerified: '',
         location: '',

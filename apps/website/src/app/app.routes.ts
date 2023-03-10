@@ -47,7 +47,7 @@ export const appRoutes: Route[] = [
     matcher: profileUrlMatcher,
     ...listingPageRouteConfig,
   }, {
-    path: "Profiles",
+    path: "profiles",
     ...listingPageRouteConfig,
   }, {
     path: "profiles/by-platform/:platforms",

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { initFilters, ListPageFilterModel } from '../../models/filter-model';
+import { GoogleAnalyticsService } from '../../services/google-analytics.service';
 
 @Component({
   selector: 'pp-search-form',
@@ -19,6 +20,7 @@ export class SearchFormComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private gooleAnalytics:GoogleAnalyticsService
   ) { }
 
   ngOnInit() {
@@ -41,8 +43,23 @@ export class SearchFormComponent implements OnInit {
     );
   }
 
-  onSearchClkd(){
-
+  onSearchClkd() {
+    let url = "profiles";
+    if (this.params.keyword) {
+      const cleanedKeyword = this.params.keyword.replace(/\s/g, "-");
+      url = `${url}/${cleanedKeyword}`;
+      this.gooleAnalytics.eventEmitter("search","engagement",this.params.keyword)
+    }
+    if(this.params.selectedPlatforms.length > 0){
+      const cleanedPlatform = this.params.selectedPlatforms.join("-");
+      url = this.params.keyword 
+      ?`${url}/${cleanedPlatform}`
+      :`${url}/by-platform/${cleanedPlatform}`;
+      this.gooleAnalytics.eventEmitter("search","engagement",cleanedPlatform);
+    }
+    this.router.navigate([url],{
+      queryParams:this.filters,
+    })
   }
 
   updateFilters(filters: any) {

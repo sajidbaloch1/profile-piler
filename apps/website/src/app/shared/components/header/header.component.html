@@ -1,5 +1,5 @@
 <div class="grid bg-gray-50 m-0 lg:h-2rem align-content-center text-sm">
-  <div class="col-7 md:col-4 lg:col-4 lg:text-center ">
+  <div class="col-7 md:col-4 lg:col-4 lg:text-center">
     <a href="" class="no-underline font-normal">
       <i class="pi pi-envelope"></i>
       info@profilerpiler.com
@@ -40,12 +40,9 @@
 <div class="border-bottom-1 border-gray-300 py-3">
   <p-menubar [model]="items">
     <ng-template pTemplate="start">
-      <img
-        src="../assets/img/logo.png"
-        alt=""
-        routerlink="/"
-        class="lg:px-8 mr-8 img"
-      />
+      <a routerLink="/">
+        <img src="../assets/img/logo.png" alt="" class="lg:px-8 mr-8 img" />
+      </a>
     </ng-template>
   </p-menubar>
 </div>

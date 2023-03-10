@@ -8,7 +8,7 @@ import { KeywordEntity } from '../entities/keyword.entity';
 @Injectable()
 export class KeywordBeService {
   constructor(
-    @InjectRepository(KeywordEntity)
+    @InjectRepository(KeywordEntity,'PP')
     private keywordsRepository: Repository<KeywordEntity>
   ) {}
 

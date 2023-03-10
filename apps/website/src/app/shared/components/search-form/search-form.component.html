@@ -8,7 +8,7 @@
         pInputText="pInputText"
         placeholder="Search"
         [(ngModel)]="params.keyword"
-        (keydown)="onSearchClkd()"
+        (keydown.enter)="onSearchClkd()"
         autocomplete="off"
       />
     </div>
@@ -34,4 +34,3 @@
     </div>
   </div>
 </div>
-

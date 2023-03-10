@@ -1,13 +1,23 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
-import { BehaviorSubject, catchError, forkJoin, map, Observable, of, skip, Subject, Subscribable, Subscription } from 'rxjs';
-import { initFilters, ListPageFilterModel } from '../../shared/models/filter-model';
-import { ProfileSearchResponse } from '../../shared/models/profile-search-response';
-import { SocialEntity } from '../../shared/models/social.entity';
-import { AjaxService } from '../../shared/services/ajax.service';
-import { getPlatformName } from '../../shared/utils';
+import { Injectable } from "@angular/core";
+import {
+  BehaviorSubject,
+  forkJoin,
+  Observable,
+  of,
+  Subject,
+  Subscription,
+} from "rxjs";
+import { catchError, map, skip } from "rxjs/operators";
 const COUNT_ENDPOINT = "profiles/count";
-import { ListPageData } from '../curated-list/data.resolver';
+
+import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
+import { ListPageData } from "./data.resolver";
+import { SocialEntity } from "../../shared/models/social.entity";
+import { AjaxService } from "../../shared/services/ajax.service";
+import { initFilters, ListPageFilterModel } from "../../shared/models/filter-model";
+import { ProfileSearchResponse } from "../../shared/models/profile-search-response";
+import { getPlatformName } from "../../shared/utils";
+
 
 export type IListPageData = ListPageData | { errors: string[] };
 export interface ISocialEntityResponseItem {
@@ -33,41 +43,41 @@ export interface CountResponse {
   success: boolean;
   errors: string[];
 }
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ListService {
   private $dataStream: BehaviorSubject<IListPageData> =
-    new BehaviorSubject<IListPageData>(null);
+    new BehaviorSubject<IListPageData>({} as IListPageData);
   private $dataLoadingStream: Subject<boolean> = new Subject<boolean>();
   private activeRoute?: ActivatedRoute;
-  private $socialEntityStream: BehaviorSubject<ISocialEntityResponseItem>
-    = new BehaviorSubject<ISocialEntityResponseItem>(null);
+  private $socialEntityStream: BehaviorSubject<ISocialEntityResponseItem> =
+    new BehaviorSubject<ISocialEntityResponseItem>({} as ISocialEntityResponseItem);
   private dataSubscription?: Subscription;
   private queryParamsSubscription?: Subscription;
   private routeParamsSubscription?: Subscription;
 
   get dataStream(): BehaviorSubject<IListPageData> {
-    return this.$dataStream
+    return this.$dataStream;
   }
 
-  get getisDataLoading(): Subject<boolean> {
+  get isDataLoading(): Subject<boolean> {
     return this.$dataLoadingStream;
   }
 
   get socialEntityStream(): BehaviorSubject<ISocialEntityResponseItem> {
     return this.$socialEntityStream;
   }
-  constructor(
-    private ajax: AjaxService
-  ) { }
+
+  constructor(private ajax: AjaxService) { }
 
   subscribeDataStream(activeRoute: ActivatedRoute) {
     this.activeRoute = activeRoute;
     this.dataSubscription = this.activeRoute.data.subscribe((data) => {
-      if (data['data']) {
-        this.$dataStream.next(data['data']);
-        this.bulkLoadSocialEntities(data['data']);
+      if (data["data"]) {
+        this.$dataStream.next(data["data"]);
+        this.bulkLoadSocialEntities(data["data"]);
       } else this.loadAndPublishData();
     });
 
@@ -78,8 +88,8 @@ export class ListService {
     this.routeParamsSubscription = this.activeRoute.params
       .pipe(skip(1))
       .subscribe(() => {
-        if (this.activeRoute?.snapshot.data['data'])
-          this.$dataStream.next(this.activeRoute?.snapshot.data['data']);
+        if (this.activeRoute?.snapshot.data?.["data"])
+          this.$dataStream.next(this.activeRoute.snapshot.data["data"]);
         else this.loadAndPublishData();
       });
   }
@@ -156,10 +166,10 @@ export class ListService {
     const filters: any = {
       ...initFilters(),
       ...queryParams,
-      platforms: routeParams['platforms'],
+      platforms: routeParams["platforms"],
     };
 
-    if (routeParams['keyword']) filters.q = routeParams['keyword'].replace(/-/g, " ");
+    if (routeParams["keyword"]) filters.q = routeParams["keyword"].replace(/-/g, " ");
     if (!filters.sort) filters.sort = "followers";
 
     const finalFilters: any = {};
@@ -169,10 +179,9 @@ export class ListService {
     return finalFilters;
   }
 
-
   private async bulkLoadSocialEntities(
     response: IListPageData
-  ): Promise<ISocialEntityResponseItem> {
+  ): Promise<ISocialEntityResponseItem | any> {
     if ((response as any).errors) {
       return;
     }
@@ -191,11 +200,12 @@ export class ListService {
       .toPromise();
     this.$socialEntityStream.next(entityResponse);
   }
-  private async loadAndPublishData() {
-    this.$dataLoadingStream.next(true);
-    const params: any = this.buildParams(this.activeRoute?.snapshot);
-    const data: any = await this.loadData(params).toPromise<IListPageData>();
 
+  private async loadAndPublishData() {
+    let snapshot: any = this.activeRoute?.snapshot
+    this.$dataLoadingStream.next(true);
+    const params = this.buildParams(snapshot);
+    const data: any = await this.loadData(params).toPromise() as IListPageData;
     this.bulkLoadSocialEntities(data);
     this.$dataStream.next(data);
     this.$dataLoadingStream.next(false);

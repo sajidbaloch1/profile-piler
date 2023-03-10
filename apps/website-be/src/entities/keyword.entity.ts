@@ -20,6 +20,4 @@ export class KeywordEntity {
   @Column()
   scanned_at: Date;
 
-  @Column()
-  expiration: number;
 }
