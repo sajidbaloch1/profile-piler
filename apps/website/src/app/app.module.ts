@@ -25,7 +25,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     NotFoundComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({appId:"profile-piler-web"}),
     ButtonModule,
     PaginatorModule,
     FormsModule,

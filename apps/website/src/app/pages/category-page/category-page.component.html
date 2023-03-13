@@ -1,29 +1,95 @@
-<div class="surface-section mx-5 py-3 md:px-6 lg:px-8">
-  <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
-    <li>
-      <a class="no-underline line-height-3 cursor-pointer" routerlink="/"
-        >Home</a
-      >
-    </li>
-    <li class="px-2">
-      <i class="pi pi-angle-right text-500 line-height-3"></i>
-    </li>
-    <li>
-      <a class="no-underline line-height-3 cursor-pointer" routerlink="/"
-        >Search Profiles</a
-      >
-    </li>
-    <li class="px-2">
-      <i class="pi pi-angle-right text-500 line-height-3"></i>
-    </li>
-    <li>
-      <span class="line-height-3" style="color: #640ab6">{{
-        title | titlecase
-      }}</span>
-    </li>
-  </ul>
-</div>
-<div class="grid">
-  <br />
+<div class="content">
+  <div class="surface-section">
+    <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
+      <li>
+        <a class="no-underline line-height-3 cursor-pointer" routerlink="/"
+          >Home</a
+        >
+      </li>
+      <li class="px-2">
+        <i class="pi pi-angle-right text-500 line-height-3"></i>
+      </li>
+      <li>
+        <a class="no-underline line-height-3 cursor-pointer" routerlink="/"
+          >Search Profiles</a
+        >
+      </li>
+      <li class="px-2">
+        <i class="pi pi-angle-right text-500 line-height-3"></i>
+      </li>
+      <li>
+        <span class="line-height-3" style="color: #640ab6">{{
+          title | titlecase
+        }}</span>
+      </li>
+    </ul>
+  </div>
   <h3>Browse All {{ sourceName }} by Network</h3>
+  <div class="grid">
+    <!-- <br /> -->
+    <br />
+    <div class="col-6 col-sm-6">
+      <a routerLink="/categories/{{ source }}/instagram">Instagram</a>
+    </div>
+    <div class="col-6 col-sm-6">
+      <a routerLink="/categories/{{ source }}/youtube">Youtube</a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/categories/{{ source }}/twitter">Twitter</a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/categories/{{ source }}/facebook">Facebook</a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/categories/{{ source }}/flickr">Flickr</a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/categories/{{ source }}/quora">Quora</a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/categories/{{ source }}/pinterest">Pinterest</a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/categories/{{ source }}/tiktok">Tiktok</a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/categories/{{ source }}/TravelMassive">TravelMassive</a>
+    </div>
+  </div>
+
+  <h3 class="heading">
+    <ng-container *ngIf="platform">
+      <pp-plateform-icon
+        [plateform]="platform"
+        cssClasses="heading-icon"
+      ></pp-plateform-icon>
+    </ng-container>
+    {{ title }}
+  </h3>
+  <!-- <div class="grid"> -->
+    <br />
+    <div style="margin-left: 45%" class="fa-3x" *ngIf="keywords.length === 0">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+    <ng-container *ngFor="let keyword of keywords">
+      <h4>
+        {{ keyword.category }} ({{ getTotal(keyword.keywords) | number }})
+      </h4>
+      <hr />
+      <div class="grid">
+        <div
+          class="col-4"
+          style="margin: 0px; padding: 0px"
+          *ngFor="let key of keyword.keywords"
+        >
+          <a [href]="getSearchLink(key.keyword)" target="_blank">
+            <i class="fas fa-caret-right"></i> {{ key.keyword }} ({{
+              key.resultCount | number
+            }})
+          </a>
+        </div>
+      </div>
+      <br />
+    </ng-container>
+  <!-- </div> -->
 </div>

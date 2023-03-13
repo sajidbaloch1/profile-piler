@@ -1,21 +1,106 @@
-<div class="surface-section mx-5 py-3 md:px-6 lg:px-8">
-  <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
-    <li>
-      <a class="no-underline line-height-3 cursor-pointer" routerlink="/"
-        >Home</a
+<div class="content">
+  <div class="surface-section">
+    <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
+      <li>
+        <a class="no-underline line-height-3 cursor-pointer" routerlink="/"
+          >Home</a
+        >
+      </li>
+      <li class="px-2">
+        <i class="pi pi-angle-right text-500 line-height-3"></i>
+      </li>
+      <li>
+        <a class="no-underline line-height-3 cursor-pointer">
+          Search Profiles
+        </a>
+      </li>
+      <li class="px-2">
+        <i class="pi pi-angle-right text-500 line-height-3"></i>
+      </li>
+      <li>
+        <span class="line-height-3" style="color: #640ab6">Topics</span>
+      </li>
+    </ul>
+  </div>
+  <div class="grid">
+    <div class="col-12">
+      <a
+        *ngFor="let key of alphabets"
+        class="p-button alphabet-btn rounded-circle"
+        [class.selected]="startWith === key"
+        routerLink="/search-profiles/topics/{{ platform }}"
+        [queryParams]="{ startWith: key }"
+        >{{ key | titlecase }}
+      </a>
+    </div>
+  </div>
+
+  <h3>Browse all Topics By Network</h3>
+  <div class="grid">
+    <br />
+    <div class="col-3">
+      <a routerLink="/search-profiles/topics/instagram">Instagram</a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/search-profiles/topics/youtube">Youtube</a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/search-profiles/topics/twitter">Twitter</a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/search-profiles/topics/facebook">Facebook</a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/search-profiles/topics/flickr">Flickr</a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/search-profiles/topics/quora">Quora</a>
+    </div>
+    <div class="col-3">
+      <a class="active" routerLink="/search-profiles/topics/pinterest">
+        Pinterest
+      </a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/search-profiles/topics/tiktok">Tiktok</a>
+    </div>
+    <div class="col-3">
+      <a routerLink="/search-profiles/topics/TravelMassive">TravelMassive</a>
+    </div>
+  </div>
+
+  <h3 class="heading">
+    <ng-container *ngIf="platform">
+      <pp-plateform-icon [plateform]="platform" cssClasses="heading-icon">
+      </pp-plateform-icon
+    ></ng-container>
+    Browse all Topics
+    <ng-container *ngIf="platform">
+      for {{ platform | titlecase }}</ng-container
+    >
+  </h3>
+  <br />
+  <div class="grid">
+    <div class="col-3" *ngFor="let key of keywords">
+      <a [href]="getSearchLink(key.keyword)" target="_blank">
+        <i class="fas fa-caret-right"></i> {{ key.keyword | titlecase }} ({{
+          key.resultsCount | number
+        }})
+      </a>
+    </div>
+  </div>
+  <br />
+  <div class="grid">
+    <div class="col-12">
+      <a
+        *ngFor="let key of alphabets"
+        class="p-button alphabet-btn rounded-circle"
+        [class.selected]="startWith === key"
+        routerLink="/search-profiles/topics"
+        [queryParams]="{ startWith: key }"
       >
-    </li>
-    <li class="px-2">
-      <i class="pi pi-angle-right text-500 line-height-3"></i>
-    </li>
-    <li>
-      <a class="no-underline line-height-3 cursor-pointer"> Search Profiles </a>
-    </li>
-    <li class="px-2">
-      <i class="pi pi-angle-right text-500 line-height-3"></i>
-    </li>
-    <li>
-      <span class="line-height-3" style="color: #640ab6">Topics</span>
-    </li>
-  </ul>
+        {{ key | titlecase }}
+      </a>
+    </div>
+  </div>
 </div>

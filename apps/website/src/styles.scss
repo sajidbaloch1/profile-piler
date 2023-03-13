@@ -1,2 +1,95 @@
 @import '~@fortawesome/fontawesome-free/css/all.css';
 @import 'primeflex/primeflex.scss';
+
+.search-panel {
+  padding: 50px;
+  background: rgb(255, 255, 255);
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 1) 0%,
+    rgba(240, 240, 240, 1) 100%
+  );
+}
+.search-panel .heading h1 {
+  text-shadow: 0 4px 5px rgb(0 0 0 / 3%);
+  font-size: 63px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.26;
+  letter-spacing: -0.1px;
+  text-align: center;
+  color: #22222b;
+  margin-top: 0px;
+}
+
+.search-panel .heading p {
+  padding: 0px 62px;
+  margin-bottom: 1rem;
+}
+@media (max-width: 575.98px) {
+  .search-panel {
+    padding: 40px 10px;
+  }
+}
+
+.heading-icon {
+  color: #4f0098;
+}
+
+@media (max-width: 575.98px) {
+  h1 {
+    font-size: 30px !important;
+  }
+}
+a {
+  color: black;
+}
+
+.content {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+@media (max-width: 575.98px) {
+  .content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+a {
+  text-decoration: none;
+}
+@media (max-width: 575.98px) {
+  .content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+h3 {
+  font-size: 35px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.89;
+  letter-spacing: normal;
+}
+h4 {
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0.27px;
+  margin: 0px;
+}
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}

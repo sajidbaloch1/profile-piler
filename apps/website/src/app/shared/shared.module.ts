@@ -35,9 +35,29 @@ import { SocialEntityRenderComponent } from './components/social-entity-render/s
 import { SocialFeedItemComponent } from './components/social-feed-item/social-feed-item.component';
 import { SocialPlatformFeedComponent } from './components/social-platform-feed/social-platform-feed.component';
 import { PipesModule } from './pipes/pipes.module';
+import { RouterModule } from '@angular/router';
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, SearchProfileComponent, SearchFormComponent, PlatformSelectorComponent, PlateformIconComponent, PlateformSelectorContentComponent, PlatformStatsComponent, AnimatedDigitComponent, AutoCompleteComponent, FiltersComponent, PaginationRenderComponent, ProfileListItemComponent, ProfileSkeletonComponent, ProfileSocialFeedComponent, ProfileSocialScoreComponent, SocialEntityRenderComponent, SocialFeedItemComponent, SocialPlatformFeedComponent],
-  imports: [CommonModule, MenubarModule, ButtonModule,
+  declarations: [
+    HeaderComponent,
+    FooterComponent,
+    SearchProfileComponent,
+    SearchFormComponent,
+    PlatformSelectorComponent,
+    PlateformIconComponent,
+    PlateformSelectorContentComponent,
+    PlatformStatsComponent,
+    AnimatedDigitComponent,
+    AutoCompleteComponent,
+    FiltersComponent,
+    PaginationRenderComponent,
+    ProfileListItemComponent,
+    ProfileSkeletonComponent,
+    ProfileSocialFeedComponent,
+    ProfileSocialScoreComponent,
+    SocialEntityRenderComponent,
+    SocialFeedItemComponent,
+    SocialPlatformFeedComponent],
+  imports: [CommonModule, MenubarModule, ButtonModule, RouterModule,
     FormsModule,
     InputTextModule,
     DropdownModule,
@@ -49,11 +69,25 @@ import { PipesModule } from './pipes/pipes.module';
     TableModule,
     FormsModule,
     CardModule,
+    RouterModule,
     DynamicDialogModule,
     PipesModule,
     HttpClientModule
   ],
-  exports: [HeaderComponent, FooterComponent, SearchFormComponent, SearchProfileComponent, PipesModule, FormsModule,DropdownModule],
+
+  exports: [
+    HeaderComponent,
+    FooterComponent,
+    SearchFormComponent,
+    SearchProfileComponent,
+    PipesModule,
+    PlatformStatsComponent,
+    PlateformIconComponent,
+    FormsModule,
+    DropdownModule,
+    RouterModule,
+    
+  ],
   providers: [DialogService, MessageService]
 })
 export class SharedModule { }

@@ -1,1 +1,24 @@
-<p>platform-stats works!</p>
+<div class="profile-stats pt-5 pb-5">
+  <h2 class="text-center">{{ heading }}</h2>
+
+  <div class="grid">
+    <div class="col-3" *ngFor="let p of platforms">
+      <div class="card selectable">
+        <a target="_blank" routerLink="/profiles/by-platform/{{ p.name }}">
+          <div class="card-body">
+            <pp-plateform-icon
+              [plateform]="p.name | lowercase"
+              cssClasses="colored icon-circle"
+            >
+            </pp-plateform-icon>
+            <span>{{ p.name }}</span>
+            <h5>
+              {{ p.count | toShortNumber }}
+            </h5>
+            <span>Accounts</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
