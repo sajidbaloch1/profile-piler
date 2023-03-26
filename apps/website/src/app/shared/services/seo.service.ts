@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { environment } from 'apps/website/src/environments/environment';
 
 export interface IPageMetaData {
-  title: string;
+  title?: string;
   description?: string;
   url?: string;
   keywords?: string[]
@@ -22,12 +23,9 @@ export class SeoService {
 
   setPageMetaData(metaData: IPageMetaData) {
     this.titleService.setTitle(`${metaData.title} - ProfilePiler`);
-    // please add the url path 
-    // console.log(`${}`)
-
     if (metaData.description) {
       this.meta.addTag({
-        name: 'description',
+        name: "description",
         content: metaData.description,
       });
     }
@@ -35,22 +33,18 @@ export class SeoService {
     if (metaData.keywords && metaData.keywords.length > 0) {
       this.meta.addTag({
         name: "keywords",
-        content: metaData.keywords.join(", ")
+        content: metaData.keywords.join(", "),
       });
     }
 
-    //  please add environment path on meta addTage
-    //  this.meta.addTag({
-    //   name: "url",
-    //   content:
-    //  })
+    this.meta.addTag({
+      name: "url",
+      content: `${environment.appUrl}${this.route.url}`,
+    });
 
     this.meta.addTag({
       name: "robots",
       content: "index,follow",
-    })
-
+    });
   }
-
-
 }

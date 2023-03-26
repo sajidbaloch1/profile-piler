@@ -1,4 +1,4 @@
-import { ProfileViewModel } from "./profile-view.model";
+import { ProfileViewModel } from "./profile-view-model";
 
 export interface ProfileSearchResponse {
     errors: string[];

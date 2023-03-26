@@ -4,6 +4,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { KeywordEntity } from '../entities/keyword.entity';
 import { KeywordBeModule } from '../keyword-be/keyword-be.module';
 import { MapperModule } from '../mapper/mapper.module';
+import { CuratedListEntity } from '../entities/curated-list.entity';
+import { CuratedListBeModule } from '../curated-list-be/curated-list-be.module';
+import { CuratedListProfileEntity } from '../entities/curated-list-profile.entity';
+import { CuratedListTagEntity } from '../entities/curated-list-tag.entity';
+import { CuratedListProfileBeModule } from '../curated-list-profile-be/curated-list-profile-be.module';
+import { TagEntity } from '../entities/tag.entity';
 const defaultOptions = {
   type: 'mysql',
   host: 'localhost',
@@ -15,6 +21,8 @@ const defaultOptions = {
 @Module({
   imports: [
     KeywordBeModule,
+    CuratedListBeModule,
+    CuratedListProfileBeModule,
     ConfigModule,
     MapperModule,
     TypeOrmModule.forRoot({
@@ -37,7 +45,13 @@ const defaultOptions = {
       ...defaultOptions,
       database: 'profile_piler',
       name: 'PP',
-      entities: [KeywordEntity],
+      entities: [
+        KeywordEntity,
+        CuratedListEntity,
+        CuratedListProfileEntity,
+        CuratedListTagEntity,
+        TagEntity
+      ],
     } as any)
   ],
 })

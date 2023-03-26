@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { PrimeNGConfig } from 'primeng/api';
-import { ProfileViewModel } from './shared/models/profile-view.model';
+import { ProfileViewModel } from './shared/models/profile-view-model';
 import { GoogleAnalyticsService } from './shared/services/google-analytics.service';
 
 @Component({

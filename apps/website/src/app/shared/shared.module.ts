@@ -57,7 +57,10 @@ import { RouterModule } from '@angular/router';
     SocialEntityRenderComponent,
     SocialFeedItemComponent,
     SocialPlatformFeedComponent],
-  imports: [CommonModule, MenubarModule, ButtonModule, RouterModule,
+  imports: [CommonModule,
+    MenubarModule,
+    ButtonModule,
+    RouterModule,
     FormsModule,
     InputTextModule,
     DropdownModule,
@@ -86,7 +89,7 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     DropdownModule,
     RouterModule,
-    
+    ProfileListItemComponent,
   ],
   providers: [DialogService, MessageService]
 })

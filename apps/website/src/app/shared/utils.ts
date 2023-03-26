@@ -72,47 +72,46 @@ export function generateExternalLink(plateform: PlateFormEnum, username: string)
 }
 
 export const socialPlatformNames = [
-  "Facebook",
-  "Youtube",
-  "Twitter",
-  "Instagram",
-  "Tiktok",
-  "Pinterest",
-  "Quora",
-  "Linkedin",
-  "Flickr",
-  "DailyMotion",
-  "Tumblr",
-  "Vimeo",
-  "Reddit",
-  "Medium",
-  "TravelMassive",
+    "Facebook",
+    "Youtube",
+    "Twitter",
+    "Instagram",
+    "Tiktok",
+    "Pinterest",
+    "Quora",
+    "Linkedin",
+    "Flickr",
+    "DailyMotion",
+    "Tumblr",
+    "Vimeo",
+    "Reddit",
+    "Medium",
+    "TravelMassive",
 ];
 
 export function buildProfilesPageUrl(keyword: string, platform?: string) {
     const urlFriendlyKeyword = keyword.replace(/\W+/g, "-").toLocaleLowerCase();
     if (platform) {
-      const slug = topProfileByPlatformSlug
-        .replace("{platform-name}", platform)
-        .replace("{profile-type}", getProfileTypeByPlatform(platform));
-      return `${slug}${urlFriendlyKeyword}`;
+        const slug = topProfileByPlatformSlug
+            .replace("{platform-name}", platform)
+            .replace("{profile-type}", getProfileTypeByPlatform(platform));
+        return `${slug}${urlFriendlyKeyword}`;
     }
     return `${topProfileSlug}${urlFriendlyKeyword}`;
-  }
-  
-  export function getProfileTypeByPlatform(platformName: string) {
+}
+
+export function getProfileTypeByPlatform(platformName: string) {
     switch (platformName) {
-      case "facebook":
-        return "pages";
-      case "youtube":
-        return "channels";
-      default:
-        return "profiles";
+        case "facebook":
+            return "pages";
+        case "youtube":
+            return "channels";
+        default:
+            return "profiles";
     }
-  }
-  
-  export function scrollToEl(elementId: string): void {
+}
+
+export function scrollToEl(elementId: string): void {
     if (typeof document === "undefined") return;
     document.getElementById(elementId)?.scrollIntoView({ behavior: "smooth" });
-  }
-  
+}

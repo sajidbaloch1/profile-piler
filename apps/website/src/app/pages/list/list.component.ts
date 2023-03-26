@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ListPageFilterModel } from '../../shared/models/filter-model';
-import { ProfileViewModel } from '../../shared/models/profile-view.model';
+import { ProfileViewModel } from '../../shared/models/profile-view-model';
 import { SeoService } from '../../shared/services/seo.service';
 import { scrollToEl } from '../../shared/utils';
 import { ListPageData } from './data.resolver';

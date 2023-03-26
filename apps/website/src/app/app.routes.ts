@@ -65,12 +65,16 @@ export const appRoutes: Route[] = [
   {
     path: 'lists',
     loadChildren: () =>
-      import("../app/pages/curated-list/curated-list.module").then((m) => m.CuratedListModule), data: { state: "CuratedLists", title: "Curated Lists" }
+      import("../app/pages/curated-list/curated-list.module")
+        .then((m) => m.CuratedListModule),
+    data: { state: "CuratedLists", title: "Curated Lists" }
   },
   {
     path: 'lists/:seo_url',
     loadChildren: () =>
-      import("../app/pages/curated-list-detail-page/curated-list-detail-page.module").then((m) => m.CuratedListDetailPageModule), data: { state: "CuratedList", title: "Curated List" }
+      import("../app/pages/curated-list-detail-page/curated-list-detail-page.module")
+        .then((m) => m.CuratedListDetailPageModule),
+    data: { state: "CuratedList", title: "Curated List" }
   },
   {
     path: 'contact-us',

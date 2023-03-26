@@ -1,1 +1,53 @@
-<p>curated-list-detail-page works!</p>
+<div class="content">
+  <div class="surface-section">
+    <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
+      <li>
+        <a class="no-underline line-height-3 cursor-pointer" routerlink="/"
+          >Home</a
+        >
+      </li>
+      <li class="px-2">
+        <i class="pi pi-angle-right text-500 line-height-3"></i>
+      </li>
+      <li>
+        <a class="no-underline line-height-3 cursor-pointer" routerLink="lists">
+          Curated List
+        </a>
+      </li>
+      <li class="px-2">
+        <i class="pi pi-angle-right text-500 line-height-3"></i>
+      </li>
+      <li *ngIf="list">
+        <span class="line-height-3" style="color: #640ab6">{{
+          list.title
+        }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <ng-container *ngIf="error">
+    <p class="erro">
+      {{ error }}
+    </p>
+  </ng-container>
+  <ng-container *ngIf="list">
+    <div class="heading">
+      <h1>{{ list.title }}</h1>
+      <p>
+        {{ list.sub_heading }}
+      </p>
+    </div>
+
+    <div class="description">
+      <p>
+        {{ list.description }}
+      </p>
+    </div>
+
+    <div class="list profile-list mt-3">
+      <ng-container *ngFor="let profile of list.profiles">
+        <pp-profile-list-item [profile]="profile"></pp-profile-list-item>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

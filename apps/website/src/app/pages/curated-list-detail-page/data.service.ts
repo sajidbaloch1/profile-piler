@@ -2,21 +2,19 @@ import { Injectable } from '@angular/core';
 import { Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IPaginationData } from '../../shared/models/pagination-data';
-import { ProfileViewModel } from '../../shared/models/profile-view.model';
+import { ProfileViewModel } from '../../shared/models/profile-view-model';
 import { AjaxService } from '../../shared/services/ajax.service';
-
 
 export interface ICuratedListItem {
   title: string;
-  subTitle: string;
+  sub_heading: string;
   description: string;
-  slug: string;
+  seo_url: string;
   profiles?: ProfileViewModel[];
   tags: string[];
 }
 
 export interface ICuratedListItemRs {
-  meta: IPaginationData | undefined;
   data?: ICuratedListItem;
 }
 
@@ -31,15 +29,13 @@ export interface ICuratedListsRs {
 })
 export class CuratedListDataService {
 
-  constructor(
-    private ajax: AjaxService
-  ) { }
+  constructor(private ajax: AjaxService) { }
 
   getListItem(seoUrl: string): Observable<ICuratedListItemRs> {
-    return this.ajax.get<ICuratedListItemRs>(`curated-list/${seoUrl}`);
+    return this.ajax.get<ICuratedListItemRs>(`curated-lists/${seoUrl}`);
   }
 
   getLists(queryParams?: Params): Observable<ICuratedListsRs> {
-    return this.ajax.get<ICuratedListsRs>(`curated-lists`, queryParams)
+    return this.ajax.get<ICuratedListsRs>(`curated-lists`, queryParams);
   }
 }
