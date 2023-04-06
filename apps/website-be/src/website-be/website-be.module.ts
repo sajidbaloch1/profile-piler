@@ -10,6 +10,7 @@ import { CuratedListProfileEntity } from '../entities/curated-list-profile.entit
 import { CuratedListTagEntity } from '../entities/curated-list-tag.entity';
 import { CuratedListProfileBeModule } from '../curated-list-profile-be/curated-list-profile-be.module';
 import { TagEntity } from '../entities/tag.entity';
+import { ProfileBeModule } from '../profile-be/profile-be.module';
 const defaultOptions = {
   type: 'mysql',
   host: 'localhost',
@@ -23,6 +24,7 @@ const defaultOptions = {
     KeywordBeModule,
     CuratedListBeModule,
     CuratedListProfileBeModule,
+    ProfileBeModule,
     ConfigModule,
     MapperModule,
     TypeOrmModule.forRoot({

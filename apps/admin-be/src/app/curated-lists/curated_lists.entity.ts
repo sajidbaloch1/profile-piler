@@ -1,7 +1,7 @@
 import { type } from "os";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity('curated_lists')
 export class CuratedLists {
     @PrimaryGeneratedColumn()
     id: number

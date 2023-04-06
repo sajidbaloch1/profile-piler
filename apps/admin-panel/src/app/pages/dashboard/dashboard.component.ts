@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'profile-piler-dashboard',
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
+  items!: MenuItem[];
+  
+
+  ngOnInit() {
+    this.items = [
+      {
+        label: 'Home'
+      }
+    ]
+  }
 
 }

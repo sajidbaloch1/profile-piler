@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { TagsService } from './tags.service';
 
 @Controller('tags')
@@ -10,5 +10,11 @@ export class TagsController {
     @Get()
     findAll() {
         return this.tagService.findAll();
+    }
+
+    @Post()
+    async createRow(@Body() data: any) {
+        const newRow = await this.tagService.createRow(data);
+        return newRow;
     }
 }

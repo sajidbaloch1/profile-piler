@@ -27,7 +27,7 @@ export function generateExternalLink(plateform: PlateFormEnum, username: string)
             baseUrl = "https://www.tiktok.com/@";
             break;
 
-        case "tiktok":
+        case "facebook":
             baseUrl = "https://www.facebook.com/";
             break
         case "YT":

@@ -12,7 +12,7 @@ import { CuratedListsModule } from './curated-lists/curated-lists.module';
 import { CuratedLists } from './curated-lists/curated_lists.entity';
 import { Keywords } from './keywords/keywords.entity';
 import { Tags } from './tags/tags.entity';
-import { FailedJobs } from './failed-jobs/failed-jobs.entity';
+import { FailedJobs } from './failed-jobs/failed_jobs.entity';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { FailedJobs } from './failed-jobs/failed-jobs.entity';
       username: 'root',
       password: '',
       database: 'profile_piler',
-      entities: [Jobs, CuratedLists, Keywords, Tags, FailedJobs],
+      entities: [Jobs, CuratedLists, Keywords, Tags],
       synchronize: true,
     }),
     JobsModule, KeywordsModule, TagsModule, FailedJobsModule, CuratedListsModule

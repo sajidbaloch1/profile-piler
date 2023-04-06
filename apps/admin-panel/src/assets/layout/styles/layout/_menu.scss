@@ -79,7 +79,8 @@
 
             &.active-route {
                 font-weight: 700;
-                color: var(--primary-color);
+                color: #fff;
+                background-color: #6f42c1 !important;
             }
 
             &:hover {

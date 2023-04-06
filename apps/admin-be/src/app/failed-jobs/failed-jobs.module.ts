@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FailedJobsController } from './failed-jobs.controller';
-import { FailedJobs } from './failed-jobs.entity';
+import { FailedJobs } from './failed_jobs.entity';
 import { FailedJobsService } from './failed-jobs.service';
 
 @Module({

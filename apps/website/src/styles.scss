@@ -93,3 +93,73 @@ hr {
   border: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
+
+.verified-indicator {
+  font-size: 16px;
+  color: #28a745;
+}
+ul.mb-2:first-child {
+  padding-left: 0px;
+}
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+.profile-list .card .profile-img,
+.profile-detail .profile-img {
+  overflow: hidden !important;
+  width: 90px !important;
+  height: 90px !important;
+  padding: 0 !important;
+  border-radius: 100px !important;
+}
+ul {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.profile-list .desc li {
+  display: inline;
+  padding-right: 10px;
+  font-size: 16px;
+}
+ul li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: #b3b3b3;
+}
+
+.profile-list .desc li span:first-child {
+  font-weight: bold;
+  color: #000 !important;
+}
+.profile-list .desc li span:last-child {
+  padding: 0 14px;
+  font-size: 14px;
+}
+.profile-list .desc li::after {
+  content: '|' !important;
+}
+.float-right {
+  float: right !important;
+}
+.float-left {
+  float: left;
+}
+
+.profile-list h4 .ex-link i {
+  font-size: 12px;
+  color: #040000;
+}
+.profile-list .desc, .profile-detail .desc {
+  padding: 0 50px 0 110px;
+  font-size: 16px;
+}
+
+// .profile-list h4 .ex-link {
+//   position: absolute;
+//   top: 11px;
+//   color: #000;
+// }

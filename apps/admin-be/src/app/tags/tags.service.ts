@@ -14,4 +14,9 @@ export class TagsService {
     findAll(){
         return this.tagRepo.find()
     }
+
+    async createRow(data: any) {
+        const newRow = await this.tagRepo.create(data);
+        return await this.tagRepo.save(newRow);
+      }
 }
