@@ -14,4 +14,8 @@ export class KeywordsService {
         return this.keywordRepo.find();
     }
 
+    async createRow(data: any) {
+        const newRow = await this.keywordRepo.create(data);
+        return await this.keywordRepo.save(newRow);
+      }
 }

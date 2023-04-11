@@ -4,6 +4,9 @@ import { JobsComponent } from './jobs.component';
 import { JobsRoutingModule } from './jobs-routing.module';
 import { TableModule } from 'primeng/table';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { jobsService } from './jobs.service';
+import { PaginatorModule } from 'primeng/paginator';
+
 
 
 
@@ -15,7 +18,10 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
     CommonModule,
     TableModule,
     BreadcrumbModule,
-    JobsRoutingModule
-  ]
+    JobsRoutingModule,
+    PaginatorModule
+  ],
+  providers: [jobsService]
+
 })
 export class JobsModule { }

@@ -2,10 +2,10 @@ import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity('failed_jobs')
 export class FailedJobs {
-  @PrimaryGeneratedColumn()
-  id: number;
+  // @PrimaryGeneratedColumn()
+  // id: number;
 
-  @Column()
+  @PrimaryGeneratedColumn()
   @Unique(['uuid'])
   uuid: string;
 

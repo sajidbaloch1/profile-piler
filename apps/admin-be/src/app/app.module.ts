@@ -23,7 +23,7 @@ import { FailedJobs } from './failed-jobs/failed_jobs.entity';
       username: 'root',
       password: '',
       database: 'profile_piler',
-      entities: [Jobs, CuratedLists, Keywords, Tags],
+      entities: [Jobs, CuratedLists, Keywords, Tags,FailedJobs],
       synchronize: true,
     }),
     JobsModule, KeywordsModule, TagsModule, FailedJobsModule, CuratedListsModule

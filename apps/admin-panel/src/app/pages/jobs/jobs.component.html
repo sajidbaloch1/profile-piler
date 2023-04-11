@@ -2,25 +2,47 @@
   <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
 </div>
 <div class="card">
-  <p-table [value]="products">
+  <div class="flex justify-content-end my-2">
+    <input
+      class="p-2"
+      pInputText
+      type="text"
+      (input)="filterTable()"
+      [(ngModel)]="queueFilter"
+      placeholder="Search Keywords"
+    />
+  </div>
+  <p-table
+    #dt
+    [value]="jobLists"
+    [rows]="jobLists.length > 10 ? 10 : 10"
+    [paginator]="jobLists.length > 10"
+  >
     <ng-template pTemplate="header">
       <tr>
-        <th>Code</th>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Email</th>
-        <th>Contact</th>
-        <th>Class</th>
+        <th>id</th>
+        <th>queue</th>
+        <th>payload</th>
+        <th>attempts</th>
+        <th>reserved_at</th>
+        <th>available_at</th>
+        <th>created_at</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-product>
+    <ng-template pTemplate="body" let-jobList let-i="rowIndex">
       <tr>
-        <td>{{ product.code }}</td>
-        <td>{{ product.name }}</td>
-        <td>{{ product.address }}</td>
-        <td>{{ product.email }}</td>
-        <td>{{ product.contact }}</td>
-        <td>{{ product.class }}</td>
+        <td>{{ i + 1 }}</td>
+        <td>{{ jobList.queue }}</td>
+        <td>{{ jobList.payload }}</td>
+        <td>{{ jobList.attempts }}</td>
+        <td>{{ jobList.reserved_at }}</td>
+        <td>{{ jobList.available_at }}</td>
+        <td>{{ jobList.created_at }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+        <td colspan="5">Total Data {{ jobLists.length }}</td>
       </tr>
     </ng-template>
   </p-table>
