@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { searchLogsItem, searchLogsService } from './search-logs.service';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'profile-piler-search-logs',
@@ -7,10 +9,14 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./search-logs.component.css']
 })
 export class SearchLogsComponent {
+  searchLogsLists: searchLogsItem[] = []
   items!: MenuItem[];
+  searchLogsFilter: string = '';
 
+  @ViewChild('dt') table!: Table;
+  constructor(private searchLogsService: searchLogsService) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.items = [
       {
         label: 'Home',
@@ -19,6 +25,26 @@ export class SearchLogsComponent {
       {
         label: 'Search Logs'
       }
-    ]
+    ], 
+    this.loadProducts();
+  }
+  private async loadProducts() {
+    this.searchLogsService.getProducts().subscribe({
+      next: (res) => {
+        if (res.length > 0) {
+          this.searchLogsLists = res;
+          console.log(this.searchLogsLists)
+        }
+      },
+      error: (err) => {
+        console.log(err)
+      },
+      complete: () => {
+        console.log("complete")
+      }
+    })
+  }
+  filterTable() {
+    this.table.filter(this.searchLogsFilter, 'query', 'contains');
   }
 }

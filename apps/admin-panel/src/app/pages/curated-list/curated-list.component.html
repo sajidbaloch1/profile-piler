@@ -1,9 +1,18 @@
-<div class="flex justify-content-end">
-  <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
+<div class="grid">
+  <div class="col-4">
+    <h1 class="mt-1">Curated List</h1>
+  </div>
+  <div class="col-8">
+    <div class="flex justify-content-end">
+      <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
+    </div>
+  </div>
 </div>
 <div class="card">
   <div class="flex flex-wrap justify-content-between my-2">
-    <button class="p-button p-button-raised p-button-info">Add New</button>
+    <a routerLink="/curated-lists/create"
+      ><button class="p-button p-button-raised p-button-info">Add New</button>
+    </a>
     <input
       class="p-2"
       pInputText
@@ -48,10 +57,12 @@
               icon="pi pi-file-edit"
               styleClass="bg-blue-700 p-button-text text-white p-button-raised"
             ></p-button>
-            <p-button
-              icon="pi pi-eye"
-              styleClass="bg-gray-700 text-white p-button-text p-button-raised"
-            ></p-button>
+            <a routerLink="/curated-lists/view">
+              <p-button
+                icon="pi pi-eye"
+                styleClass="bg-gray-700 text-white p-button-text p-button-raised"
+              ></p-button>
+            </a>
           </div>
         </td>
       </tr>

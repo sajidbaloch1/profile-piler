@@ -1,26 +1,25 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('failed_jobs')
-export class FailedJobs {
-  // @PrimaryGeneratedColumn()
-  // id: number;
+@Entity({ name: 'failed_jobs' })
+export class FailedJob {
+  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
+  id: number;
 
-  @PrimaryGeneratedColumn()
-  @Unique(['uuid'])
+  @Column({ type: 'varchar', length: 191 })
   uuid: string;
 
-  @Column('text')
+  @Column({ type: 'text' })
   connection: string;
 
-  @Column('text')
+  @Column({ type: 'text' })
   queue: string;
 
-  @Column('longtext')
+  @Column({ type: 'longtext' })
   payload: string;
 
-  @Column('longtext')
+  @Column({ type: 'longtext' })
   exception: string;
 
-  @Column({ type: 'timestamp'})
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   failed_at: Date;
 }

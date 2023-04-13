@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { FailedJobs } from './failed_jobs.entity';
+import { FailedJob } from './failed_jobs.entity';
 
 @Injectable()
 export class FailedJobsService {
     constructor(
-        @InjectRepository(FailedJobs)
-        private readonly failedJobRepo: Repository<FailedJobs>
+        @InjectRepository(FailedJob)
+        private readonly failedJobRepo: Repository<FailedJob>
     ){}
 
     findAll(){

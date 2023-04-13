@@ -9,6 +9,7 @@ import { Table } from 'primeng/table';
   styleUrls: ['./curated-list.component.css']
 })
 export class CuratedListComponent {
+  checked!: boolean
   curatedLists: ICuratedListItem[] = []
   items!: MenuItem[];
   titleFilter: string = '';
@@ -26,8 +27,8 @@ export class CuratedListComponent {
         label: 'Curated Lists'
       }
     ]
+    console.log(this.loadProducts())
     this.loadProducts();
-    //console.log(this.loadProducts())
   }
 
   private async loadProducts() {
@@ -43,7 +44,7 @@ export class CuratedListComponent {
         console.log(err)
       },
       complete: () => {
-        console.log("complete")
+        // console.log("complete")
       }
     })
   }

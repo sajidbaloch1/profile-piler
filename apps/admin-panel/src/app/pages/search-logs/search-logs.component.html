@@ -1,3 +1,57 @@
-<div class="flex justify-content-end">
-    <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
+<div class="grid">
+  <div class="col-4">
+    <h1 class="mt-1">Elastic Search Logs</h1>
+  </div>
+  <div class="col-8">
+    <div class="flex justify-content-end">
+      <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
+    </div>
+  </div>
 </div>
+  <div class="card">
+    <div class="flex justify-content-end my-2">
+      <input
+        class="p-2"
+        pInputText
+        type="text"
+        (input)="filterTable()"
+        [(ngModel)]="searchLogsFilter"
+        placeholder="Search Keywords"
+      />
+    </div>
+    <p-table
+      #dt
+      [value]="searchLogsLists"
+      [rows]="searchLogsLists.length > 10 ? 10 : 10"
+      [paginator]="searchLogsLists.length > 10"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>id</th>
+          <th>query</th>
+          <th>query_time_ms</th>
+          <th>timed_out</th>
+          <th>failed_shareds_count</th>
+          <th>total_hits</th>
+          <th>created_at</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-searchLogList>
+        <tr>
+          <td>{{ searchLogList.id }}</td>
+          <td>{{ searchLogList.query }}</td>
+          <td>{{ searchLogList.query_time_ms }}</td>
+          <td>{{ searchLogList.timed_out }}</td>
+          <td>{{ searchLogList.failed_shareds_count }}</td>
+          <td>{{ searchLogList.total_hits }}</td>
+          <td>{{ searchLogList.created_at }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td colspan="5">Total Data {{ searchLogsLists.length }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  

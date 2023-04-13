@@ -1,5 +1,12 @@
-<div class="flex justify-content-end">
-  <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
+<div class="grid">
+  <div class="col-4">
+    <h1 class="mt-1">Failed Jobs</h1>
+  </div>
+  <div class="col-8">
+    <div class="flex justify-content-end">
+      <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
+    </div>
+  </div>
 </div>
 <div class="card">
   <div class="flex justify-content-end my-2">
@@ -28,9 +35,9 @@
         <th>failed_at</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-failedJobList let-i="rowIndex">
+    <ng-template pTemplate="body" let-failedJobList>
       <tr>
-        <td>{{ i + 1 }}</td>
+        <td>{{ failedJobList.uuid }}</td>
         <td>{{ failedJobList.connection }}</td>
         <td>{{ failedJobList.queue }}</td>
         <td>{{ failedJobList.payload }}</td>

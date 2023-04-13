@@ -1,10 +1,18 @@
-<div class="flex justify-content-end">
-  <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
+<div class="grid">
+  <div class="col-4">
+    <h1 class="mt-1">Tags</h1>
+  </div>
+  <div class="col-8">
+    <div class="flex justify-content-end">
+      <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
+    </div>
+  </div>
 </div>
 <div class="card">
   <div class="flex justify-content-between my-2">
-    <button class="p-button p-button-raised p-button-info">Add New</button>
-    <input
+    <a routerLink="/tags/create"
+      ><button class="p-button p-button-raised p-button-info">Add New</button>
+    </a> <input
       class="p-2"
       pInputText
       type="text"

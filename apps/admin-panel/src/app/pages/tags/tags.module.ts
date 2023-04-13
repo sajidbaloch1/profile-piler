@@ -7,11 +7,14 @@ import { tagsService } from './tags.service';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { FormsModule } from '@angular/forms';
+import { TagsCreateComponent } from './tags-create/tags-create.component';
+import { CardModule } from 'primeng/card';
 
 
 @NgModule({
   declarations: [
-    TagsComponent
+    TagsComponent,
+    TagsCreateComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     TagsRoutingModule,
     TableModule,
     PaginatorModule,
-    FormsModule
+    FormsModule,
+    CardModule
   ],
   providers: [tagsService]
 

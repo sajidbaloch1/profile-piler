@@ -9,10 +9,19 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
+import { CuratedListCreateComponent } from './curated-list-create/curated-list-create.component';
+import { CuratedListProfileComponent } from './curated-list-profile/curated-list-profile.component';
+import { CuratedListEditComponent } from './curated-list-edit/curated-list-edit.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    CuratedListComponent
+    CuratedListComponent,
+    CuratedListCreateComponent,
+    CuratedListProfileComponent,
+    CuratedListEditComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +31,10 @@ import { PaginatorModule } from 'primeng/paginator';
     CheckboxModule,
     FormsModule,
     ButtonModule,
-    PaginatorModule
+    PaginatorModule,
+    InputTextModule,
+    CardModule,
+    ReactiveFormsModule
   ],
   providers: [CuratedListService]
 })

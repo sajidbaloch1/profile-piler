@@ -12,7 +12,15 @@ import { CuratedListsModule } from './curated-lists/curated-lists.module';
 import { CuratedLists } from './curated-lists/curated_lists.entity';
 import { Keywords } from './keywords/keywords.entity';
 import { Tags } from './tags/tags.entity';
-import { FailedJobs } from './failed-jobs/failed_jobs.entity';
+import { CuratedListTagModule } from './curated-list-tag/curated-list-tag.module';
+import { CuratedListProfileModule } from './curated-list-profile/curated-list-profile.module';
+import { CuratedListProfileEntity } from './curated-list-profile/curated-list-profile.entity';
+import { CuratedlistTag } from './curated-list-tag/curated-list-tag.entity';
+import { SearchLogController } from './search-log/search-log.controller';
+import { SearchLogService } from './search-log/search-log.service';
+import { SearchLogModule } from './search-log/search-log.module';
+import { ElasticSearchLog } from './search-log/search-log.entity';
+import { FailedJob } from './failed-jobs/failed_jobs.entity';
 
 @Module({
   imports: [
@@ -23,10 +31,29 @@ import { FailedJobs } from './failed-jobs/failed_jobs.entity';
       username: 'root',
       password: '',
       database: 'profile_piler',
-      entities: [Jobs, CuratedLists, Keywords, Tags,FailedJobs],
+      entities: [
+        Jobs,
+        CuratedLists,
+        Keywords,
+        Tags,
+        FailedJob,
+        CuratedListProfileEntity,
+        CuratedlistTag,
+        ElasticSearchLog
+      ],
       synchronize: true,
     }),
-    JobsModule, KeywordsModule, TagsModule, FailedJobsModule, CuratedListsModule
+    JobsModule,
+    KeywordsModule,
+    TagsModule,
+    FailedJobsModule,
+    CuratedListsModule,
+    CuratedListTagModule,
+    CuratedListProfileModule,
+    CuratedListProfileModule,
+    CuratedListTagModule,
+    SearchLogModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],
