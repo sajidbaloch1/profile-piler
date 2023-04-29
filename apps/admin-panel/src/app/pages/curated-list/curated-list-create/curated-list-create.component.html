@@ -1,97 +1,103 @@
-<div class="grid">
-  <div class="col-4">
-    <h1 class="mt-1">Curated List</h1>
-  </div>
-  <div class="col-8">
-    <div class="flex justify-content-end">
-      <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
-    </div>
+<!-- <div class="grid"> -->
+<div class="col-lg-4 col-md-12">
+  <h1 class="mt-1">Curated List</h1>
+</div>
+<div class="col-lg-8 col-md-12">
+  <div class="flex justify-content-end">
+    <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
   </div>
 </div>
-
-<div class="grid">
-  <div class="col-12">
-    <p-card>
-      <form [formGroup]="curatedListForm" (ngSubmit)="onSubmit()">
-        <div class="card">
-          <div class="field">
-            <label for="title">Title</label>
-            <input
-              styleClass="w-full"
-              class="w-full"
-              id="title"
-              name="title"
-              type="text"
-              class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-              [(ngModel)]="curatedList.title"
-              formControlName="title"
-            />
-          </div>
-          <div class="field">
-            <label for="seoUrl">SEO URL</label>
-            <input
-              id="seoUrl"
-              name="seoUrl"
-              type="text"
-              class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-              [(ngModel)]="curatedList.seo_url"
-              formControlName="seo_url"
-            />
-          </div>
-          <div class="field">
-            <label for="subHeading">Sub Heading</label>
-            <input
-              id="subHeading"
-              name="subHeading"
-              type="text"
-              class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-              [(ngModel)]="curatedList.sub_heading"
-              formControlName="sub_heading"
-            />
-          </div>
-          <div class="field">
-            <label for="tags">Tags</label>
-            <input
-              id="tags"
-              name="tags"
-              type="text"
-              class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-              [(ngModel)]="curatedList.tags"
-              formControlName="tags"
-            />
-          </div>
-          <div class="field col-12">
-            <label for="description">Description</label>
-            <textarea
-              id="description"
-              name="description"
-              rows="4"
-              class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-              [(ngModel)]="curatedList.description"
-              formControlName="description"
-            ></textarea>
-          </div>
-          <div class="p-field-checkbox mb-4">
-            <p-checkbox
-              [binary]="true"
-              name="is_active"
-              id="is_active"
-              inputId="is_active_input"
-              label="Is Active"
-              [(ngModel)]="curatedList.is_active"
-              formControlName="is_active"
-            ></p-checkbox>
-          </div>
-          <div class="flex justify-end">
-            <button class="p-button p-button-success mr-2" type="submit">
-              Create
-            </button>
-            <button class="p-button p-button-secondary" type="button">
-              Cancel
-            </button>
-          </div>
+<!-- </div> -->
+<div class="col-lg-12 col-md-12">
+  <p-card>
+    <form [formGroup]="curatedListForm" (ngSubmit)="onSubmit()">
+      <div class="card">
+        <div class="field">
+          <label for="title">Title</label>
+          <input
+            styleClass="w-full"
+            class="w-full"
+            id="title"
+            name="title"
+            type="text"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            [(ngModel)]="curatedList.title"
+            formControlName="title"
+          />
+          <div
+            class="field-message"
+            ></div>
+            <!-- *ngIf="curatedList.title?.curatedList.title" -->
         </div>
-      </form>
-    </p-card>
-  </div>
+        <div class="field">
+          <label for="seoUrl">SEO URL</label>
+          <input
+            id="seoUrl"
+            name="seoUrl"
+            type="text"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            [(ngModel)]="curatedList.seo_url"
+            formControlName="seo_url"
+          />
+        </div>
+        <div class="field">
+          <label for="subHeading">Sub Heading</label>
+          <input
+            id="subHeading"
+            name="subHeading"
+            type="text"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            [(ngModel)]="curatedList.sub_heading"
+            formControlName="sub_heading"
+          />
+        </div>
+        <div class="field">
+          <label for="tags">Tags</label>
+          <br />
+          <p-multiSelect
+            id="tags"
+            name="tags"
+            [options]="tagOptions"
+            [(ngModel)]="curatedList.tags"
+            defaultLabel="Select tags"
+            [filter]="true"
+            class="selected-tags w-full"
+            filterPlaceholder="Search tags"
+            formControlName="tags"
+          ></p-multiSelect>
+        </div>
+        <div class="field col-lg-12 col-md-12">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            rows="4"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            [(ngModel)]="curatedList.description"
+            formControlName="description"
+          ></textarea>
+        </div>
+        <div class="p-field-checkbox mb-4">
+          <p-checkbox
+            [binary]="true"
+            name="is_active"
+            id="is_active"
+            inputId="is_active_input"
+            label="Is Active"
+            [(ngModel)]="curatedList.is_active"
+            formControlName="is_active"
+          ></p-checkbox>
+        </div>
+        <div class="flex justify-end">
+          <button class="p-button p-button-success mr-2" type="submit">
+            Create
+          </button>
+          <button class="p-button p-button-secondary" type="button">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </p-card>
 </div>
+<!-- </div> -->

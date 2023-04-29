@@ -15,6 +15,8 @@ import { CuratedListEditComponent } from './curated-list-edit/curated-list-edit.
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MultiSelectModule } from 'primeng/multiselect';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     PaginatorModule,
     InputTextModule,
     CardModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MultiSelectModule
   ],
   providers: [CuratedListService]
 })

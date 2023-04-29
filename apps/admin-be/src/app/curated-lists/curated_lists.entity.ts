@@ -21,8 +21,9 @@ export class CuratedLists {
     @Column({ type: 'varchar', length: 255 })
     seo_url: string;
 
-    @Column({ type: "bit", width: 1 })
-    is_active: number
+    @Column({ type: "tinyint", width: 1 })
+    is_active:number;
+
     @OneToMany(() => CuratedListProfileEntity, profile => profile.curated_list)
     profiles: CuratedListProfileEntity[];
 

@@ -3,23 +3,34 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
 import { CuratedListService, ICuratedListItem } from '../curated-list.service';
 import { Router } from '@angular/router';
+import { tagsItem, tagsService } from '../../tags/tags.service';
+import { SelectItem } from 'primeng/api';
+import { MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'profile-piler-curated-list-create',
   templateUrl: './curated-list-create.component.html',
-  styleUrls: ['./curated-list-create.component.css']
+  styleUrls: ['./curated-list-create.component.css'],
+  providers: [MessageService]
 })
 export class CuratedListCreateComponent implements OnInit {
   items!: MenuItem[];
+  tagLists: tagsItem[] = []
+  tagOptions: SelectItem[] = [];
+  
+
   curatedListForm!: FormGroup;
   curatedList: ICuratedListItem = { id: 0, title: '', sub_heading: '', seo_url: '', description: '', is_active: false, tags: [] };
-  errorMessage = '';
 
   constructor(
     private curatedListService: CuratedListService,
     private router: Router,
-    private fb: FormBuilder
-  ) { }
+    private fb: FormBuilder,
+    private tagsService: tagsService,
+    private messageService: MessageService,
+  ) { };
+
 
   ngOnInit() {
     this.items = [
@@ -36,22 +47,46 @@ export class CuratedListCreateComponent implements OnInit {
     ];
 
     this.createForm();
+    this.loadProducts();
   }
+
+  private async loadProducts() {
+    this.tagsService.getProducts().subscribe({
+      next: (res) => {
+        if (res.length > 0) {
+          this.tagLists = res;
+          this.tagOptions = this.tagLists.map((tag) => {
+            return {
+              label: tag.name,
+              value: tag.name,
+            };
+          });
+          console.log(this.tagOptions);
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('complete');
+      },
+    });    
+  }
+
   createForm() {
     this.curatedListForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
-      seo_url: ['', [Validators.maxLength(100), Validators.pattern(/^[a-zA-Z0-9-_]+$/)]],
-      sub_heading: ['', Validators.maxLength(100)],
-      tags: ['', Validators.maxLength(50)],
-      description: ['', Validators.maxLength(500)],
-      is_active: [false]
+      title: ['', Validators.required],
+      seo_url: ['', Validators.required],
+      sub_heading: ['', Validators.required],
+      tags: ['', Validators.required],
+      description: ['', Validators.required],
+      is_active: [false, Validators.required]
     });
   }
-  
 
   onSubmit() {
     if (this.curatedListForm.invalid) {
-      this.errorMessage = 'Please enter valid input';
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please enter valid input' });
       return;
     }
 
@@ -67,7 +102,7 @@ export class CuratedListCreateComponent implements OnInit {
       },
       err => {
         console.log('Error creating curated list.');
-        this.errorMessage = 'Error creating curated list.';
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error creating curated list.' });
       }
     );
   }

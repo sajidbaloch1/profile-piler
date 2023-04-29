@@ -30,7 +30,7 @@
   >
     <ng-template pTemplate="header">
       <tr>
-        <th>id</th>
+        <th>Id</th>
         <th>Title</th>
         <th>Sub Heading</th>
         <th>Active</th>
@@ -40,11 +40,15 @@
     </ng-template>
     <ng-template pTemplate="body" let-curatedList let-i="rowIndex">
       <tr>
-        <td>{{ i + 1 }}</td>
+        <td>{{ curatedList.id }}</td>
         <td>{{ curatedList.title }}</td>
         <td>{{ curatedList.sub_heading }}</td>
         <td>
-          <p-checkbox [(ngModel)]="curatedList.is_active"></p-checkbox>
+          <p-checkbox
+            [ngModel]="curatedList.is_active == '1'"
+            [binary]="true"
+            (click)="toggleClick(curatedList.id)"
+          ></p-checkbox>
         </td>
         <td>{{ curatedList.tags }}</td>
         <td>
