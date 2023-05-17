@@ -17,13 +17,12 @@ import { CardModule } from 'primeng/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 
-
 @NgModule({
   declarations: [
     CuratedListComponent,
     CuratedListCreateComponent,
     CuratedListProfileComponent,
-    CuratedListEditComponent
+    CuratedListEditComponent,
   ],
   imports: [
     CommonModule,
@@ -37,8 +36,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
     InputTextModule,
     CardModule,
     ReactiveFormsModule,
-    MultiSelectModule
+    MultiSelectModule,
   ],
-  providers: [CuratedListService]
+  providers: [CuratedListService],
 })
-export class CuratedListModule { }
+export class CuratedListModule {}

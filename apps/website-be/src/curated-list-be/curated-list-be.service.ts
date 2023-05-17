@@ -11,7 +11,6 @@ export class CuratedListBeService {
         private readonly curatedRepo: Repository<CuratedListEntity>
     ) { }
     getIndex(tag: string) {
-        const isActive = true;
         const listQuery = this.curatedRepo.createQueryBuilder('curated_lists')
             .leftJoinAndSelect('curated_lists.profiles', 'profiles')
             .leftJoinAndSelect('curated_lists.listTags', 'listTags')

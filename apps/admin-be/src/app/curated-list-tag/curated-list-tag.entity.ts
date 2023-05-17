@@ -9,7 +9,7 @@ export class CuratedlistTag{
     @Column({ type: 'bigint', width: 19 })
     curated_list_id: number
 
-    @Column({ type: 'bigint', width: 19 })
+    @Column()
     tag_id: number
 
     @ManyToOne(() => CuratedLists, list => list.listTags)

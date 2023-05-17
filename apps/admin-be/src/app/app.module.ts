@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
+import { Module, Provider } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm'
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { JobsModule } from './jobs/jobs.module';
 import { Jobs } from './jobs/jobs.entity';
 import { KeywordsModule } from './keywords/keywords.module';
@@ -21,7 +21,15 @@ import { SearchLogService } from './search-log/search-log.service';
 import { SearchLogModule } from './search-log/search-log.module';
 import { ElasticSearchLog } from './search-log/search-log.entity';
 import { FailedJob } from './failed-jobs/failed_jobs.entity';
+import { createConnection } from 'net';
+// import { async } from 'rxjs';
 
+const data :Provider = {
+  provide:'DATABASE_CONNECTION',
+  useFactory: async () => await createConnection({
+    type: 'mysql'
+  })
+}
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -30,7 +38,7 @@ import { FailedJob } from './failed-jobs/failed_jobs.entity';
       port: 3306,
       username: 'root',
       password: '',
-      database: 'profile_piler',
+      database: 'profiler-piler',
       entities: [
         Jobs,
         CuratedLists,
@@ -39,9 +47,10 @@ import { FailedJob } from './failed-jobs/failed_jobs.entity';
         FailedJob,
         CuratedListProfileEntity,
         CuratedlistTag,
-        ElasticSearchLog
+        ElasticSearchLog,
       ],
-      synchronize: true,
+      synchronize: false,
+      // logging: true,
     }),
     JobsModule,
     KeywordsModule,
@@ -53,9 +62,8 @@ import { FailedJob } from './failed-jobs/failed_jobs.entity';
     CuratedListProfileModule,
     CuratedListTagModule,
     SearchLogModule,
-
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

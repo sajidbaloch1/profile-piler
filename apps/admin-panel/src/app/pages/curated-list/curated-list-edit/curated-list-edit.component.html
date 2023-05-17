@@ -1,1 +1,67 @@
-<p>curated-list-edit works!</p>
+<!-- <div class="grid"> -->
+<div class="col-lg-4 col-md-12">
+    <h1 class="mt-1">Curated List</h1>
+</div>
+<div class="col-lg-8 col-md-12">
+    <div class="flex justify-content-end">
+        <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
+    </div>
+</div>
+<!-- </div> -->
+<div class="col-lg-12 col-md-12">
+    <p-card>
+        <form [formGroup]="curatedListForm" (ngSubmit)="onSubmit()">
+            <div class="card">
+                <div class="field">
+                    <label for="title">Title</label>
+                    <input styleClass="w-full" class="w-full" id="title" name="title" type="text"
+                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                        *ngIf="curatedList && curatedList.title" [(ngModel)]="curatedList.title"
+                        formControlName="title" />
+                    <div class="field-message"></div>
+                </div>
+                <div class="field">
+                    <label for="seoUrl">SEO URL</label>
+                    <input id="seoUrl" name="seoUrl" type="text" *ngIf="curatedList && curatedList.seo_url"
+                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                        [(ngModel)]="curatedList.seo_url" formControlName="seo_url" />
+                </div>
+                <div class="field">
+                    <label for="subHeading">Sub Heading</label>
+                    <input id="subHeading" name="subHeading" type="text" *ngIf="curatedList && curatedList.sub_heading"
+                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                        [(ngModel)]="curatedList.sub_heading" formControlName="sub_heading" />
+                </div>
+                <!-- <div class="field">
+                    <label for="tags">Tags</label>
+                    [options]="tagOptions"
+                    <br />
+                    <p-multiSelect id="tags" name="tags" [(ngModel)]="curatedList.tags" defaultLabel="Select tags"
+                        [filter]="true" class="selected-tags w-full" filterPlaceholder="Search tags"
+                        formControlName="tags"></p-multiSelect>
+                </div> -->
+                <div class="field col-lg-12 col-md-12">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4"
+                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                        *ngIf="curatedList && curatedList.description" [(ngModel)]="curatedList.description"
+                        formControlName="description"></textarea>
+                </div>
+                <!-- *ngIf="curatedList && curatedList.is_active" -->
+                <p-checkbox [ngModel]="curatedList && curatedList.is_active.data && curatedList.is_active.data[0] === 1"
+                    [binary]="true" (ngModelChange)="curatedList.is_active.data = $event ? [1] : [0]" name="is_active"
+                    id="is_active" inputId="is_active_input" label="Is Active" formControlName="is_active">
+                </p-checkbox>
+                <div class="flex justify-end">
+                    <button class="p-button p-button-success mr-2" type="submit">
+                        Create
+                    </button>
+                    <button class="p-button p-button-secondary" type="button">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </p-card>
+</div>
+<!-- </div> -->

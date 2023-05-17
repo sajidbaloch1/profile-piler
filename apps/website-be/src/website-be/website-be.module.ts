@@ -27,25 +27,26 @@ const defaultOptions = {
     ProfileBeModule,
     ConfigModule,
     MapperModule,
+    // TypeOrmModule.forRoot({
+    //   ...defaultOptions,
+    //   database: 'social_entity_db',
+    //   entities: [],
+    // } as any), 
+    // TypeOrmModule.forRoot({
+    //   ...defaultOptions,
+    //   name: 'YT',
+    //   database: 'youtube_data',
+    //   entities: [],
+    // } as any),
+    // TypeOrmModule.forRoot({
+    //   ...defaultOptions,
+    //   database: 'quora',
+    //   name: 'Q',
+    //   entities: [],
+    // } as any),
     TypeOrmModule.forRoot({
       ...defaultOptions,
-      database: 'social_entity_db',
-      entities: [],
-    } as any), TypeOrmModule.forRoot({
-      ...defaultOptions,
-      name: 'YT',
-      database: 'youtube_data',
-      entities: [],
-    } as any),
-    TypeOrmModule.forRoot({
-      ...defaultOptions,
-      database: 'quora',
-      name: 'Q',
-      entities: [],
-    } as any),
-    TypeOrmModule.forRoot({
-      ...defaultOptions,
-      database: 'profile_piler',
+      database: 'profiler-piler',
       name: 'PP',
       entities: [
         KeywordEntity,
